@@ -5,11 +5,11 @@ const userschema = new mongoose.Schema({
     username:String,
     email:String,
     password:String,
-    // avatar:String,
-    // bio:String,
-    // followers:[],
-    // following:[],
-    // created_at:Date,
+    avatar:String,
+    bio:String,
+    followers:[],
+    following:[],
+    created_at:Date,
 
 
 })

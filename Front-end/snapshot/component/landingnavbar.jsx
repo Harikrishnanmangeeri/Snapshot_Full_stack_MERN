@@ -9,7 +9,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
-import Signupmodal from './signup';
+import Loginmodal from './Login';
+import RegistrationModal from './Signup';
+
 
 export default function Landingnavbar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -74,7 +76,7 @@ export default function Landingnavbar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} >
       <AppBar position="static" style={{ background: 'white', boxShadow: 'none' }}>
         <Toolbar>
           <IconButton
@@ -88,11 +90,12 @@ export default function Landingnavbar() {
           </IconButton>
           <Box sx={{ flexGrow: 1 }} style={{ color: 'black' }} />
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-            <Button variant="contained" style={{ color: 'white', background: 'red', borderRadius: '20px' }}>
-              {/* <Signupmodal /> */}
-              Login
-            </Button>
-            <Button variant="contained" style={{ color: 'black', background: '#dbd7d7', borderRadius: '27px' }}>Signin</Button>
+            {/* <Button variant="contained" style={{ color: 'white', background: 'red', borderRadius: '20px' }}> */}
+              <Loginmodal/>
+              {/* Login */}
+            {/* </Button> */}
+            <RegistrationModal/>
+            {/* <Button variant="contained" style={{ color: 'black', background: '#dbd7d7', borderRadius: '27px' }}></Button> */}
           </Stack>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton

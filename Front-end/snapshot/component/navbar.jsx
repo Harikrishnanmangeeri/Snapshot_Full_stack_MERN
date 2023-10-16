@@ -16,9 +16,16 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Divider from '@mui/material/Divider';
+import InboxIcon from '@mui/icons-material/MoveToInbox';import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -36,6 +43,8 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
+
+
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -44,6 +53,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -62,6 +72,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const router = useRouter()
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -77,6 +88,7 @@ export default function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    router.push('/user_profile')
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -99,9 +111,40 @@ export default function Navbar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      sx={{ marginTop: '44px' }}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+     <Box 
+      sx={{ width: 250 ,height: '60vh'}}
+      role="presentation"
+    >
+       <List>
+        <ListItem>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText onClick={() => router.push('/user_profile')} primary="User Name" />
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => router.push('/user_profile')}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile"  />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      </Box> 
     </Menu>
   );
 
@@ -160,7 +203,7 @@ export default function Navbar() {
  
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{background:'white'}}>
+      <AppBar position="static" style={{ background: 'white', boxShadow: 'none' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -170,7 +213,7 @@ export default function Navbar() {
             sx={{ mr: 2 }}
 
           >
-       <Image src='/Vector.svg' alt='Photos' width="130" height="60" />
+       <Image src='/Vector.svg' alt='Photos' width="30" height="30" />
 
             {/* <MenuIcon /> */}
           </IconButton>
@@ -178,15 +221,15 @@ export default function Navbar() {
   justifyContent="center"
   alignItems="center"
   spacing={2}>
-    <Button variant="text"
-    //  sx={{ display: { xs: 'none', sm: 'block' } }}
+  
+    <Button variant="text" className='btn active'  onClick={()=> router.push('/user')}
     style={{color:'black'}}>Home</Button>
+       
          
-         <Button variant="text"
-    //  sx={{ display: { xs: 'none', sm: 'block' } }}
+         <Button variant="text" className='btn active' 
     style={{color:'black'}}>Explore</Button>
          
-         <Button variant="text"
+         <Button variant="text" className='btn active' 
     //  sx={{ display: { xs: 'none', sm: 'block' } }}
     style={{color:'black'}}>Create</Button>
          
