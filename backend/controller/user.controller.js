@@ -20,7 +20,8 @@ if(error) {
         await userschema.create({
             username: username,
             email: email,
-            password:await bcrypt.hash(password, 10)
+            password:await bcrypt.hash(password, 10),
+            created_at:Date()
           });
           res.json('add sucessfully')
     }
@@ -53,11 +54,18 @@ login:async(req,res) =>{
               const token = jwt.sign(resp, process.env.ACESS_USERTOKEN_SECRET, {
                 expiresIn: 86400,
               });
-              res.send({ auth: true, token: token });
+              res.send({ auth: true, token: token, id:user[0].id });
             
-        }
-      
-    }}
-}
+        }}}},
+
+        profile:async(req,res)=>{
+            const profile = await userschema.find({_id: req.params.id});
+            if(profile.length !=0){
+                res.json(profile)
+            }else{
+                res.json('user not found!')
+            }
+        },
+
 
 }

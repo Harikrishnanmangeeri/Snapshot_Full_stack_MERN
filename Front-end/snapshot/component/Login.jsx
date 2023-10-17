@@ -57,7 +57,7 @@ export default function Loginmodal() {
        
     })
     console.log(response);
-    setCookies(response.data.token)
+    setCookies('token_acces',{token:response.data.token,id:response.data.id})
     router.push('/user')
       
     } catch (error) {

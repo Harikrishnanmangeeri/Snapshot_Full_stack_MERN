@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardCover from '@mui/material/CardMedia';
@@ -10,8 +10,28 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import ShareIcon from '@mui/icons-material/Share';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
+
+
 
 export default function UserProfile() {
+  const [cookie,setCookies] =useCookies(['token_acces'])
+const [profile,setprofile]=useState()
+const router = useRouter()
+console.log(profile);
+  
+useEffect(()=>{async function profile(){
+   const profiles = await axios.get(`http://127.0.0.1:3001/api/user/profile/${cookie.token_acces.id}`)
+  
+   setprofile(profiles.data)
+}profile()},[])
+ 
+
+
+
+
   return (
     <Box>
       <Card sx={{ minWidth: 300, minHeight: "80vh", flexGrow: 1 ,alignItems: 'center'}}>
@@ -35,15 +55,18 @@ export default function UserProfile() {
   
 </CardCover>
         <CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {profile?.map((data)=>(
+        
+       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} key={data._id}>
+          
             <Avatar
               alt="User Avatar"
               src="/hari.jpg"
               sx={{ width: 100, height: 100 }}
             />
             <div>
-              <Typography variant="h5">User Name</Typography>
-              <Typography variant="subtitle1" color="textSecondary">Name</Typography>
+              <Typography variant="h5">{data.username}</Typography>
+              <Typography variant="subtitle1" color="textSecondary">{data.email}</Typography>
             </div>
             <div>
               <Typography variant="subtitle1">
@@ -54,11 +77,12 @@ export default function UserProfile() {
               </Typography>
             </div>
           </Box>
+         ))}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
             <Button variant="outlined" startIcon={<ShareIcon />}>
               Share
             </Button>
-            <IconButton>
+            <IconButton onClick={() => router.push('/edit_profile')}>
               <EditIcon />
             </IconButton>
           </Box>
