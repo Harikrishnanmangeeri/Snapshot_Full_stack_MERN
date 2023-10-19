@@ -5,6 +5,7 @@ const auth = (req , res,next)=>{
         const recive = token && token.split(' ')[1]
         const jwtverify = jwt.verify(recive,process.env.ACESS_USERTOKEN_SECRET)
         if(jwtverify){
+            res.id=jwtverify.id
         next()
         }
         else{

@@ -61,7 +61,7 @@ useEffect(()=>{async function profile(){
           
             <Avatar
               alt="User Avatar"
-              src="/hari.jpg"
+              src={data.avatar}
               sx={{ width: 100, height: 100 }}
             />
             <div>

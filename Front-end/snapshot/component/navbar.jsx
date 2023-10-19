@@ -25,7 +25,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/MoveToInbox';import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -97,7 +98,7 @@ export default function Navbar() {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    <Menu
+    <Menu 
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',

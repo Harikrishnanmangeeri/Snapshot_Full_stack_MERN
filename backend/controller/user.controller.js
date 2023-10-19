@@ -32,7 +32,7 @@ login:async(req,res) =>{
     const { email, password } = value;
 
     if (error){
-        req.json(error.message);
+        res.json(error.message);
     }else{
         const user =await userschema.find({
             email: email
@@ -66,6 +66,42 @@ login:async(req,res) =>{
                 res.json('user not found!')
             }
         },
+
+
+        editprofile:async(req,res)=>{
+            const { bio,username,website,contact} = req.body; 
+                const user = await userschema.findOne({_id: req.params.id})
+                
+                if (user.length !=0){;
+                    await userschema.findByIdAndUpdate(req.params.id,{$set:{
+                        username: username,
+                        bio:bio,
+                        website:website,
+                        contact:contact,
+                }});
+                      res.json('add sucessfully')
+                }else{
+                    
+                }
+            
+            
+        },
+        editavatar:async(req,res)=>{
+            const {avatar} = req.body;
+            const user = await userschema.findOne({_id:res.id })
+            if (user.length !=0){;
+                await userschema.findByIdAndUpdate(res.id,{$set:{
+                    avatar: avatar,
+                  
+            }});
+                  res.json('add sucessfully')
+            }else{
+                
+            }
+        
+        },
+
+
 
 
 }

@@ -10,6 +10,8 @@ const userschema = new mongoose.Schema({
     followers:[],
     following:[],
     created_at:Date,
+    website:String,
+    contact:Number,
 
 
 })
