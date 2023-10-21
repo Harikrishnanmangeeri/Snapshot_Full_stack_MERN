@@ -11,20 +11,26 @@ import EditIcon from '@mui/icons-material/Edit';
 import ShareIcon from '@mui/icons-material/Share';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
-
+import { getCookies } from 'cookies-next';
+const cookie = getCookies('token')
 
 
 export default function UserProfile() {
-  const [cookie,setCookies] =useCookies(['token_acces'])
 const [profile,setprofile]=useState()
 const router = useRouter()
-console.log(profile);
+// console.log(cookie.token);
+// console.log(profile);
+
   
 useEffect(()=>{async function profile(){
-   const profiles = await axios.get(`http://127.0.0.1:3001/api/user/profile/${cookie.token_acces.id}`)
-  
+   const profiles = await axios.get('http://127.0.0.1:3001/api/user/profile',
+   {
+    headers: {
+      Authorization: `Bearer ${cookie.token} `,
+      
+    },
+  })
    setprofile(profiles.data)
 }profile()},[])
  
@@ -67,6 +73,14 @@ useEffect(()=>{async function profile(){
             <div>
               <Typography variant="h5">{data.username}</Typography>
               <Typography variant="subtitle1" color="textSecondary">{data.email}</Typography>
+            </div>
+            <div>
+              <Typography variant="h5">{data.bio}</Typography>
+              {/* <Typography variant="subtitle1" color="textSecondary">{data.contact}</Typography> */}
+            </div>
+            <div>
+              <Typography variant="h5">{data.website}</Typography>
+              <Typography variant="subtitle1" color="textSecondary">{data.contact}</Typography>
             </div>
             <div>
               <Typography variant="subtitle1">

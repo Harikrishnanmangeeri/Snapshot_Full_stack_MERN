@@ -54,26 +54,27 @@ login:async(req,res) =>{
               const token = jwt.sign(resp, process.env.ACESS_USERTOKEN_SECRET, {
                 expiresIn: 86400,
               });
-              res.send({ auth: true, token: token, id:user[0].id });
+              res.send({ status:"sucess",auth: true, token: token, id:user[0].id });
             
         }}}},
 
         profile:async(req,res)=>{
-            const profile = await userschema.find({_id: req.params.id});
-            if(profile.length !=0){
-                res.json(profile)
-            }else{
-                res.json('user not found!')
+            const profile = await userschema.find({_id: res.token});
+            if (profile.length !== 0) {
+              res.json(profile);
+            } else {
+              res.status(404).json('User not found!');
             }
+            
         },
 
 
         editprofile:async(req,res)=>{
             const { bio,username,website,contact} = req.body; 
-                const user = await userschema.findOne({_id: req.params.id})
+                const user = await userschema.findOne({_id:res.token})
                 
                 if (user.length !=0){;
-                    await userschema.findByIdAndUpdate(req.params.id,{$set:{
+                    await userschema.findByIdAndUpdate(res.token,{$set:{
                         username: username,
                         bio:bio,
                         website:website,
@@ -81,24 +82,27 @@ login:async(req,res) =>{
                 }});
                       res.json('add sucessfully')
                 }else{
-                    
+                    res.json('failed')
                 }
             
             
         },
         editavatar:async(req,res)=>{
             const {avatar} = req.body;
-            const user = await userschema.findOne({_id:res.id })
+            const user = await userschema.findOne({_id:res.token })
             if (user.length !=0){;
-                await userschema.findByIdAndUpdate(res.id,{$set:{
+              const avatars=  await userschema.findByIdAndUpdate(res.token,{$set:{
                     avatar: avatar,
                   
             }});
+            console.log(avatar);
+            console.log(avatars);
                   res.json('add sucessfully')
+                  
             }else{
-                
+                res.json('failed') 
             }
-        
+         
         },
 
 

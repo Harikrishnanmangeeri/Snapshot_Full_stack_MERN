@@ -232,6 +232,7 @@ export default function Navbar() {
          
          <Button variant="text" className='btn active' 
     //  sx={{ display: { xs: 'none', sm: 'block' } }}
+    onClick={() => router.push('/create_pin')}
     style={{color:'black'}}>Create</Button>
          
           

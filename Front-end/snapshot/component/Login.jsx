@@ -11,8 +11,8 @@ import Grid from '@mui/material/Grid';
 import Image from 'next/image';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
-import { useCookies } from "react-cookie";
 import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next';
 
 
 
@@ -42,7 +42,6 @@ export default function Loginmodal() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [_,setCookies] =useCookies(['token_acces'])
   const router = useRouter()
 
   const loginhandle = async (event)=>{
@@ -57,8 +56,13 @@ export default function Loginmodal() {
        
     })
     console.log(response);
-    setCookies('token_acces',{token:response.data.token,id:response.data.id})
+    if (response.data.status=='sucess'){
+      setCookie('token',response.data.token)
     router.push('/user')
+    }
+    else{
+      alert('password incorrect')
+    }
       
     } catch (error) {
       
