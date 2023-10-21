@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -27,6 +27,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { getCookies } from 'cookies-next';
+const cookie = getCookies('token')
+import axios from 'axios';
+import Avatar from '@mui/material/Avatar';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -73,7 +77,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [profile,setprofile]=useState()
+  console.log(profile);
   const router = useRouter()
+
+  
+  useEffect(()=>{async function profile(){
+    const profiles = await axios.get('http://127.0.0.1:3001/api/user/profile',
+    {
+     headers: {
+       Authorization: `Bearer ${cookie.token} `,
+       
+     },
+   })
+    setprofile(profiles.data)
+ }profile()},[])
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -114,17 +132,25 @@ export default function Navbar() {
       onClose={handleMenuClose}
       sx={{ marginTop: '44px' }}
     >
+    
      <Box 
       sx={{ width: 250 ,height: '60vh'}}
       role="presentation"
     >
        <List>
+       {profile?.map((data)=>(
+      
         <ListItem>
           <ListItemIcon>
-            <AccountCircleIcon />
+          <Avatar
+              alt="User Avatar"
+              src={data.avatar}
+              sx={{ width: 50, height: 50 }}
+            />
           </ListItemIcon>
-          <ListItemText onClick={() => router.push('/user_profile')} primary="User Name" />
+          <ListItemText onClick={() => router.push('/user_profile')} primary={data.username} />
         </ListItem>
+        ))}
       </List>
       <Divider />
       <List>
@@ -145,7 +171,7 @@ export default function Navbar() {
           </ListItemButton>
         </ListItem>
       </List>
-      </Box> 
+      </Box>  
     </Menu>
   );
 
@@ -264,6 +290,7 @@ export default function Navbar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            {profile?.map((data)=>(
             <IconButton
               size="large"
               edge="end"
@@ -273,8 +300,13 @@ export default function Navbar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <Avatar
+              alt="User Avatar"
+              src={data.avatar}
+              sx={{ width: 30, height: 30 }}
+            />
             </IconButton>
+            ))}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton

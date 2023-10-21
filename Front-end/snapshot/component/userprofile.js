@@ -13,6 +13,7 @@ import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { getCookies } from 'cookies-next';
+import Usertab from './created_saved_in profile';
 const cookie = getCookies('token')
 
 
@@ -39,6 +40,7 @@ useEffect(()=>{async function profile(){
 
 
   return (
+    <>
     <Box>
       <Card sx={{ minWidth: 300, minHeight: "80vh", flexGrow: 1 ,alignItems: 'center'}}>
       <CardCover
@@ -103,5 +105,7 @@ useEffect(()=>{async function profile(){
         </CardContent>
       </Card>
     </Box>
+    <Usertab/>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookies } from 'cookies-next';
 const cookie = getCookies('token')
@@ -15,6 +15,21 @@ import {
 import { useRouter } from 'next/navigation'
 export default function UpdateProfile() {
   const router = useRouter()
+  const [profile,setprofile]=useState()
+  
+  useEffect(()=>{async function profile(){
+    const profiles = await axios.get('http://127.0.0.1:3001/api/user/profile',
+    {
+     headers: {
+       Authorization: `Bearer ${cookie.token} `,
+       
+     },
+   })
+    setprofile(profiles.data)
+ }profile()},[])
+  
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bio = e.target.bio.value;
@@ -63,11 +78,13 @@ export default function UpdateProfile() {
             <Typography component="h1" variant="h5">
               Update Profile
             </Typography>
+            {profile?.map((data)=>(
             <form noValidate onSubmit={handleSubmit}>
-              <TextField fullWidth label="Bio" name="bio" variant="outlined" />
-              <TextField fullWidth label="Username" name="username" variant="outlined" />
-              <TextField fullWidth label="Website" name="website" variant="outlined" />
-              <TextField fullWidth label="Contact" name="contact" variant="outlined" />
+              <TextField fullWidth label="Bio" name="bio" defaultValue={data.bio}  variant="outlined" />
+              <TextField fullWidth label="Username" name="username" defaultValue={data.username}  variant="outlined" />
+              <TextField fullWidth label="Website" name="website" defaultValue={data.website} variant="outlined" />
+              <TextField fullWidth label="Contact" name="contact" defaultValue={data.contact} variant="outlined" />
+      
               <Button
                 type="submit"
                 fullWidth
@@ -82,6 +99,7 @@ export default function UpdateProfile() {
                 Save
               </Button>
             </form>
+            ))}
           </Box>
         </Grid>
       </Grid>
