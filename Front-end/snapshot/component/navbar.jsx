@@ -254,6 +254,7 @@ export default function Navbar() {
        
          
          <Button variant="text" className='btn active' 
+         onClick={() => router.push('/explore')}
     style={{color:'black'}}>Explore</Button>
          
          <Button variant="text" className='btn active' 

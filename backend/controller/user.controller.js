@@ -3,7 +3,7 @@ const userschema = require('../model/user')
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 const { joiuserschema } = require('../model/validationschema')  
-
+const contentschema =require('../model/content')
 
 module.exports={
 
@@ -105,6 +105,11 @@ login:async(req,res) =>{
          
         },
 
+
+        // editbanner:async(req,res)=>{
+        //     const {banner} =req.body;
+
+        // }
 
 
 

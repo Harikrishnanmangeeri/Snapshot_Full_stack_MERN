@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import {
   Button,
   Container,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Grid,
   Typography,
 } from '@mui/material';
+import ImageUploadModal from './ImageUploadModal';
+
 
 const CreatePinsPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -21,6 +20,13 @@ const CreatePinsPage = () => {
     }
   };
 
+  const handlePost = () => {
+    // Handle the post action here
+  };
+
+  const handleCancel = () => {
+    setModalOpen(false);
+  };
   return (
     <Container maxWidth="md">
       <Grid container spacing={3}>
@@ -53,59 +59,25 @@ const CreatePinsPage = () => {
         </Grid>
 
         <Grid item xs={12}>
-          {/* Random Picture Collage (simplified) */}
-          {/* This is just a placeholder */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <img
-              src="https://via.placeholder.com/150x150"
-              alt="Random Image"
-              style={{ margin: '4px' }}
-            />
-            <img
-              src="https://via.placeholder.com/150x150"
-              alt="Random Image"
-              style={{ margin: '4px' }}
-            />
-            <img
-              src="https://via.placeholder.com/150x150"
-              alt="Random Image"
-              style={{ margin: '4px' }}
-            />
-          </div>
-        </Grid>
-      </Grid>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridGap: '8px' }}>
+  <img src="https://source.unsplash.com/150x150/?random=1" alt="Random Image 1" />
+  <img src="https://source.unsplash.com/200x200/?random=2" alt="Random Image 2" />
+  <img src="https://source.unsplash.com/180x250/?random=3" alt="Random Image 3" />
+  <img src="https://source.unsplash.com/250x180/?random=4" alt="Random Image 4" />
+  <img src="https://source.unsplash.com/170x170/?random=5" alt="Random Image 5" />
+</div>
 
-      {/* Upload Image Modal */}
-      <Dialog open={isModalOpen} onClose={() => setModalOpen(false)}>
-        <DialogTitle>Upload Image</DialogTitle>
-        <DialogContent>
-          <input
-            type="file"
-            accept="image/*"
-            id="image-upload"
-            style={{ display: 'none' }}
-            onChange={(e) => handleImageUpload(e.target.files[0])}
-          />
-          <label htmlFor="image-upload">
-            <Button
-              variant="contained"
-              color="secondary"
-              component="span"
-              fullWidth
-            >
-              Choose File
-            </Button>
-          </label>
-          {/* Display the uploaded image */}
-          {uploadedImage && (
-            <img
-              src={URL.createObjectURL(uploadedImage)}
-              alt="Uploaded Image"
-              style={{ maxWidth: '100%', marginTop: '16px' }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+</Grid>
+
+      </Grid>
+      <ImageUploadModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onImageUpload={handleImageUpload}
+        uploadedImage={uploadedImage}
+        onPost={handlePost}
+        onCancel={handleCancel}
+      />
     </Container>
   );
 };
