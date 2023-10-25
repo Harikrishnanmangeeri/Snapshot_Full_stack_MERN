@@ -8,5 +8,5 @@ userRouter.post('/user/login',controller.login)
 userRouter.get('/user/profile',auth,controller.profile)
 userRouter.put('/user/Editprofile',auth,controller.editprofile)
 userRouter.put('/user/Editavatar',auth,controller.editavatar)
-// userRouter.put('/user/Editbanner',auth,controller.editbanner)
+userRouter.put('/user/Editbanner',auth,controller.editbanner)
 module.exports = userRouter

@@ -106,10 +106,21 @@ login:async(req,res) =>{
         },
 
 
-        // editbanner:async(req,res)=>{
-        //     const {banner} =req.body;
-
-        // }
+        editbanner:async(req,res)=>{
+            const {banner} =req.body;
+           const user = await userschema.findOne({_id:res.token}) 
+           if(user.length != 0){
+            const banners = await userschema.findByIdAndUpdate(res.token,{$set:{
+                banner: banner,
+            }})
+            console.log(banner)
+            console.log(banners);
+            res.json('add sucessfully')
+           }
+           else{
+            res.json('failed')
+           }
+        }
 
 
 

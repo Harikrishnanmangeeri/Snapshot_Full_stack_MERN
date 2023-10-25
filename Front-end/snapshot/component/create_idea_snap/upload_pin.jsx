@@ -9,7 +9,7 @@ import {
 import ImageUploadModal from './ImageUploadModal';
 
 
-const CreatePinsPage = () => {
+const Create_idea_snap = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
 
@@ -31,10 +31,10 @@ const CreatePinsPage = () => {
     <Container maxWidth="md">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-            Create Pins
+          <Typography variant="h4" gutterBottom align='center'>
+            Create idea snap
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" align='center'>
             Share your inspiration with the world!
           </Typography>
         </Grid>
@@ -53,7 +53,7 @@ const CreatePinsPage = () => {
 
         <Grid item xs={12}>
           {/* Attractive Quote */}
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom align='center'>
             "Your inspiration is someone's future."
           </Typography>
         </Grid>
@@ -82,4 +82,4 @@ const CreatePinsPage = () => {
   );
 };
 
-export default CreatePinsPage;
+export default Create_idea_snap;

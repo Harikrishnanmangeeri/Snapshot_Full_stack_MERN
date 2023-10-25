@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const contentschema = new mongoose.Schema({
 
-    user_id:Object,
+    user_id:String,
     title:String,
     type:String,
     url:String,
@@ -10,7 +10,7 @@ const contentschema = new mongoose.Schema({
     likes:[],
     comments:[],
     created_at:Date,
-    
+   
 
 })
 module.exports=mongoose.model('Content',contentschema)
