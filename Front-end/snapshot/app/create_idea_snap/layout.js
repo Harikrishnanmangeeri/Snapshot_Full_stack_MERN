@@ -1,7 +1,8 @@
 // import './globals.css'
+
 import Navbar from '@/component/navbar'
 import { Inter } from 'next/font/google'
-
+import Divider from '@mui/material/Divider';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -12,7 +13,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}><Navbar/>{children}</body>
+      <body className={inter.className}>
+        <Navbar/>
+      <Divider/>
+     
+      {children}</body>
     </html>
   )
 }

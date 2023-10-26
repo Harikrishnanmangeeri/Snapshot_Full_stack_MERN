@@ -9,6 +9,7 @@ import {
 import ImageUploadModal from './ImageUploadModal';
 
 
+
 const Create_idea_snap = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);

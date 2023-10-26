@@ -29,8 +29,10 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div
             style={{
-              width: '70vh',
-              height: '60vh',
+              width: '100%',
+              maxWidth: "700px",
+                minHeight: "200px",
+             
               border: '2px dashed #ccc',
               display: 'flex',
               justifyContent: 'center',
