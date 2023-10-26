@@ -1,32 +1,31 @@
 'use client'
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import AddIcon from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import { Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import ImageUploadModal from './ImageUploadModal';
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  marginTop:'50px',
+  marginTop:'65px',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -56,23 +55,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//   shouldForwardProp: (prop) => prop !== 'open',
+// })(({ theme, open }) => ({
+//   zIndex: theme.zIndex.drawer + 1,
+//   transition: theme.transitions.create(['width', 'margin'], {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   ...(open && {
+//     marginLeft: drawerWidth,
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     transition: theme.transitions.create(['width', 'margin'], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//   }),
+// }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -94,6 +93,25 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Sidebar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  const handleImageUpload = (file) => {
+    if (file) {
+      setUploadedImage(file);
+      setModalOpen(false);
+    }
+  };
+
+  const handlePost = () => {
+    // Handle the post action here
+  };
+
+  const handleCancel = () => {
+    setModalOpen(false);
+  };
+
+const router =useRouter()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -108,15 +126,41 @@ export default function Sidebar() {
       <CssBaseline />
       <Drawer variant="permanent" open={open} >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+        
+        {open && (
+  <Typography variant="h5" component="h2">
+    Snap drafts (5)
+  </Typography>
+)}
+
+
+        
+        <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+  {open ? <ChevronLeftIcon style={{color:'black'}} />: <ChevronRightIcon style={{color:'black'}} />}
+</IconButton>
+
+
         </DrawerHeader>
-        <Divider />
+        {open ? <Button
+        type="submit"
+        fullWidth
+        onClick={() => setModalOpen(true)}
+        variant="contained"
+        style={{
+          background: "red",
+          color: "white",
+          borderRadius: "25px",
+        }}
+        sx={{ mt: 3, mb: 2 }}
+      >
+        Create New 
+      </Button>
+        :
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+      
+            <ListItem disablePadding sx={{ display: 'block'}}>
               <ListItemButton
+               onClick={() => setModalOpen(true)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -130,15 +174,16 @@ export default function Sidebar() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <AddIcon style={{color:'black'}}/>
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
+       
         </List>
+    }
         <Divider />
-        <List>
+        {/* <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -161,28 +206,17 @@ export default function Sidebar() {
               </ListItemButton>
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
-      <Box component="main" >
-      <MuiAppBar position="static"  color="transparent" elevation={0}> 
-    <Toolbar>
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={handleDrawerOpen}
-        edge="start"
-        sx={{
-          marginRight: 5,
-          ...(open && { display: 'none' }),
-        }}
-      >
-        <MenuIcon />
-      </IconButton>
-    </Toolbar>
-  </MuiAppBar>
-  <Divider />
-        <DrawerHeader />
-      </Box>
+      <ImageUploadModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onImageUpload={handleImageUpload}
+        uploadedImage={uploadedImage}
+        onPost={handlePost}
+        onCancel={handleCancel}
+      />
+
     </Box>
   );
 }
