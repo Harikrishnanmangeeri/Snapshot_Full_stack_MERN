@@ -1,20 +1,66 @@
+'use client'
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, IconButton, Snackbar, Alert } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Button from "@mui/material/Button";
 import { useRouter } from 'next/navigation';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { getCookies } from 'cookies-next';
+import axios from 'axios';
+import ContentUpload from './Upload_content_cloudnary';
+const cookie = getCookies("token");
 
 
 const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => {
   const [selectedImage, setSelectedImage] = useState(uploadedImage);
-  // const [isAlertOpen, setAlertOpen] = useState(false);
+  const [draft,setDraft]=useState(null)
+ console.log(draft);
+ const router = useRouter();
+
+ const handleupload = async () => {
+  try {
+    
+    const url = await ContentUpload(draft);
+    
+    
+    await axios.post(
+      "http://127.0.0.1:3001/api/user/draft",
+      {
+        draft: url,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${cookie.token}`,
+        },
+      }
+    );
+    
+    router.push("/publish_idea_snap")
+  } catch (error) {
+    console.log("from upload", error.message);
+  }
+ 
+};
 
   const handleImageUpload = (file) => {
     if (file) {
       setSelectedImage(URL.createObjectURL(file));
+      setDraft(file)
     }
+    console.log(file);
   };
-  const router = useRouter();
+ 
+
+
+
+
+  const handlesubmit =async (e)=>{
+    e.preventDefault()
+  
+    e.target.reset()
+    }
+
+ // const [isAlertOpen, setAlertOpen] = useState(false);
   // const showSuccessAlert = () => {
   //   setAlertOpen(true);
   // };
@@ -25,7 +71,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
   // };
 
   return (
-    <Dialog open={isOpen} onClose={onClose} fullWidth maxWidth="md">
+    <Dialog open={isOpen} onClose={onClose} fullWidth maxWidth="md" onSubmit={handlesubmit}>
       <DialogTitle align='center'>Upload Idea Snap</DialogTitle>
       <DialogContent>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -72,10 +118,10 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
         }}
         
         sx={{ mt: 3, mb: 2 }}
-        // onClick={publishHandel}
-        onClick={() => router.push("/publish_idea_snap")}
+        onClick={()=>handleupload()}
+        // onClick={() => router.push("/publish_idea_snap")}
       >
-        Publish!
+        Open<ChevronRightIcon/>
       </Button>
 {/* 
       <Snackbar

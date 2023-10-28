@@ -13,6 +13,7 @@ const userschema = new mongoose.Schema({
     created_at:Date,
     website:String,
     contact:Number,
+    draftContent:[],
 
 
 })

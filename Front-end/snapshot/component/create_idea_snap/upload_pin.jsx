@@ -10,7 +10,7 @@ import ImageUploadModal from './ImageUploadModal';
 
 
 
-const Create_idea_snap = () => {
+const Publish_idea_snap = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
 
@@ -83,4 +83,4 @@ const Create_idea_snap = () => {
   );
 };
 
-export default Create_idea_snap;
+export default Publish_idea_snap;

@@ -59,10 +59,6 @@ export default function Editprofile() {
   const handlesubmit =async (e)=>{
     e.preventDefault()
     
-    
-    
-    
-    
     }
     
 

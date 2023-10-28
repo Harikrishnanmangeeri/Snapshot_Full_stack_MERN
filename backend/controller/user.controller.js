@@ -120,8 +120,21 @@ login:async(req,res) =>{
            else{
             res.json('failed')
            }
-        }
+        },
 
+        draft:async(req,res)=>{
+         const {draft}= req.body;
+         const user = await userschema.findOne({_id:res.token})
+         if (user.length != 0){
+            const drafts = await userschema.updateOne({_id:res.token},{$push:{draftContent:draft}})
+            res.json('added sucessfully')
+        console.log(drafts);
+    }
+            else{
+                res.json('failed')
+            }
+        
+        },
 
 
 }
