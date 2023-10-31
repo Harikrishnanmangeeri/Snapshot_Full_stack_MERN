@@ -10,4 +10,5 @@ userRouter.put('/user/Editprofile',auth,controller.editprofile)
 userRouter.put('/user/Editavatar',auth,controller.editavatar)
 userRouter.put('/user/Editbanner',auth,controller.editbanner)
 userRouter.post('/user/draft',auth,controller.draft)
+userRouter.put('/user/draft',auth,controller.deletedraft)
 module.exports = userRouter

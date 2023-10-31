@@ -8,46 +8,52 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { getCookies } from 'cookies-next';
 import axios from 'axios';
 import ContentUpload from './Upload_content_cloudnary';
+import {content} from '@/Redux/features/content';
+import { useDispatch } from 'react-redux';
 const cookie = getCookies("token");
 
 
 const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => {
   const [selectedImage, setSelectedImage] = useState(uploadedImage);
   const [draft,setDraft]=useState(null)
+  const [isAlertOpen, setAlertOpen] = useState(false);
  console.log(draft);
+ const dispatch = useDispatch()
  const router = useRouter();
 
+
  const handleupload = async () => {
-  try {
-    
-    const url = await ContentUpload(draft);
-    
-    
-    await axios.post(
-      "http://127.0.0.1:3001/api/user/draft",
-      {
-        draft: url,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${cookie.token}`,
+  if (!draft) { 
+    setAlertOpen(true); 
+  } else {
+    try {
+      const url = await ContentUpload(draft);
+      await axios.post(
+        "http://127.0.0.1:3001/api/user/draft",
+        {
+          draft: url,
         },
-      }
-    );
-    
-    router.push("/publish_idea_snap")
-  } catch (error) {
-    console.log("from upload", error.message);
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        }
+      );
+      router.push("/publish_idea_snap");
+      dispatch(content(url));
+    } catch (error) {
+      console.log("from upload", error.message);
+    }
   }
- 
 };
+
 
   const handleImageUpload = (file) => {
     if (file) {
       setSelectedImage(URL.createObjectURL(file));
       setDraft(file)
     }
-    console.log(file);
+    // console.log(file);
   };
  
 
@@ -60,16 +66,8 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
     e.target.reset()
     }
 
- // const [isAlertOpen, setAlertOpen] = useState(false);
-  // const showSuccessAlert = () => {
-  //   setAlertOpen(true);
-  // };
 
-  // const publishHandel = () => {
-   
-  //   showSuccessAlert();
-  // };
-
+  
   return (
     <Dialog open={isOpen} onClose={onClose} fullWidth maxWidth="md" onSubmit={handlesubmit}>
       <DialogTitle align='center'>Upload Idea Snap</DialogTitle>
@@ -123,17 +121,18 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
       >
         Open<ChevronRightIcon/>
       </Button>
-{/* 
+
       <Snackbar
         open={isAlertOpen}
-        autoHideDuration={5000} 
+        autoHideDuration={2500} 
         onClose={() => setAlertOpen(false)}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
-        <Alert onClose={() => setAlertOpen(false)} variant="filled" severity="success">
-        "Unlocking Tomorrow's Possibilities, Today! 🚀 Our Next Adventure Is Underway. Stay Tuned for a Spectacular Update - It's a Work in Progress!"
-        </Alert>
-      </Snackbar> */}
+       <Alert onClose={() => setAlertOpen(false)} variant="filled" severity="warning">
+       "No image selected. To proceed, choose an image for upload."
+</Alert>
+
+      </Snackbar>
     </Dialog>
   );
 };

@@ -21,6 +21,7 @@ import Create_idea_snap from '../Publish_snaps/ideaSnap';
 
 
 
+
 const drawerWidth = 280;
 
 const openedMixin = (theme) => ({
@@ -95,6 +96,9 @@ export default function PublishBar() {
   const [open, setOpen] = React.useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
+
+
+
 
   const handleImageUpload = (file) => {
     if (file) {

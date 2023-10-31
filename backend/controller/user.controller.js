@@ -135,6 +135,23 @@ login:async(req,res) =>{
             }
         
         },
-
+        deletedraft:async(req,res)=>{
+            try {
+                const {deletedraft} = req.body
+            console.log("hello" ,deletedraft);
+            const user = await userschema.findOne({_id:res.token}) 
+            if(user.length != 0){
+                const deletedrafts= await userschema.updateOne({_id:res.token},{$pull:{draftContent:deletedraft}})
+                res.json('deleted')
+                console.log(deletedrafts);
+            }else{
+                res.json('failed')
+            }
+                
+            } catch (error) {
+                res.json('error',error.message)
+            }
+            
+        },
 
 }

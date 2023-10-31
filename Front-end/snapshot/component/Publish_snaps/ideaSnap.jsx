@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Button,
   Container,
@@ -8,13 +9,13 @@ import {
   TextField,
   Typography,
   Card,
-  CardMedia,
   CardContent,
 } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
 const Create_idea_snap = ({sidebarOpen }) => {
- 
+  const user = useSelector(state=>state.content.user)
+  console.log(user);
 
   
   return (
@@ -44,7 +45,7 @@ const Create_idea_snap = ({sidebarOpen }) => {
           <Paper elevation={0} style={{ padding: '0' }}>
               <div style={{ position: 'relative', marginTop:'20px'}}>
                 <img
-                  src='https://source.unsplash.com/400x300/?nature'
+                  src={user}
                   alt="Uploaded Image"
                   style={{ width: '30%', height: '240px', borderRadius: '35px' }}
                 />

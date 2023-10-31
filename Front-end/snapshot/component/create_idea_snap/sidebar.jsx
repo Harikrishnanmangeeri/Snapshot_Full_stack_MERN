@@ -17,20 +17,23 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import ImageUploadModal from './ImageUploadModal';
 import axios from 'axios';
 import { getCookies } from "cookies-next";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { autoBatchEnhancer } from '@reduxjs/toolkit';
+
 const cookie = getCookies("token");
-import Grid from '@mui/material/Grid';
+
 
 
 const drawerWidth = 280;
 
 const openedMixin = (theme) => ({
-  width: drawerWidth,
-  marginTop:'65px',
+  width: drawerWidth, // Set the width when the sidebar is open
+  marginTop: '65px',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -39,44 +42,33 @@ const openedMixin = (theme) => ({
 });
 
 const closedMixin = (theme) => ({
-    marginTop:'65px',
+  width: `60px`, // Set a smaller width when the sidebar is closed
+  marginTop: '65px',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+  [theme.breakpoints.up('xl')]: {
+    width: `100px`, // Adjust the width for larger screens when the sidebar is closed
   },
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
+  padding: theme.spacing(0, 2),
+  justifyContent: 'space-between', // Center items horizontally and create space between them
   ...theme.mixins.toolbar,
 }));
 
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(['width', 'margin'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
+const IconsContainer = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  width: autoBatchEnhancer
+});
+
+
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -144,26 +136,50 @@ const router =useRouter()
     setOpen(false);
   };
 
+  const handleRefresh = () => {
+    location.reload();
+  };
+
+
+  const removeImage= async(file)=>{
+    try {
+    
+     await axios.put(
+      "http://127.0.0.1:3001/api/user/draft",
+      {
+        deletedraft: file,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${cookie.token}`,
+        },
+      }
+     )
+     handleRefresh();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open} >
-        <DrawerHeader>
-        
-        {open && (
-  <Typography variant="h5" component="h2">
-    Snap drafts (5)
-  </Typography>
-)}
+      <DrawerHeader>
+  {open && (
+    <Typography variant="h5" component="h2">
+      Snap drafts (5)
+    </Typography>
+  )}
 
-
-        
-        <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
-  {open ? <ChevronLeftIcon style={{color:'black'}} />: <ChevronRightIcon style={{color:'black'}} />}
-</IconButton>
-
-
-        </DrawerHeader>
+  <IconsContainer>
+    <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+      {open ? <ChevronLeftIcon style={{ color: 'black' }} /> : <ChevronRightIcon style={{ color: 'black' }} />}
+    </IconButton>
+  </IconsContainer>
+</DrawerHeader>
         {open ? <Button
         type="submit"
         fullWidth
@@ -206,15 +222,31 @@ const router =useRouter()
         </List>
     }
         <Divider />
-        <ImageList sx={{ width: '100%' }} cols={1} rowHeight="auto">
-  {draft?.map((data, index) => (
-    <ImageListItem key={index}>
-      {data.draftContent.map((imageUrl, imageIndex) => (
-        <img src={imageUrl} alt={`Draft Image ${imageIndex}`} loading="lazy" />
-      ))}
-    </ImageListItem>
-  ))}
+        <ImageList sx={{ width: '100%' }} cols={1} rowHeight="auto" style={{ cursor: 'pointer' }}>
+        {draft?.map((data, dataIndex) => (
+  <Stack key={dataIndex} spacing={{ xs: 1, sm: 1 }} direction="row" useFlexGap flexWrap="wrap">
+    {data.draftContent.map((imageUrl, imageIndex) => (
+      <ImageListItem key={imageIndex}>
+        <img src={imageUrl} alt={`Draft Image ${imageIndex}`} onClick={() => router.push("/publish_idea_snap")} loading="lazy" />
+        <IconButton
+          onClick={() => removeImage(imageUrl)} 
+          color="secondary"
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            visibility: open ? 'visible' : 'hidden' 
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </ImageListItem>
+    ))}
+  </Stack>
+))}
+
 </ImageList>
+
 
       </Drawer>
       <ImageUploadModal
