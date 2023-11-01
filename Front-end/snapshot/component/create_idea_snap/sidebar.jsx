@@ -24,6 +24,8 @@ import axios from 'axios';
 import { getCookies } from "cookies-next";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { autoBatchEnhancer } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import {content} from '@/Redux/features/content';
 
 const cookie = getCookies("token");
 
@@ -93,6 +95,7 @@ export default function Sidebar() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [draft,setDraft]=useState();
+  const dispatch = useDispatch()
 console.log(draft);
   useEffect(() => {
     async function draft() {
@@ -161,6 +164,11 @@ const router =useRouter()
     }
   }
 
+  const Handleupload = (file) =>{
+    router.push("/publish_idea_snap")
+    dispatch(content(file))
+  }
+
 
 
   return (
@@ -227,7 +235,7 @@ const router =useRouter()
   <Stack key={dataIndex} spacing={{ xs: 1, sm: 1 }} direction="row" useFlexGap flexWrap="wrap">
     {data.draftContent.map((imageUrl, imageIndex) => (
       <ImageListItem key={imageIndex}>
-        <img src={imageUrl} alt={`Draft Image ${imageIndex}`} onClick={() => router.push("/publish_idea_snap")} loading="lazy" />
+        <img src={imageUrl} alt={`Draft Image ${imageIndex}`} onClick={() => Handleupload(imageUrl)} loading="lazy" />
         <IconButton
           onClick={() => removeImage(imageUrl)} 
           color="secondary"
