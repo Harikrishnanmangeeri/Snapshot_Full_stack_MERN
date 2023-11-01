@@ -7,12 +7,16 @@ import {
   Typography,
 } from '@mui/material';
 import ImageUploadModal from './ImageUploadModal';
+import { useSelector } from 'react-redux';
 
 
 
 const Publish_idea_snap = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
+
+const open = useSelector(state=>state.content.user)
+console.log(open);
 
   const handleImageUpload = (file) => {
     if (file) {
@@ -28,8 +32,12 @@ const Publish_idea_snap = () => {
   const handleCancel = () => {
     setModalOpen(false);
   };
+
+
+  
+
   return (
-    <Container maxWidth="md">
+    <Container style={{ maxWidth: open ? '58%' : '80%' }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom align='center'>

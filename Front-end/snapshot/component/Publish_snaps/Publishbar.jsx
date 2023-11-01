@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -15,12 +15,19 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Create_idea_snap from '../Publish_snaps/ideaSnap';
+import { getCookies } from "cookies-next";
+import axios from 'axios';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useDispatch } from 'react-redux';
+import {content} from '@/Redux/features/content';
+import ImageUploadModal from '../create_idea_snap/ImageUploadModal';
 
-
-
+const cookie = getCookies("token");
 
 const drawerWidth = 280;
 
@@ -79,9 +86,49 @@ export default function PublishBar() {
   const [open, setOpen] = React.useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [draft,setDraft]=useState();
+  const dispatch = useDispatch()
+  useEffect(() => {
+    async function draft() {
+      const drafts = await axios.get(
+        "http://127.0.0.1:3001/api/user/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.token} `,
+          },
+        }
+      );
+      setDraft(drafts.data);
+      // console.log(drafts);
+    }
+    draft();
+  }, []);
+
+  const removeImage= async(file)=>{
+    try {
+    
+     await axios.put(
+      "http://127.0.0.1:3001/api/user/draft",
+      {
+        deletedraft: file,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${cookie.token}`,
+        },
+      }
+     )
+     handleRefresh();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
-
+  const Handleupload = (file) =>{
+    router.push("/publish_idea_snap")
+    dispatch(content(file))
+  }
 
   const handleImageUpload = (file) => {
     if (file) {
@@ -112,11 +159,12 @@ const router =useRouter()
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open} >
-        <DrawerHeader>
+      {draft?.map((data, dataIndex) => (
+        <DrawerHeader key={dataIndex}>
         
         {open && (
   <Typography variant="h5" component="h2">
-    Snap drafts (5)
+    Snap drafts ({data.draftContent.length})
   </Typography>
 )}
 
@@ -128,6 +176,7 @@ const router =useRouter()
 
 
         </DrawerHeader>
+        ))}
         {open ? <Button
         type="submit"
         fullWidth
@@ -170,33 +219,41 @@ const router =useRouter()
         </List>
     }
         <Divider />
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
+        <ImageList sx={{ width: '100%', overflow: 'hidden' }} cols={1} rowHeight="auto" style={{ cursor: 'pointer' }}>
+  {draft?.map((data, dataIndex) => (
+    <Stack key={dataIndex} spacing={{ xs: 1, sm: 1 }} direction="row" useFlexGap flexWrap="wrap">
+      {data.draftContent.map((imageUrl, imageIndex) => (
+        <ImageListItem key={imageIndex}>
+          <img src={imageUrl} alt={`Draft Image ${imageIndex}`} onClick={() => Handleupload(imageUrl)} loading="lazy" />
+          <IconButton
+            onClick={() => removeImage(imageUrl)} 
+            color="secondary"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              visibility: open ? 'visible' : 'hidden' 
+            }}
+          >
+            <DeleteIcon style={{color:'#4e484b'}} />
+          </IconButton>
+        </ImageListItem>
+      ))}
+    </Stack>
+  ))}
+</ImageList>
+
+
       </Drawer>
       <Create_idea_snap sidebarOpen={open} />
-      
+      <ImageUploadModal
+          isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onImageUpload={handleImageUpload}
+        uploadedImage={uploadedImage}
+        onPost={handlePost}
+        onCancel={handleCancel}
+      />
     </Box>
   );
 }

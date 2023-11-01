@@ -26,7 +26,7 @@ const cookie = getCookies("token");
 export default function Editprofile() {
   const [avatar, setavatar] = useState(null);
   
-  console.log(avatar);
+  // console.log(avatar);
   const router = useRouter();
 
   const handleupload = async () => {

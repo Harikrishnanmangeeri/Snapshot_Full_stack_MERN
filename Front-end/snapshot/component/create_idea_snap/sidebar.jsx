@@ -25,7 +25,7 @@ import { getCookies } from "cookies-next";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { autoBatchEnhancer } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import {content} from '@/Redux/features/content';
+import {content,modal} from '@/Redux/features/content';
 
 const cookie = getCookies("token");
 
@@ -34,7 +34,7 @@ const cookie = getCookies("token");
 const drawerWidth = 280;
 
 const openedMixin = (theme) => ({
-  width: drawerWidth, // Set the width when the sidebar is open
+  width: drawerWidth, 
   marginTop: '65px',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -108,7 +108,7 @@ console.log(draft);
         }
       );
       setDraft(drafts.data);
-      console.log(drafts);
+      // console.log(drafts);
     }
     draft();
   }, []);
@@ -133,6 +133,7 @@ const router =useRouter()
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    
   };
 
   const handleDrawerClose = () => {
@@ -168,26 +169,31 @@ const router =useRouter()
     router.push("/publish_idea_snap")
     dispatch(content(file))
   }
-
+const handlecontrol = () => {
+  dispatch(modal(open))
+}
 
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open} >
-      <DrawerHeader>
+      {draft?.map((data, dataIndex) => (
+      <DrawerHeader key={dataIndex}>
   {open && (
     <Typography variant="h5" component="h2">
-      Snap drafts (5)
+      Snap drafts ({data.draftContent.length})
     </Typography>
+  
   )}
 
   <IconsContainer>
-    <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+    <IconButton onSubmit={handlecontrol()} onClick={open ? handleDrawerClose : handleDrawerOpen}>
       {open ? <ChevronLeftIcon style={{ color: 'black' }} /> : <ChevronRightIcon style={{ color: 'black' }} />}
     </IconButton>
   </IconsContainer>
 </DrawerHeader>
+  ))}
         {open ? <Button
         type="submit"
         fullWidth
@@ -246,7 +252,7 @@ const router =useRouter()
             visibility: open ? 'visible' : 'hidden' 
           }}
         >
-          <DeleteIcon />
+          <DeleteIcon style={{color:'#4e484b'}} />
         </IconButton>
       </ImageListItem>
     ))}

@@ -17,7 +17,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
   const [selectedImage, setSelectedImage] = useState(uploadedImage);
   const [draft,setDraft]=useState(null)
   const [isAlertOpen, setAlertOpen] = useState(false);
- console.log(draft);
+//  console.log(draft);
  const dispatch = useDispatch()
  const router = useRouter();
 

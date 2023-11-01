@@ -12,10 +12,13 @@ const ContentRedux = createSlice(
     reducers:{
         content:(state,actions)=>{
             state.user=actions.payload
-        }
+        },
+        modal:(state,actions)=>{
+            state.user=actions.payload
+        },
     } 
 }
 
 )
-export const {content}=ContentRedux.actions
+export const {content,modal}=ContentRedux.actions
 export default ContentRedux.reducer

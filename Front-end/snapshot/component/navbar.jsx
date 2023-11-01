@@ -76,7 +76,7 @@ export default function Navbar() {
   const [profile, setprofile] = useState();
   const [createMenuOpen, setCreateMenuOpen] = useState(null);
 
-  console.log(profile);
+  // console.log(profile);
   const router = useRouter();
 
   useEffect(() => {
@@ -139,8 +139,8 @@ export default function Navbar() {
     >
       <Box sx={{ width: 250, height: "60vh" }} role="presentation">
         <List>
-          {profile?.map((data) => (
-            <ListItem>
+          {profile?.map((data,index) => (
+            <ListItem key={index}>
               <ListItemIcon>
                 <Avatar
                   alt="User Avatar"
@@ -323,7 +323,7 @@ export default function Navbar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            {profile?.map((data) => (
+            {profile?.map((data,index) => (
               <IconButton
                 size="large"
                 edge="end"
@@ -332,6 +332,7 @@ export default function Navbar() {
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
+                key={index}
               >
                 <Avatar
                   alt="User Avatar"

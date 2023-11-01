@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 const { joiuserschema } = require('../model/validationschema')  
 const contentschema =require('../model/content')
-
+const {joicontentSchema} = require('../model/ContentValidation')
 module.exports={
 
     register:async(req,res) =>{
@@ -153,5 +153,35 @@ login:async(req,res) =>{
             }
             
         },
+        postContent:async(req,res)=>{
+            try {
+                // const {value,error}=joicontentSchema.validate(req.body)
+                const{url,description,title,category}=req.body
+               
+                    const user = await userschema.findOne({
+                        draftContent:url
+                    })
+                    
+                        if(user){
+                            await contentschema.create({
+                                user_id:res.token ,
+                                url:url,
+                                description:description,
+                                title:title,
+                                category:category,
+                                created_at:Date.now()
+                              })
+                              res.json('sucessfully')
+                               await userschema.updateOne({_id:res.token},{$pull:{draftContent:url}})
+                        }
+                    
 
+
+                }
+
+             catch (error) {
+                res.json(error.message)
+            }
+        
+        }
 }

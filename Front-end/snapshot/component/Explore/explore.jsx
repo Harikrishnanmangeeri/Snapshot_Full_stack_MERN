@@ -65,6 +65,81 @@ const categories = [
     imageSrc: "https://source.unsplash.com/400x300/?books",
     quote: "Explore new worlds through pages.",
   },
+  {
+    name: "Photography",
+    imageSrc: "https://source.unsplash.com/400x300/?photography",
+    quote: "Capture moments in time through the lens.",
+  },
+  {
+    name: "Science",
+    imageSrc: "https://source.unsplash.com/400x300/?science",
+    quote: "Unlock the mysteries of the universe.",
+  },
+  {
+    name: "Gardening",
+    imageSrc: "https://source.unsplash.com/400x300/?gardening",
+    quote: "Nurture the beauty of your garden.",
+  },
+  {
+    name: "Movies",
+    imageSrc: "https://source.unsplash.com/400x300/?movies",
+    quote: "Dive into the world of cinematic storytelling.",
+  },
+  {
+    name: "History",
+    imageSrc: "https://source.unsplash.com/400x300/?history",
+    quote: "Learn from the past to shape the future.",
+  },
+  {
+    name: "Cooking",
+    imageSrc: "https://source.unsplash.com/400x300/?cooking",
+    quote: "Create delicious dishes from around the world.",
+  },
+  {
+    name: "Travel",
+    imageSrc: "https://source.unsplash.com/400x300/?adventure",
+    quote: "Embark on exciting adventures.",
+  },
+  {
+    name: "Nature",
+    imageSrc: "https://source.unsplash.com/400x300/?landscape",
+    quote: "Discover the wonders of landscapes.",
+  },
+  {
+    name: "Fashion",
+    imageSrc: "https://source.unsplash.com/400x300/?style",
+    quote: "Express your unique sense of style.",
+  },
+  {
+    name: "DIY Projects",
+    imageSrc: "https://source.unsplash.com/400x300/?diy",
+    quote: "Create, build, and craft your own projects.",
+  },
+  {
+    name: "Travel Destinations",
+    imageSrc: "https://source.unsplash.com/400x300/?traveldestinations",
+    quote: "Explore breathtaking travel destinations.",
+  },
+  {
+    name: "Technology Gadgets",
+    imageSrc: "https://source.unsplash.com/400x300/?technologygadgets",
+    quote: "Discover the latest in tech innovations.",
+  },
+  {
+    name: "Wildlife",
+    imageSrc: "https://source.unsplash.com/400x300/?wildlife",
+    quote: "Witness the beauty of wildlife in its natural habitat.",
+  },
+  {
+    name: "Education",
+    imageSrc: "https://source.unsplash.com/400x300/?education",
+    quote: "Expand your knowledge and grow your mind.",
+  },
+  {
+    name: "Health and Wellness",
+    imageSrc: "https://source.unsplash.com/400x300/?healthandwellness",
+    quote: "Prioritize your well-being and live a healthy life.",
+  },
 ];
 
 const cardStyle = {

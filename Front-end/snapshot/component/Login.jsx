@@ -48,14 +48,14 @@ export default function Loginmodal() {
     event.preventDefault()
     const email = event.target.email.value;
     const password = event.target.password.value;
-    console.log(email,password);
+    // console.log(email,password);
     try {
      const response = await axios.post('http://127.0.0.1:3001/api/user/login',{
         password:password,
         email:email,
        
     })
-    console.log(response);
+    // console.log(response);
     if (response.data.status=='sucess'){
       setCookie('token',response.data.token)
     router.push('/user')

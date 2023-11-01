@@ -5,6 +5,7 @@ const contentschema = new mongoose.Schema({
     user_id:String,
     title:String,
     type:String,
+    description:String,
     url:String,
     category:String,
     likes:[],

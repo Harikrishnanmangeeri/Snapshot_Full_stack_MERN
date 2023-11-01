@@ -59,7 +59,7 @@ export default function UpdateProfile() {
           );
   
           router.push("/user_profile");
-          console.log('success');
+          // console.log('success');
         } else {
           console.error('Token is missing in cookies.');
         
