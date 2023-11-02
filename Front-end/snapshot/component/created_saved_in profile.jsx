@@ -6,6 +6,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Card from './card';
+import ContentShowonUserProfile from './show_Content_on_profile/created_content';
 
 export default function Usertab() {
   const [value, setValue] = React.useState('1');
@@ -23,7 +24,9 @@ export default function Usertab() {
             <Tab label="Saved" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1">Nothing to show...yet! Pins you create will live here.</TabPanel>
+        <TabPanel value="1">  
+        <ContentShowonUserProfile/>
+        </TabPanel>
         <TabPanel value="2"><Card/></TabPanel>
       </TabContext>
     </Box>
