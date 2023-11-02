@@ -12,4 +12,7 @@ userRouter.put('/user/Editbanner',auth,controller.editbanner)
 userRouter.post('/user/draft',auth,controller.draft)
 userRouter.put('/user/draft',auth,controller.deletedraft)
 userRouter.post('/user/postcontent',auth,controller.postContent)
+userRouter.get('/user/showcontent',auth,controller.showContent)
+userRouter.get('/user/ShowAllContentHome',controller.ShowAllContentHome)
+
 module.exports = userRouter
