@@ -4,7 +4,9 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { finduser } from "@/Redux/features/findcontentuser";
 const commonStyles = {
   bgcolor: 'background.paper',
   borderColor: 'text.primary',
@@ -14,6 +16,16 @@ const commonStyles = {
 
 const Card = () => {
   const [content,setContent]=useState();
+const dispatch=useDispatch()
+const router = useRouter()
+
+const handleContent = (id)=>{
+
+dispatch(finduser(id))
+  router.push("/showsnap")
+}
+
+
 
   useEffect(() => {
     async function content() {
@@ -33,6 +45,7 @@ const Card = () => {
               alt={item.title}
               loading="lazy"
               style={{ ...commonStyles, borderRadius: '16px' }}
+              onClick={()=>handleContent(item._id)}
             />
           </ImageListItem>
         ))}

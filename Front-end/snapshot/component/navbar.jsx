@@ -26,7 +26,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { getCookies } from "cookies-next";
+import { deleteCookie, getCookies } from "cookies-next";
 const cookie = getCookies("token");
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
@@ -78,6 +78,12 @@ export default function Navbar() {
 
   // console.log(profile);
   const router = useRouter();
+  const handleLogout=()=>{
+deleteCookie("token")
+router.push('/')
+
+
+  }
 
   useEffect(() => {
     async function profile() {
@@ -166,7 +172,7 @@ export default function Navbar() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=>handleLogout()}>
               <ListItemIcon>
                 <ExitToAppIcon />
               </ListItemIcon>

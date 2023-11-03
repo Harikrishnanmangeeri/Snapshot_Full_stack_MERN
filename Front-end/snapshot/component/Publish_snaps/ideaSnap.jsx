@@ -73,9 +73,9 @@ const Create_idea_snap = ({ sidebarOpen }) => {
           "http://127.0.0.1:3001/api/user/postcontent",
           {
             url: user,
-            title: data[0].title,
-            description: data[0].description,
-            category: data[0].category,
+            title: data.title,
+            description: data.description,
+            category: data.category,
           },
           {
             headers: {

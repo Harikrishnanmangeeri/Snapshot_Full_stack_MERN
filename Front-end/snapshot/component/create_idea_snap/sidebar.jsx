@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -189,7 +189,7 @@ const handlecontrol = () => {
 
   <IconsContainer>
     <IconButton onSubmit={handlecontrol()} onClick={open ? handleDrawerClose : handleDrawerOpen}>
-      {open ? <ChevronLeftIcon style={{ color: 'black' }} /> : <ChevronRightIcon style={{ color: 'black' }} />}
+      {open ? <KeyboardDoubleArrowLeftIcon style={{ color: 'black' }} /> : <KeyboardDoubleArrowRightIcon style={{ color: 'black' }} />}
     </IconButton>
   </IconsContainer>
 </DrawerHeader>

@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { joiuserschema } = require("../model/validationschema");
 const contentschema = require("../model/content");
+const user = require("../model/user");
 // const {joicontentSchema} = require('../model/ContentValidation')
 module.exports = {
   register: async (req, res) => {
@@ -157,7 +158,7 @@ module.exports = {
   },
   postContent: async (req, res) => {
     try {
-      // const {value,error}=joicontentSchema.validate(req.body)
+   
       const { url, description, title, category } = req.body;
 
       const user = await userschema.findOne({
@@ -200,4 +201,12 @@ module.exports = {
       res.status(404).json("User not found!");
     }
   },
+  contentUser:async(req,res)=>{
+    const {id}=req.body
+    const contentuser = await contentschema.findOne({_id:id}).populate('user_id');
+    if (contentuser.length !==0 ){
+      res.json(contentuser)
+    }
+  }
+
 };
