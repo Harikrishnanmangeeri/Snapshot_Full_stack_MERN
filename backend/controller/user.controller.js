@@ -207,6 +207,22 @@ module.exports = {
     if (contentuser.length !==0 ){
       res.json(contentuser)
     }
+  },
+  setLike:async(req,res)=>{
+    const {id,user_id}=req.body
+    console.log(id,user_id);
+   const likeuser = await contentschema.findOne( {_id:id} )
+   if(!likeuser.likes.includes(user_id) ){
+    const setLike =await contentschema.updateOne({_id:id},{$push:{likes:user_id}})
+    res.json(setLike)
+   }
+   else{
+    const dislike = await contentschema.updateOne({_id:id},{$pull:{likes:user_id}})
+    res.json(dislike)
+   }
+    
   }
+
+
 
 };

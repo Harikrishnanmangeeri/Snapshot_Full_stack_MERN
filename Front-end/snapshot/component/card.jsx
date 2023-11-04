@@ -22,7 +22,7 @@ const router = useRouter()
 const handleContent = (id)=>{
 
 dispatch(finduser(id))
-  router.push("/showsnap")
+  router.push(`/showsnap/${id}`)
 }
 
 

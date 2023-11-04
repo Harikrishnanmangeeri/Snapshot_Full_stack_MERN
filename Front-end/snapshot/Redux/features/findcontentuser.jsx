@@ -5,7 +5,8 @@ import { getCookie } from "cookies-next";
 const initialState = {
   loading: false,
   content: [],
-  error: null, 
+  error: null,
+  like:'' 
 };
 
 const cookie = getCookie('token');
@@ -28,6 +29,27 @@ export const finduser = createAsyncThunk('user/finduser', async (id) => {
   // }
 });
 
+
+export const setlike = createAsyncThunk('user/setlike', async ({id,user_id}) => {
+  console.log(user_id);
+  // try {
+    const res = await axios.post('http://127.0.0.1:3001/api/user/setLike',{
+      id:id,
+      user_id:user_id
+
+    },{
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
+    return res.data;
+  // } catch (error) {
+  //   console.error('Error fetching user:', error);
+  //   throw error;
+  // }
+});
+
+
 const userslice = createSlice({
   name: 'service',
   initialState,
@@ -46,7 +68,12 @@ const userslice = createSlice({
         state.loading = true;
         state.content = [];
         state.error = action.error.message;
-      });
+      })
+      .addCase(setlike.fulfilled, (state, action) => {
+       
+        state.like = action.payload;
+      
+      })
   },
 });
 
