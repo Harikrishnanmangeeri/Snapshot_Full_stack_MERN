@@ -16,5 +16,6 @@ userRouter.get('/user/showcontent',auth,controller.showContent)
 userRouter.get('/user/ShowAllContentHome',controller.ShowAllContentHome)
 userRouter.post('/user/contentUser',controller.contentUser)
 userRouter.post('/user/setLike',controller.setLike)
+userRouter.post('/user/follow',controller.follow)
 
 module.exports = userRouter

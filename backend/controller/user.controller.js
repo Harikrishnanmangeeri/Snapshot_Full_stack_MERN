@@ -210,7 +210,7 @@ module.exports = {
   },
   setLike:async(req,res)=>{
     const {id,user_id}=req.body
-    console.log(id,user_id);
+    // console.log(id,user_id);
    const likeuser = await contentschema.findOne( {_id:id} )
    if(!likeuser.likes.includes(user_id) ){
     const setLike =await contentschema.updateOne({_id:id},{$push:{likes:user_id}})
@@ -221,7 +221,26 @@ module.exports = {
     res.json(dislike)
    }
     
-  }
+  },
+  follow:async(req,res)=>{
+    const {user_id,follow_user} = req.body;
+   console.log(user_id,follow_user);
+   const followser = await userschema.findOne({_id:follow_user})
+   const following = await userschema.findOne({_id:user_id})
+    if (!followser.followers.includes(user_id) && !following.following.includes(follow_user)){
+      const follow = await userschema.updateOne({_id:follow_user},{$push:{followers:user_id}})
+      res.json(follow)
+
+      if(follow){
+        const folloing = await userschema.updateOne({_id:user_id},{$push:{following:follow_user}})
+      
+      }
+      
+    }
+    else{
+      res.json('alredy following')
+    }
+  },
 
 
 

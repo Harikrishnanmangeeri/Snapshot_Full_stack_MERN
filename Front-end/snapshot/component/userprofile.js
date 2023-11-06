@@ -107,10 +107,10 @@ export default function UserProfile() {
                 </div>
                 <div>
                   <Typography variant="subtitle1">
-                    <strong>Followers:</strong> 2.4M
+                    <strong>Followers:</strong> {data.followers?.length}
                   </Typography>
                   <Typography variant="subtitle1">
-                    <strong>Following:</strong> 983
+                    <strong>Following:</strong> {data.following?.length}
                   </Typography>
                 </div>
               </Box>

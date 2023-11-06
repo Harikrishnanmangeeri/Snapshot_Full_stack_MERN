@@ -22,7 +22,7 @@ import SendSharpIcon from "@mui/icons-material/SendSharp";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
-import { finduser, setlike } from "@/Redux/features/findcontentuser";
+import { finduser, follow, setlike } from "@/Redux/features/findcontentuser";
 const cookie = getCookies("token");
 
 const Show_snap = ({url}) => {
@@ -33,16 +33,16 @@ const Show_snap = ({url}) => {
   
 
   const content = useSelector((state) => state.user);
-    console.log(profile);
+    console.log(content);
     useEffect(()=>{
       function reload() {
         dispatch(finduser(url))
       }
       reload()
-    })
+    },[dispatch])
 
 const likes = useSelector((state) => state.user.like)
-console.log(likes);
+console.log(content);
     useEffect(() => {
       async function profile() {
         const profiles = await axios.get(
@@ -72,6 +72,10 @@ console.log(likes);
     location.reload()
   };
 
+  const handlefollow_unfollow=()=>{
+    dispatch(follow({user_id:profile._id,id:content.content.user_id._id}))
+  }
+//user_id==currentuser,, //id == follow
   return (
     <Container maxWidth="mg">
       <Box
@@ -162,6 +166,7 @@ console.log(likes);
                   borderRadius: "35px",
                   border: "none",
                 }}
+                onClick={()=> handlefollow_unfollow()}
               >
                 Follow
               </Button>
