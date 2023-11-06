@@ -22,7 +22,13 @@ import SendSharpIcon from "@mui/icons-material/SendSharp";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
-import { addComment, finduser, follow, setlike, showcomment } from "@/Redux/features/findcontentuser";
+import {
+  addComment,
+  finduser,
+  follow,
+  setlike,
+  showcomment,
+} from "@/Redux/features/findcontentuser";
 const cookie = getCookies("token");
 
 const Show_snap = ({ url }) => {
@@ -32,7 +38,7 @@ const Show_snap = ({ url }) => {
   const [profile, setprofile] = useState();
 
   const content = useSelector((state) => state.user);
-  const show = useSelector((state) =>state.user.showcomment);
+  const show = useSelector((state) => state.user.showcomment);
   console.log(show);
   useEffect(() => {
     function reload() {
@@ -42,7 +48,7 @@ const Show_snap = ({ url }) => {
   }, [dispatch]);
 
   const likes = useSelector((state) => state.user.like);
- 
+
   useEffect(() => {
     async function profile() {
       const profiles = await axios.get(
@@ -60,8 +66,9 @@ const Show_snap = ({ url }) => {
 
   const handleAddComment = () => {
     if (comment.trim() !== "") {
-      
-      dispatch(addComment({comment, id: content.content._id,user_id: profile._id})); // Replace postId with the actual post ID
+      dispatch(
+        addComment({ comment, id: content.content._id, user_id: profile._id })
+      ); // Replace postId with the actual post ID
       setComment("");
     }
   };
@@ -75,6 +82,13 @@ const Show_snap = ({ url }) => {
     dispatch(follow({ user_id: profile._id, id: content.content.user_id._id }));
   };
   //user_id==currentuser,, //id == follow
+
+  function formatDate(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
+  }
+
   return (
     <Container maxWidth="mg">
       <Box
@@ -89,40 +103,40 @@ const Show_snap = ({ url }) => {
         }}
       >
         {/* Left Section */}
-        <Box flex="1" style={{ marginRight: "10px" }}>
-          <img
-            src={content.content.url}
-            alt="Uploaded Image"
+        <Box
+          flex="1"
+          style={{
+            marginRight: "10px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <div
             style={{
               width: "100%",
-              height: "560px",
-              borderRadius: "20px",
-              objectFit: "cover",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              justifyContent: "center",
             }}
-          />
+          >
+            <img
+              src={content.content.url}
+              alt="Uploaded Image"
+              style={{
+                maxWidth: "100%", // Set maximum width to 100% for responsiveness
+                maxHeight: "560px", // Set a fixed maximum height
+                objectFit: "contain",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                borderRadius: "20px", // Add border-radius to the image
+                border: "none", // Remove border
+              }}
+            />
+          </div>
         </Box>
 
         {/* Right Section */}
         <Box flex="1" style={{ marginLeft: "10px" }}>
           <Stack direction="row" spacing={2} justifyContent="space-between">
-            <div>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  borderRadius: "35px",
-                  marginLeft: "21px",
-                  width: "20%",
-                  margin: "0 auto",
-                }}
-              >
-                Save
-              </Button>
-            </div>
+            <div></div>
 
             <div>
               <IconButton onClick={() => router.push("/user")}>
@@ -178,13 +192,11 @@ const Show_snap = ({ url }) => {
 
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "10px 20px",
+              padding: "20px",
               background: "#f5f5f5",
               borderRadius: "20px",
               marginTop: "20px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
             <div
@@ -192,49 +204,108 @@ const Show_snap = ({ url }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                marginBottom: "20px",
               }}
             >
-              <IconButton color="primary" onClick={handleLike}>
-                {content.content?.likes?.includes(profile?._id) ? (
-                  <FavoriteOutlinedIcon style={{ color: "red" }} />
-                ) : (
-                  <FavoriteBorderOutlinedIcon style={{ color: "black" }} />
-                )}
-              </IconButton>
-              <Typography variant="body2">
-                {content.content?.likes?.length}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <IconButton
+                  color="primary"
+                  onClick={handleLike}
+                  style={{ marginRight: "10px" }}
+                >
+                  {content.content?.likes?.includes(profile?._id) ? (
+                    <FavoriteOutlinedIcon style={{ color: "red" }} />
+                  ) : (
+                    <FavoriteBorderOutlinedIcon style={{ color: "black" }} />
+                  )}
+                </IconButton>
+                <Typography variant="body2">
+                  {content.content?.likes?.length}
+                </Typography>
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  style={{
+                    backgroundColor: "red",
+                    color: "white",
+                    borderRadius: "35px",
+                    marginLeft: "21px",
+                    width: "20%",
+                    margin: "0 auto",
+                  }}
+                >
+                  Save
+                </Button>
+              </div>
+            </div>
+            <div>
+              <Typography
+                variant="h5"
+                style={{
+                  marginBottom: "10px",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                }}
+              >
+                {content.content.title}
+              </Typography>
+              <Typography variant="body1" style={{ lineHeight: "1.5" }}>
+                {content.content.description}
               </Typography>
             </div>
           </div>
 
-          <div
-            style={{
-              height: "300px",
-              overflowY: "auto",
-              padding: "20px",
-              background: "#f5f5f5",
-              borderRadius: "20px",
-              marginTop: "20px",
-            }}
-          >
-            <Typography variant="h5">{content.content.title}</Typography>
-            <Typography variant="body1">
-              {content.content.description}
-            </Typography>
-            <Stack direction="row" spacing={2}>
+          <div>
+            <div
+              style={{
+                height: "200px", // Set a fixed height for the comments container
+                overflowY: "auto", // Add a vertical scrollbar when needed
+                padding: "20px",
+                background: "#f5f5f5",
+                borderRadius: "20px",
+                marginTop: "20px",
+              }}
+            >
               {show?.map((comment) => (
                 <div
                   key={comment.id}
-                  style={{ display: "flex", alignItems: "center" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "10px", // Add margin between comments
+                  }}
                 >
                   <Avatar
-                    src={comment.user.avatar}
-                    alt={comment.user.username}
+                    src={comment.user_id.avatar}
+                    alt={comment.user_id.username}
                     style={{ marginRight: "10px" }}
                   />
-                  <p>{comment.text}</p>
+                  <div>
+                    <p>{comment.comments}</p>
+                    <p
+                      style={{ fontSize: "12px", color: "rgba(0, 0, 0, 0.5)" }}
+                    >
+                      {formatDate(comment.created_at)}
+                    </p>
+                  </div>
                 </div>
               ))}
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Avatar
+                src={profile?.avatar}
+                alt="Current User"
+                style={{ marginRight: "10px" }}
+              />
               <TextField
                 label="Add a comment"
                 fullWidth
@@ -242,18 +313,21 @@ const Show_snap = ({ url }) => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddComment}
-                style={{ borderRadius: "35px" }}
-              >
-                <SendSharpIcon />
-              </Button>
-            </Stack>
-            <div key={comment.id}>
-              <p>{content.content?.comments}</p>
-              <Divider />
+<Button
+  variant="contained"
+  onClick={handleAddComment}
+  style={{
+    backgroundColor: "red",
+    color: "white",
+    borderRadius: "35px",
+    margin: "10px",
+    padding: "12px",
+  }}
+>
+  <SendSharpIcon />
+</Button>
+
+
             </div>
           </div>
         </Box>
