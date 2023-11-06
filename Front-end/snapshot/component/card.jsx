@@ -5,8 +5,9 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { finduser } from "@/Redux/features/findcontentuser";
+import { useDispatch, useSelector,} from "react-redux";
+import { finduser, showcomments } from "@/Redux/features/findcontentuser";
+
 const commonStyles = {
   bgcolor: 'background.paper',
   borderColor: 'text.primary',
@@ -19,9 +20,11 @@ const Card = () => {
 const dispatch=useDispatch()
 const router = useRouter()
 
+
 const handleContent = (id)=>{
 
 dispatch(finduser(id))
+dispatch(showcomments(id))
   router.push(`/showsnap/${id}`)
 }
 

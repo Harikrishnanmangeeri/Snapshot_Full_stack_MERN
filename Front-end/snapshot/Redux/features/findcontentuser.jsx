@@ -7,7 +7,9 @@ const initialState = {
   content: [],
   error: null,
   like:'' ,
-  follow:''
+  follow:'',
+  comment:'',
+  showcomment:[],
 };
 
 const cookie = getCookie('token');
@@ -52,7 +54,7 @@ export const setlike = createAsyncThunk('user/setlike', async ({id,user_id}) => 
 
 
 export const follow = createAsyncThunk('user/follow', async ({id,user_id}) => {
-  console.log(user_id,id);
+  // console.log(user_id,id);
   // try {
     const res = await axios.post('http://127.0.0.1:3001/api/user/follow',{
       
@@ -66,10 +68,39 @@ export const follow = createAsyncThunk('user/follow', async ({id,user_id}) => {
       },
     });
     return res.data;
-  // } catch (error) {
-  //   console.error('Error fetching user:', error);
-  //   throw error;
-  // }
+  
+});
+export const addComment = createAsyncThunk('user/addComments', async ({id,user_id,comment}) => {
+  
+  // try {
+    const res = await axios.post('http://127.0.0.1:3001/api/user/comment',{
+      
+    comment:comment,
+    user_id:user_id,
+    _id:id
+
+    },{
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
+    return res.data;
+ 
+});
+
+export const showcomments = createAsyncThunk('user/showcomment', async (id) => {
+ 
+  // try {
+    const res = await axios.post('http://127.0.0.1:3001/api/user/showcomment',{
+    _id:id
+
+    },{
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
+    return res.data;
+  
 });
 
 const userslice = createSlice({
@@ -99,6 +130,18 @@ const userslice = createSlice({
       .addCase(follow.fulfilled, (state, action) => {
        
         state.follow = action.payload;
+      
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+       
+        state.comment = action.payload;
+      
+      })
+
+      .addCase(showcomments.fulfilled, (state, action) => {
+       
+        state.showcomment = action.payload;
+        console.log(state.showcomment);
       
       })
   },
