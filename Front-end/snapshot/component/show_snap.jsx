@@ -313,21 +313,19 @@ const Show_snap = ({ url }) => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
-<Button
-  variant="contained"
-  onClick={handleAddComment}
-  style={{
-    backgroundColor: "red",
-    color: "white",
-    borderRadius: "35px",
-    margin: "10px",
-    padding: "12px",
-  }}
->
-  <SendSharpIcon />
-</Button>
-
-
+              <Button
+                variant="contained"
+                onClick={handleAddComment}
+                style={{
+                  backgroundColor: "red",
+                  color: "white",
+                  borderRadius: "35px",
+                  margin: "10px",
+                  padding: "12px",
+                }}
+              >
+                <SendSharpIcon />
+              </Button>
             </div>
           </div>
         </Box>

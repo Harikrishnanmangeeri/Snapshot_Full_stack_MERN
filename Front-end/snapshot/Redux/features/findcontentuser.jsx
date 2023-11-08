@@ -141,7 +141,7 @@ const userslice = createSlice({
       .addCase(showcomments.fulfilled, (state, action) => {
        
         state.showcomment = action.payload;
-        console.log(state.showcomment);
+   
       
       })
   },

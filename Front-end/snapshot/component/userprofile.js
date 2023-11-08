@@ -41,40 +41,66 @@ export default function UserProfile() {
 
   return (
     <>
-      <Box>
+          <Box >
         <Card
           sx={{
             minWidth: 300,
-            minHeight: "80vh",
+            minHeight: "70vh",
             flexGrow: 1,
             alignItems: "center",
           }}
+          style={{boredr:'none'}}
         >
           <CardCover
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: "relative", // Make the container relative for absolute positioning
+            width: "100%",
+            height: "50vh",
+            position: "relative", // Set relative positioning
+          }}
+        >
+          {profile?.map((data) => (
+            <img
+              src={data.banner}
+              alt="User Profile Cover"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "25px",
+              }}
+            />
+          ))}
+          
+          <div
+            style={{
+              position: "absolute",
+              top: "10px", 
+              right: "10px", 
+            }}
+          >
+            <EditbannerModal />
+          </div>
+
+     
+          <div
+            style={{
+              position: "absolute",
+              bottom: "-50px", 
+              left: "50%",
+              transform: "translateX(-50%)", 
             }}
           >
             {profile?.map((data) => (
-              <Box>
-                <img
-                  src={data.banner}
-                  alt="User Profile Cover"
-                  style={{
-                    width: 1000,
-                    height: "50vh",
-                    objectFit: "cover",
-                    borderRadius: "25px",
-                  }}
-                />
-
-              </Box>
+              <Avatar
+                alt="User Avatar"
+                src={data.avatar}
+                sx={{ width: 150, height: 150 ,border: '6px solid white'  }}
+              />
             ))}
-            <EditbannerModal/>
-          </CardCover>
-          <CardContent>
+          </div>
+        </CardCover>
+        <CardContent>
             {profile?.map((data) => (
               <Box
                 sx={{
@@ -82,13 +108,14 @@ export default function UserProfile() {
                   alignItems: "center",
                   justifyContent: "space-between",
                 }}
+                style={{
+              padding: "30px",
+              background: "#f5f5f5",
+              borderRadius: "20px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            }}
                 key={data._id}
               >
-                <Avatar
-                  alt="User Avatar"
-                  src={data.avatar}
-                  sx={{ width: 100, height: 100 }}
-                />
                 <div>
                   <Typography variant="h5">{data.username}</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
@@ -113,22 +140,17 @@ export default function UserProfile() {
                     <strong>Following:</strong> {data.following?.length}
                   </Typography>
                 </div>
-              </Box>
-            ))}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: 2,
-              }}
-            >
-              <Button variant="outlined" startIcon={<ShareIcon />}>
-                Share
+                <div>
+                  <Button variant="outlined" >
+                  <ShareIcon />
               </Button>
-              <IconButton onClick={() => router.push("/edit_profile")}>
+              <IconButton  onClick={() => router.push("/edit_profile")}>
                 <EditIcon />
               </IconButton>
-            </Box>
+                </div>
+             
+              </Box>
+            ))}
           </CardContent>
         </Card>
       </Box>

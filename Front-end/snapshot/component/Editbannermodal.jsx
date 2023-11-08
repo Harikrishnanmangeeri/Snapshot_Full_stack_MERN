@@ -71,8 +71,8 @@ export default function EditbannerModal() {
 
   return (
     <div>
-      <IconButton onClick={handleOpen}>
-        <EditIcon />
+      <IconButton onClick={handleOpen} sx={{ border : "1px double white"}}>
+        <EditIcon sx={{color : "white"}}/>
       </IconButton>
       <Modal
         keepMounted
