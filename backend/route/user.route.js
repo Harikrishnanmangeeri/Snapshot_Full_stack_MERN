@@ -19,6 +19,8 @@ userRouter.post('/user/setLike',controller.setLike)
 userRouter.post('/user/follow',controller.follow)
 userRouter.post('/user/comment',auth,controller.comment)
 userRouter.post('/user/showcomment',controller.showcomment)
+userRouter.post('/user/showAcountUserProfile',controller.showUserProfile)
+
 
 
 module.exports = userRouter

@@ -1,6 +1,4 @@
-
-'use client'
-
+"use client"
 import Show_snap from '@/component/show_snap'
 import React from 'react'
 import { useParams } from 'next/navigation'

@@ -290,4 +290,14 @@ module.exports = {
       res.json("no content availiable")
     }
   },
+  showUserProfile: async (req, res) => {
+    const { userid } = req.body
+    const showuser = await userschema.findOne({ _id: userid });
+    if (showuser) {
+        res.json(showuser);
+    } else {
+        res.json('user not found!');
+    }
+}
+
 };

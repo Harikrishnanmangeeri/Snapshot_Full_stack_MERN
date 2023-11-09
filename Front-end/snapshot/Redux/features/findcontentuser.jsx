@@ -10,6 +10,7 @@ const initialState = {
   follow:'',
   comment:'',
   showcomment:[],
+  showuser:'wfwf',
 };
 
 const cookie = getCookie('token');
@@ -26,10 +27,7 @@ export const finduser = createAsyncThunk('user/finduser', async (id) => {
       },
     });
     return res.data;
-  // } catch (error) {
-  //   console.error('Error fetching user:', error);
-  //   throw error;
-  // }
+  
 });
 
 
@@ -102,6 +100,19 @@ export const showcomments = createAsyncThunk('user/showcomment', async (id) => {
     return res.data;
   
 });
+export const showAnotherUser = createAsyncThunk('user/showuser', async (id) => {
+  console.log(id);
+    const res = await axios.post('http://127.0.0.1:3001/api/user/showAcountUserProfile',{
+      userid:id
+
+    },{
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
+    return res.data;
+  
+});
 
 const userslice = createSlice({
   name: 'service',
@@ -141,6 +152,13 @@ const userslice = createSlice({
       .addCase(showcomments.fulfilled, (state, action) => {
        
         state.showcomment = action.payload;
+   
+      
+      })
+      .addCase(showAnotherUser.fulfilled, (state, action) => {
+       
+        state.showuser = action.payload;
+        console.log(action.payload);
    
       
       })

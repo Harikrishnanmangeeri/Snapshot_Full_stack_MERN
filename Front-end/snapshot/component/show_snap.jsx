@@ -4,17 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   Container,
-  Grid,
   TextField,
   Typography,
-  Card,
-  CardContent,
   Box,
   IconButton,
   Avatar,
   Stack,
 } from "@mui/material";
-import Divider from "@mui/material/Divider";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -27,6 +23,7 @@ import {
   finduser,
   follow,
   setlike,
+  showAnotherUser,
   showcomment,
 } from "@/Redux/features/findcontentuser";
 const cookie = getCookies("token");
@@ -39,7 +36,7 @@ const Show_snap = ({ url }) => {
 
   const content = useSelector((state) => state.user);
   const show = useSelector((state) => state.user.showcomment);
-  console.log(show);
+  // console.log(show,content);
   useEffect(() => {
     function reload() {
       dispatch(finduser(url));
@@ -87,6 +84,11 @@ const Show_snap = ({ url }) => {
     const date = new Date(dateTimeString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString(undefined, options);
+  }
+
+  const handleShowuser =()=>{
+    dispatch(showAnotherUser( content.content.user_id._id ))
+    router.push(`/View_Users_profile/${content.content.user_id._id}`)
   }
 
   return (
@@ -161,9 +163,10 @@ const Show_snap = ({ url }) => {
                   src={content.content.user_id?.avatar}
                   alt={content.content.user_id?.username}
                   style={{ marginRight: "10px" }}
+                  onClick={()=>handleShowuser()}
                 />
                 <div>
-                  <Typography variant="subtitle1">
+                  <Typography variant="subtitle1"   onClick={()=>handleShowuser()}>
                     {content.content.user_id?.username}
                   </Typography>
                   <Typography variant="body2">
@@ -287,6 +290,7 @@ const Show_snap = ({ url }) => {
                     src={comment.user_id.avatar}
                     alt={comment.user_id.username}
                     style={{ marginRight: "10px" }}
+                    // onClick={()=>router.push('/View_Another_user_profile')}
                   />
                   <div>
                     <p>{comment.comments}</p>
