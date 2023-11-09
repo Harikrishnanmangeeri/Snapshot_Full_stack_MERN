@@ -290,7 +290,7 @@ const Show_snap = ({ url }) => {
                     src={comment.user_id.avatar}
                     alt={comment.user_id.username}
                     style={{ marginRight: "10px" }}
-                    // onClick={()=>router.push('/View_Another_user_profile')}
+                    onClick={()=>handleShowuser()}
                   />
                   <div>
                     <p>{comment.comments}</p>

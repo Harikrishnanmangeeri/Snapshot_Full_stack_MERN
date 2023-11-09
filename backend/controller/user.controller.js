@@ -298,6 +298,23 @@ module.exports = {
     } else {
         res.json('user not found!');
     }
+},
+deletecontent:async(req,res)=>{
+  const { content_id } = res.body
+  const deletesnap = await contentschema.findOne({_id:content_id});
+  if(deletesnap){
+    await contentschema.deleteOne({_id:content_id})
+    res.status(200).json({
+      status:'sucess',
+      message:'Successfully deleted .',
+      data:deletesnap})
+  } else{
+    res.status(404).json({
+      status:'error',
+      message:'deleting data failed.',
+      data:deletesnap})
+  }
+  
 }
 
 };
