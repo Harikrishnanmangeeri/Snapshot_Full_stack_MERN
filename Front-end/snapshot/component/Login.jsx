@@ -60,7 +60,10 @@ export default function Loginmodal() {
       setCookie('token',response.data.token)
     router.push('/user')
     }
-    else{
+    else if(response.data.status=='admin'){
+      setCookie('admin_token',response.data.token)
+      router.push('/Admin_Dash')
+    }else{
       alert('password incorrect')
     }
       

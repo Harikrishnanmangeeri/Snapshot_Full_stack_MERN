@@ -103,8 +103,8 @@ export const showcomments = createAsyncThunk('user/showcomment', async (id) => {
 export const showAnotherUser = createAsyncThunk('user/showuser', async (id) => {
   console.log(id);
     const res = await axios.post('http://127.0.0.1:3001/api/user/showAcountUserProfile',{
-      userid:id
-
+      userid:id.userid,
+      commentuserid:id.commentuser
     },{
       headers: {
         Authorization: `Bearer ${cookie}`,

@@ -36,7 +36,8 @@ const Show_snap = ({ url }) => {
 
   const content = useSelector((state) => state.user);
   const show = useSelector((state) => state.user.showcomment);
-  // console.log(show,content);
+
+  // console.log(show);
   useEffect(() => {
     function reload() {
       dispatch(finduser(url));
@@ -86,9 +87,11 @@ const Show_snap = ({ url }) => {
     return date.toLocaleDateString(undefined, options);
   }
 
-  const handleShowuser =()=>{
-    dispatch(showAnotherUser( content.content.user_id._id ))
-    router.push(`/View_Users_profile/${content.content.user_id._id}`)
+  const handleShowuser =(cid)=>{
+    const id={ userid:content.content.user_id?._id ,commentuser:cid}
+    console.log(id);
+    dispatch(showAnotherUser(id))
+    router.push(`/View_Users_profile/${ cid||content.content.user_id._id }`)
   }
 
   return (
@@ -290,7 +293,7 @@ const Show_snap = ({ url }) => {
                     src={comment.user_id.avatar}
                     alt={comment.user_id.username}
                     style={{ marginRight: "10px" }}
-                    onClick={()=>handleShowuser()}
+                    onClick={()=>handleShowuser(comment.user_id?._id)}
                   />
                   <div>
                     <p>{comment.comments}</p>

@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { Avatar, Button, Card, CardContent, CardMedia, Typography, Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
-import { showAnotherUser } from "@/Redux/features/findcontentuser";
+import { follow, showAnotherUser } from "@/Redux/features/findcontentuser";
 import axios from "axios";
 import { getCookies } from "cookies-next";
 const cookie = getCookies("token");
 
 export default function ShowUserprofile({ userprofile }) {
-
+console.log(userprofile);
     const [profileData, setProfileData] = useState();
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -16,9 +16,9 @@ export default function ShowUserprofile({ userprofile }) {
     },[])
    
     const Profile = useSelector((state) => state.user.showuser);
- console.log(Profile.username);
+ console.log(Profile);
    
-  
+
 
     useEffect(() => {
         async function profile() {
@@ -34,6 +34,11 @@ export default function ShowUserprofile({ userprofile }) {
         }
         profile();
       }, []);
+
+
+      const handlefollow_unfollow = () => {
+        dispatch(follow({ user_id: profileData._id, id: Profile?._id }));
+      };
   return (
     <Paper elevation={3} style={{ borderRadius: '8px', overflow: 'hidden', marginBottom: '20px' , borderRadius:'35px'}}>
       {/* Banner Section */}
@@ -41,7 +46,7 @@ export default function ShowUserprofile({ userprofile }) {
         style={{
           height: "400px", // Adjust the height of the banner
           width: "100%", // Adjust the width of the banner
-          backgroundImage: `url(${Profile.banner})`,
+          backgroundImage: `url(${Profile?.banner})`,
           backgroundSize: "cover",
           backgroundPosition: "center", // Center the background image
           position: 'relative',
@@ -92,8 +97,8 @@ export default function ShowUserprofile({ userprofile }) {
 
       {/* Follow Button Section */}
       <div style={{ padding: '16px', textAlign: 'center' }}>
-        <Button variant="outlined" color="primary" style={{ borderRadius: '20px' }}>
-          {Profile.followers?.includes(Profile._id) ? (
+        <Button variant="outlined" color="primary" style={{ borderRadius: '20px' }} onClick={() => handlefollow_unfollow()} >
+          {Profile?.followers?.includes(profileData?._id) ? (
             <Typography>Following</Typography>
           ) : (
             <Typography>Follow</Typography>
