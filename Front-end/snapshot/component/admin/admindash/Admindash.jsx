@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -18,25 +19,34 @@ import Link from '@mui/material/Link';
 import Image from 'next/image';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Tooltip from '@mui/material/Tooltip';
-import Chart from './a';
-import Orders from './b';
-import Deposits from './c';
+import PropTypes from 'prop-types';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import PeopleIcon from '@mui/icons-material/People';
+import LayersIcon from '@mui/icons-material/Layers';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
-function Copyright(props) {
+import { deleteCookie, getCookies } from 'cookies-next';
+import { useRouter } from 'next/navigation';
+
+const cookie = getCookies("admin_token");
+
+function Title(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://www.instagram.com/___h__k___125___/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+    <Typography component="h2" variant="h6" color="primary" gutterBottom>
+      {props.children}
     </Typography>
   );
 }
+
+Title.propTypes = {
+  children: PropTypes.node,
+};
 
 const drawerWidth = 240;
 
@@ -92,14 +102,21 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  const router = useRouter();
+
+  const handleLogout = () => {
+    deleteCookie("admin_token");
+    router.push('/');
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" sx={{backgroundColor:"red"}} open={open}>
+        <AppBar position="absolute" sx={{ backgroundColor: "red" }} open={open}>
           <Toolbar
             sx={{
-              pr: '24px', 
+              pr: '24px',
             }}
           >
             <IconButton
@@ -121,16 +138,15 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-            Admin Dashboard
+              Admin Dashboard
             </Typography>
             <IconButton color="inherit">
-            <Image src='/logo2.svg' alt='Photos' width="130" height="60" />
-
+              <Image src='/logo2.svg' alt='Photos' width="130" height="60" />
             </IconButton>
             <Tooltip title="Logout" arrow>
-            <IconButton color="inherit">
-        <LogoutIcon/>
-            </IconButton>
+              <IconButton color="inherit" onClick={handleLogout}>
+                <LogoutIcon />
+              </IconButton>
             </Tooltip>
           </Toolbar>
         </AppBar>
@@ -149,10 +165,44 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <ListSubheader component="div" inset>
+              Users
+            </ListSubheader>
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton onClick={()=>router.push('/admin_view_users')}>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="Blocked Users" />
+            </ListItemButton>
           </List>
+          <Divider sx={{ my: 1 }} />
+          <ListSubheader component="div" inset>
+            Content
+          </ListSubheader>
+          <ListItemButton>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="View snap" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="View Reports" />
+          </ListItemButton>
         </Drawer>
         <Box
           component="main"
@@ -168,41 +218,15 @@ export default function Dashboard() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
-            </Grid>
-            <Copyright sx={{ pt: 4 }} />
+          
+            <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: 4 }}>
+              {'Copyright © '}
+              <Link color="inherit" href="https://www.instagram.com/___h__k___125___/">
+                Your Website
+              </Link>{' '}
+              {new Date().getFullYear()}
+              {'.'}
+            </Typography>
           </Container>
         </Box>
       </Box>

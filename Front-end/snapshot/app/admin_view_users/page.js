@@ -1,7 +1,6 @@
 
 
-
-import Dashboard from '@/component/admin/admindash/Admindash'
+import UserListComponent from '@/component/admin/adminlistuser/adminlistuser'
 import React from 'react'
 
 function page() {
@@ -9,7 +8,7 @@ function page() {
   return (
 
     <>
-    <Dashboard/>
+    <UserListComponent/>
     </>
 
   )

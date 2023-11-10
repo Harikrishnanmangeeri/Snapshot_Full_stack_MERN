@@ -14,6 +14,7 @@ const userschema = new mongoose.Schema({
     website:String,
     contact:Number,
     draftContent:[],
+    isBlocked: { type: Boolean, default: false },
 
 
 })
