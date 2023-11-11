@@ -55,15 +55,18 @@ export default function Loginmodal() {
         email:email,
        
     })
-    // console.log(response);
-    if (response.data.status=='sucess'){
+    console.log(response.data);
+    if (response.data.status=='sucess' &&  response.data.isBlocked == false ){
       setCookie('token',response.data.token)
     router.push('/user')
     }
     else if(response.data.status=='admin'){
       setCookie('admin_token',response.data.token)
       router.push('/Admin_Dash')
-    }else{
+    }else if (response.data.isBlocked == true ){
+       alert('blocked you ')
+    }
+    else{
       alert('password incorrect')
     }
       

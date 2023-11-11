@@ -60,6 +60,7 @@ module.exports = {
             status: "sucess",
             auth: true,
             token: token,
+            isBlocked:user[0].isBlocked,
             id: user[0].id,
           });
         }

@@ -96,7 +96,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function RootLayout({ children }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -174,7 +174,7 @@ export default function Dashboard() {
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
-            <ListItemButton onClick={()=>router.push('/admin_view_users')}>
+            <ListItemButton onClick={()=>router.push('/Admin_Dash/admin_view_users')}>
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
@@ -218,15 +218,7 @@ export default function Dashboard() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          
-            <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: 4 }}>
-              {'Copyright © '}
-              <Link color="inherit" href="https://www.instagram.com/___h__k___125___/">
-                Your Website
-              </Link>{' '}
-              {new Date().getFullYear()}
-              {'.'}
-            </Typography>
+          {children}
           </Container>
         </Box>
       </Box>
