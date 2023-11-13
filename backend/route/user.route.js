@@ -21,6 +21,8 @@ userRouter.post('/user/comment',auth,controller.comment)
 userRouter.post('/user/showcomment',controller.showcomment)
 userRouter.post('/user/showAcountUserProfile',controller.showUserProfile)
 userRouter.delete('/user/content',controller.deletecontent)
+userRouter.post('/user/reportcontent',controller.reportcontent)
+
 
 
 

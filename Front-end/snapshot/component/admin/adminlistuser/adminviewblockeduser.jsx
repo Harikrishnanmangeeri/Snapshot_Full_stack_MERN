@@ -8,7 +8,7 @@ import { getCookies } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
 const cookie = getCookies('admin_token');
-const UserListComponent = () => {
+const BlockedUserListComponent = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +19,7 @@ const UserListComponent = () => {
   useEffect(() => {
     async function getUserList() {
       try {
-        const response = await axios.get(`http://127.0.0.1:3001/api/admin/viewusers?page=${currentPage}`, {
+        const response = await axios.get(`http://127.0.0.1:3001/api/admin/viewblockuser?page=${currentPage}`, {
           headers: {
             Authorization: `Bearer ${cookie.admin_token}`,
           },
@@ -49,7 +49,6 @@ const UserListComponent = () => {
           },
         }
       );
-      location.reload()
 
       getUserList();
     } catch (error) {
@@ -77,7 +76,6 @@ const UserListComponent = () => {
             variant="contained"
             color={user.isBlocked ? 'secondary' : 'primary'}
             onClick={() => blockUnblock(user._id)}
-           
           >
             {user.isBlocked ? 'Unblock' : 'Block'}
           </Button>
@@ -114,4 +112,4 @@ const UserListComponent = () => {
   );
 };
 
-export default UserListComponent;
+export default BlockedUserListComponent;

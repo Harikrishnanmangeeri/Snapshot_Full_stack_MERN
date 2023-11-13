@@ -7,7 +7,7 @@ const cookie = getCookies("token");
 
 export default function ContentShowonUserProfile() {
 const [content,setContent]=useState();
-console.log(cookie);
+// console.log(cookie);
 useEffect(() => {
   async function content() {
     const contents = await axios.get(

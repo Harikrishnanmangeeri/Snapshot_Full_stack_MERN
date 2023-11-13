@@ -11,6 +11,7 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -26,6 +27,9 @@ import {
   showAnotherUser,
   showcomment,
 } from "@/Redux/features/findcontentuser";
+
+import Reportcontent from "./Report";
+
 const cookie = getCookies("token");
 
 const Show_snap = ({ url }) => {
@@ -33,11 +37,10 @@ const Show_snap = ({ url }) => {
   const router = useRouter();
   const [comment, setComment] = useState("");
   const [profile, setprofile] = useState();
-
   const content = useSelector((state) => state.user);
   const show = useSelector((state) => state.user.showcomment);
 
-  // console.log(show);
+  // console.log(content);
   useEffect(() => {
     function reload() {
       dispatch(finduser(url));
@@ -234,6 +237,7 @@ const Show_snap = ({ url }) => {
                   {content.content?.likes?.length}
                 </Typography>
               </div>
+              <div style={{ display: 'flex'}}>
               <div>
                 <Button
                   variant="contained"
@@ -250,7 +254,11 @@ const Show_snap = ({ url }) => {
                 >
                   Save
                 </Button>
+                </div>
+                <div><Reportcontent/></div>
+              
               </div>
+            
             </div>
             <div>
               <Typography

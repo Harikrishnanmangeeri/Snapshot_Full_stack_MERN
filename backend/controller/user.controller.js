@@ -6,6 +6,8 @@ const { joiuserschema } = require("../model/validationschema");
 const contentschema = require("../model/content");
 const user = require("../model/user");
 const commentschema = require("../model/comments");
+const reportSchema = require('../model/reported');
+const reported = require("../model/reported");
 // const {joicontentSchema} = require('../model/ContentValidation')
 module.exports = {
   register: async (req, res) => {
@@ -306,7 +308,7 @@ module.exports = {
     }
 },
 deletecontent:async(req,res)=>{
-  const { content_id } = res.body
+  const { content_id } = req.body
   const deletesnap = await contentschema.findOne({_id:content_id});
   if(deletesnap){
     await contentschema.deleteOne({_id:content_id})
@@ -321,6 +323,28 @@ deletecontent:async(req,res)=>{
       data:deletesnap})
   }
   
+},
+reportcontent:async(req,res)=>{
+  const {id,user_id,reports}= req.body 
+  const Reportuser = await userschema.findOne({_id:user_id})
+const  content = await contentschema.findOne({_id:id})
+if(Reportuser && content){
+  const reported = await reportSchema.create({
+    Id:user_id,
+    content_id:id,
+    report:reports
+  })
+  res.status(200).json({
+    status:'sucess',
+    message:'Successfully reported .',
+    data:reported})
+}else{
+  res.status(404).json({
+    status:'error',
+    message:'reported failed.',
+    data:reported})
 }
+  
+},
 
 };

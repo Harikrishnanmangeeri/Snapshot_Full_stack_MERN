@@ -10,7 +10,8 @@ const initialState = {
   follow:'',
   comment:'',
   showcomment:[],
-  showuser:'wfwf',
+  showuser:'',
+  report:''
 };
 
 const cookie = getCookie('token');
@@ -113,6 +114,24 @@ export const showAnotherUser = createAsyncThunk('user/showuser', async (id) => {
     return res.data;
   
 });
+export const reportcontent = createAsyncThunk('user/reportContent', async (id) => {
+  // console.log(id);
+  // try {
+    const res = await axios.post('http://127.0.0.1:3001/api/user/reportcontent',{
+      
+    id:id.content_id,
+    user_id:id.reported_user_id,
+    reports:id.reports
+
+    },{
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
+    return res.data;
+ 
+});
+
 
 const userslice = createSlice({
   name: 'service',
@@ -159,6 +178,13 @@ const userslice = createSlice({
        
         state.showuser = action.payload;
         console.log(action.payload);
+   
+      
+      })
+      .addCase(reportcontent.fulfilled, (state, action) => {
+       
+        state.report = action.payload;
+   
    
       
       })
