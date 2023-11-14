@@ -84,31 +84,32 @@ const BlockedUserListComponent = () => {
     </Grid>
   );
   return (
-    <div>
-      <Grid container spacing={2}>
-        {loading ? (
-          <Box>
-            <CircularProgress />
-          </Box>
-        ) : users?.length > 0 ? (
-          // Render the first 9 users or less
-          users.slice(0, 9).map(renderUserCard)
-        ) : (
-          <Typography variant="body2" color="textSecondary">
-            No users found.
-          </Typography>
-        )}
-      </Grid>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '20px' }}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          // variant="outlined"
-          color="primary"
-          onChange={handlePageChange}
-        />
-      </div>
+    <Box mt={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Grid container spacing={2}>
+      {loading ? (
+        <Box display="flex" alignItems="center" justifyContent="center" height="80vh" width="100%">
+          <CircularProgress />
+        </Box>
+      ) : users?.length > 0 ? (
+        // Render the first 9 users or less
+        users.slice(0, 9).map(renderUserCard)
+      ) : (
+        <Typography variant="body2" color="textSecondary" >
+          No  blocked users found !.
+        </Typography>
+      )}
+    </Grid>
+  
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '20px' }}>
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        // variant="outlined"
+        color="primary"
+        onChange={handlePageChange}
+      />
     </div>
+  </Box>
   );
 };
 

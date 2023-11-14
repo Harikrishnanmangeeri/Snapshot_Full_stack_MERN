@@ -110,7 +110,8 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <html lang="en">
+      <body><ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" sx={{ backgroundColor: "red" }} open={open}>
@@ -191,13 +192,13 @@ export default function RootLayout({ children }) {
           <ListSubheader component="div" inset>
             Content
           </ListSubheader>
-          <ListItemButton>
+          <ListItemButton onClick={()=>router.push('/admin_view_snap')}>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="View snap" />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton onClick={()=>router.push('/AdminViewReportedUser')}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
@@ -222,6 +223,8 @@ export default function RootLayout({ children }) {
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
+    </ThemeProvider></body>
+    </html>
+    
   );
 }

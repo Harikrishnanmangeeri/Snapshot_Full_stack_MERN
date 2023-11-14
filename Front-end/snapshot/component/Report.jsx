@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import EditIcon from "@mui/icons-material/Edit";
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import IconButton from "@mui/material/IconButton";
 import { FormControl, RadioGroup, FormControlLabel, Radio, Tooltip } from "@mui/material";
@@ -13,8 +12,10 @@ import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
 import { useDispatch, useSelector } from "react-redux";
 import { reportcontent } from "@/Redux/features/findcontentuser";
-const cookie = getCookies("token");
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const cookie = getCookies("token");
 
 const style = {
   position: "absolute",
@@ -36,7 +37,6 @@ export default function Reportcontent() {
   const dispatch = useDispatch();
 
   const content = useSelector((state) => state.user);
-//   console.log(reportOption);
 
   useEffect(() => {
     async function profile() {
@@ -61,13 +61,17 @@ export default function Reportcontent() {
   };
 
   const handleReport = () => {
-    const id ={reported_user_id:profile._id,content_id:content.content._id,reports:reportOption}
-   dispatch(reportcontent(id))
+    const id = { reported_user_id: profile._id, content_id: content.content._id, reports: reportOption };
+    dispatch(reportcontent(id));
     handleClose();
+    notify();
   };
+
+  const notify = () => toast.success("Report submitted successfully!");
 
   return (
     <div>
+      <ToastContainer />
       <Tooltip title="Report" arrow>
         <IconButton onClick={handleOpen} sx={{ border: "1px double white" }}>
           <ReportOutlinedIcon />
@@ -93,7 +97,6 @@ export default function Reportcontent() {
               <FormControlLabel value="other" control={<Radio />} label="Other" />
             </RadioGroup>
 
-         
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', mt: 2 }}>
               <Button onClick={handleClose}>
                 Cancel
@@ -102,7 +105,7 @@ export default function Reportcontent() {
                 type="button"
                 fullWidth
                 variant="contained"
-                onClick={()=>handleReport()}
+                onClick={handleReport}
                 style={{
                   background: "red",
                   color: "white",

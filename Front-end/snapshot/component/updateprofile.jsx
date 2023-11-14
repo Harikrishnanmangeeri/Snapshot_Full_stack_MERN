@@ -92,7 +92,7 @@ export default function UpdateProfile() {
             {profile?.map((data) => (
               <form noValidate onSubmit={handleSubmit}>
                 <Avatar
-                  src={data.avatar} // Display user's avatar
+                  src={data.avatar} 
                   alt="Profile Picture"
                   sx={{
                     width: 100,
@@ -146,8 +146,6 @@ export default function UpdateProfile() {
                 >
                   Save
                 </Button>
-
-                {/* Example of an edit icon */}
                 <IconButton color="primary" >
                   <EditIcon />
                 </IconButton>

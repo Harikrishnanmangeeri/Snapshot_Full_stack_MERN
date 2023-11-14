@@ -1,112 +1,63 @@
-"use client";
+'use client'
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  Button,
-  Container,
-  TextField,
-  Typography,
-  Box,
-  IconButton,
-  Avatar,
-  Stack,
-} from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SendSharpIcon from "@mui/icons-material/SendSharp";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { getCookies } from "cookies-next";
-import {
-  addComment,
-  finduser,
-  follow,
-  setlike,
-  showAnotherUser,
-  showcomments,
-  
-} from "@/Redux/features/findcontentuser";
+import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import CloseIcon from "@mui/icons-material/Close";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
-import Reportcontent from "./Report";
+export default function Viewsnapuser() {
+  const [open, setOpen] = useState(false);
 
-const cookie = getCookies("token");
-
-const Show_snap = ({ url }) => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [comment, setComment] = useState("");
-  const [profile, setprofile] = useState();
-  const content = useSelector((state) => state.user.content);
-  const show = useSelector((state) => state.user.showcomment);
-
-  
-  
-  useEffect(() => {
-    function reload() {
-      dispatch(finduser(url));
-      dispatch(showcomments(url))
-    
-    }
-    reload();
-  }, [dispatch]);
-
-
-
-  const likes = useSelector((state) => state.user.like);
 
   useEffect(() => {
-    async function profile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
-        {
-          headers: {
-            Authorization: `Bearer ${cookie.token} `,
-          },
-        }
-      );
-      setprofile(profiles.data[0]);
-    }
-    profile();
-  }, [dispatch]);
+    // Fetch content data or set it from props
+    // Example: setContentData({ image: "url", comments: [], likes: 10, title: "Title", description: "Description" });
+  }, []); // Adjust the dependency array based on your requirements
 
-  const handleAddComment = () => {
-    if (comment.trim() !== "") {
-      dispatch(
-        addComment({ comment, id: content._id, user_id: profile._id })
-      );
-      setComment("");
-    }
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleReportOptionChange = (event) => {
+    setReportOption(event.target.value);
   };
 
-  const handleLike =async () => {
-    
 
-    dispatch(setlike({ id: content._id, user_id: profile._id }));
-  setTimeout(()=>dispatch(finduser(url)),50)
-  };
-
-  const handlefollow_unfollow = () => {
-    dispatch(follow({ user_id: profile._id, id: content.user_id._id }));
-  };
-  //user_id==currentuser,, //id == follow
-
-  function formatDate(dateTimeString) {
-    const date = new Date(dateTimeString);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString(undefined, options);
-  }
-
-  const handleShowuser =(cid)=>{
-    const id={ userid:content.user_id?._id ,commentuser:cid}
-    console.log(id);
-    dispatch(showAnotherUser(id))
-    router.push(`/View_Users_profile/${ cid||content.user_id._id }`)
-  }
 
   return (
-    <Container maxWidth="mg">
+    <div>
+      <IconButton onClick={handleOpen} sx={{ border: "1px double white" }}>
+        <ReportOutlinedIcon />
+      </IconButton>
+      <Modal
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Container maxWidth="md">
       <Box
         display="flex"
         flexDirection="row"
@@ -183,27 +134,10 @@ const Show_snap = ({ url }) => {
                   <Typography variant="subtitle1"   onClick={()=>handleShowuser()}>
                     {content.user_id?.username}
                   </Typography>
-                  <Typography variant="body2">
-                    followers: {content.user_id?.followers?.length}
-                  </Typography>
+                
                 </div>
               </div>
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: "#EAEAEA",
-                  color: "black",
-                  borderRadius: "35px",
-                  border: "none",
-                }}
-                onClick={() => handlefollow_unfollow()}
-              >
-                {content.user_id?.followers.includes(profile?._id) ? (
-                  <Typography>following</Typography>
-                ) : (
-                  <Typography>follow</Typography>
-                )}
-              </Button>
+         
             </div>
           </Box>
 
@@ -353,8 +287,19 @@ const Show_snap = ({ url }) => {
           </div>
         </Box>
       </Box>
+      <IconButton
+            onClick={handleClose}
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              margin: "10px",
+            }}
+          >
+            <CloseIcon />
+            </IconButton>
     </Container>
+      </Modal>
+    </div>
   );
-};
-
-export default Show_snap;
+}
