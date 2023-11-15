@@ -3,11 +3,13 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { getCookies } from "cookies-next";
 import axios from 'axios';
+import Showingsnapprofile from "./showingsnapprofile";
 const cookie = getCookies("token");
 
 export default function ContentShowonUserProfile() {
 const [content,setContent]=useState();
-// console.log(cookie);
+
+console.log(content);
 useEffect(() => {
   async function content() {
     const contents = await axios.get(
@@ -23,18 +25,16 @@ useEffect(() => {
   content();
 }, []);
 
+const handlesnap = () =>{
+
+}
+
   return (
     <div style={containerStyle}>
 <ImageList sx={imageListStyle} cols={5} rowHeight={250} gap={16}>
         {content?.map((item) => (
-          <ImageListItem key={item.url} sx={imageItemStyle}>
-            <img
-              srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              src={`${item.url}?w=164&h=164&fit=crop&auto.format`}
-              alt={item.title}
-              loading="lazy"
-            />
-          </ImageListItem>
+          
+          <Showingsnapprofile item={item}/>
         ))}
       </ImageList>
     </div>

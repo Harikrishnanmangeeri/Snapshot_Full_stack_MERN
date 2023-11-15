@@ -289,6 +289,7 @@ module.exports = {
   showcomment: async (req, res) => {
     const { _id } = req.body
     const showcomment = await commentschema.find({ content_id:_id }).populate("user_id")
+ 
     if(showcomment){
       res.json(showcomment)
 
