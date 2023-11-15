@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector,} from "react-redux";
 import { finduser, showcomments } from "@/Redux/features/findcontentuser";
+import { searchs } from "@/Redux/features/content";
 
 const commonStyles = {
   bgcolor: 'background.paper',
@@ -28,7 +29,7 @@ dispatch(showcomments(id))
   router.push(`/showsnap/${id}`)
 }
 
-
+const search = useSelector(state=>state.content.search)
 
   useEffect(() => {
     async function content() {
@@ -38,9 +39,27 @@ dispatch(showcomments(id))
     content();
   }, []);
   return (
+
     <Box>
+  {(search)?
       <ImageList variant="masonry" cols={6} gap={8}>
       {content?.map((item) => (
+
+        item.title.includes(search)? 
+          <ImageListItem key={item.img}>
+            <img
+              srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.url}?w=248&fit=crop&auto=format`}
+              alt={item.title}
+              loading="lazy"
+              style={{ ...commonStyles, borderRadius: '16px' }}
+              onClick={()=>handleContent(item._id)}
+            />
+          </ImageListItem>:null
+        ))}
+      </ImageList>:<ImageList variant="masonry" cols={6} gap={8}>
+      {content?.map((item) => (
+
           <ImageListItem key={item.img}>
             <img
               srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -53,6 +72,7 @@ dispatch(showcomments(id))
           </ImageListItem>
         ))}
       </ImageList>
+  }
     </Box>
   );
 };
