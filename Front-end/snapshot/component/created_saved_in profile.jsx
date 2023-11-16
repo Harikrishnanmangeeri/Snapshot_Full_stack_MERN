@@ -5,8 +5,9 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Card from './card';
+
 import ContentShowonUserProfile from './show_Content_on_profile/created_content';
+import Saved from './saved';
 
 export default function Usertab() {
   const [value, setValue] = React.useState('1');
@@ -27,7 +28,7 @@ export default function Usertab() {
         <TabPanel value="1">  
         <ContentShowonUserProfile/>
         </TabPanel>
-        <TabPanel value="2"><Card/></TabPanel>
+        <TabPanel value="2"><Saved/></TabPanel>
       </TabContext>
     </Box>
   );

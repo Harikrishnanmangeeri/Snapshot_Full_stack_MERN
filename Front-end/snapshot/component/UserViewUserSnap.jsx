@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addComment,
@@ -23,6 +24,7 @@ import {
 } from "@/Redux/features/findcontentuser";
 // import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
+import { Tooltip } from "@mui/material";
 const style = {
   position: "absolute",
   top: "50%",
@@ -70,13 +72,14 @@ export default function Viewsnapuser({
   };
 
   useEffect(() => {
-    if(img){
+    if (img) {
       function reload() {
-      dispatch(finduser(item._id));
-    setimg(false)
+        dispatch(finduser(item._id));
+        setimg(false);
+      }
+      reload();
     }
-    reload();}
-  }, );
+  });
 
   const handleAddComment = () => {
     if (comment.trim() !== "") {
@@ -93,7 +96,7 @@ export default function Viewsnapuser({
   const handleLike = async () => {
     dispatch(setlike({ id: item._id, user_id: profile._id }));
     setTimeout(() => dispatch(finduser(item._id)), 50);
-    setimg(true)
+    setimg(true);
   };
 
   function formatDate(dateTimeString) {
@@ -121,7 +124,7 @@ export default function Viewsnapuser({
               background: "#f5f5f5",
               borderRadius: "20px",
               padding: "20px",
-              marginTop:"50px"
+              marginTop: "50px",
             }}
           >
             {/* Left Section */}
@@ -225,7 +228,13 @@ export default function Viewsnapuser({
                         Save
                       </Button>
                     </div>
-                    {/* <div><Reportcontent/></div> */}
+                    <div>
+                    <Tooltip title="Delete snap" arrow>
+                      <IconButton>
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                      </Tooltip>
+                    </div>
                   </div>
                 </div>
                 <div>

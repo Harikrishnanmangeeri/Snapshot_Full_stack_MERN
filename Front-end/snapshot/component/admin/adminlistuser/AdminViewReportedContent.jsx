@@ -13,6 +13,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { getCookies } from 'cookies-next';
 import { Button, Divider } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ReportedContent = () => {
   const [reportedItems, setReportedItems] = useState([]);
@@ -44,11 +46,14 @@ const ReportedContent = () => {
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
   };
-
+  const handleAction =()=>{
+    notify()
+  }
+  const notify = () => toast.info("This feature is under development. Stay tuned for updates!");
   const renderReportedItemCard = (item) => (
     
     <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
-    {console.log(item)}
+       <ToastContainer />
       <Card style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <CardHeader
           avatar={<Avatar src={item.content_id?.user_id?.avatar} alt={item.Id.username} />}
@@ -77,16 +82,16 @@ const ReportedContent = () => {
         </Typography>
         </div>
        
-        <Button variant="contained" color="primary"  style={{ margin: '8px' }}>
+        <Button variant="contained" color="primary" onClick={()=>handleAction()}  style={{ margin: '8px' }}>
           Take Action
         </Button>
         <Divider />
       </Card>
     </Grid>
   );
-
   return (
     <Box mt={3}>
+    
       {loading ? (
         <Box display="flex" alignItems="center" justifyContent="center" height="80vh">
           <CircularProgress />
