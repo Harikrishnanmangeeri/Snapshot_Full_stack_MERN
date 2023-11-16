@@ -18,8 +18,8 @@ export default function Search() {
     borderRadius: 35,
     backgroundColor: '#f2f2f2',
     padding: '5px 10px',
-    marginLeft: 100,
-    maxWidth: '100vh',
+    marginLeft: 20,
+    width: '1000px',
   };
 
   return (

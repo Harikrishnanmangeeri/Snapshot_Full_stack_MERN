@@ -9,7 +9,7 @@ function page() {
   return (
 
     <>
-    <h1>jgvj</h1>
+    <h1>Welcome admin</h1>
     </>
 
   )

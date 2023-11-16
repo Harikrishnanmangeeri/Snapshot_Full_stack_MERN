@@ -40,6 +40,7 @@ console.log(userprofile);
         dispatch(follow({ user_id: profileData._id, id: Profile?._id }));
       };
   return (
+    <>
     <Paper elevation={3} style={{ borderRadius: '8px', overflow: 'hidden', marginBottom: '20px' , borderRadius:'35px'}}>
       {/* Banner Section */}
       <div
@@ -106,5 +107,15 @@ console.log(userprofile);
         </Button>
       </div>
     </Paper>
+    <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+    <Typography variant="h4" style={{ color: 'blue' }}>
+      Exciting News!
+    </Typography>
+    <Typography variant="body1" style={{ fontSize: '18px', fontWeight: 'bold', color: '#333', padding: '10px' }}>
+      More amazing features are in the works! 🚀 Stay tuned for updates and enjoy your experience!
+    </Typography>
+  </div>
+
+    </>
   );
 }

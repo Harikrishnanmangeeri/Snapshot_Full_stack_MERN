@@ -304,7 +304,7 @@ router.push('/')
             sx={{ display: { xs: "none", md: "flex" } }}
             style={{ color: "black" }}
           >
-            <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
@@ -321,7 +321,7 @@ router.push('/')
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             {profile?.map((data,index) => (
               <IconButton
                 size="large"
