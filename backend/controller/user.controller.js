@@ -8,6 +8,7 @@ const user = require("../model/user");
 const commentschema = require("../model/comments");
 const reportSchema = require('../model/reported');
 const reported = require("../model/reported");
+const savedSchema = require("../model/saved")
 // const {joicontentSchema} = require('../model/ContentValidation')
 module.exports = {
   register: async (req, res) => {
@@ -369,5 +370,47 @@ if(Reportuser && content){
 }
   
 },
+savesnap: async (req, res) => {
+  const { user_id, content_id } = req.body;
+  // console.log(user_id,content_id);
+  const snap = await contentschema.findOne({ _id: content_id });
+  const user = await userschema.findOne({ _id: user_id });
+
+  if (snap && user) {
+    try {
+      const savesnaps = await savedSchema.create({
+        Id: user_id,
+        content_id: content_id,
+      });
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully reported.',
+        data: savesnaps,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal server error',
+        error: error.message,
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: 'error',
+      message: 'Invalid user or content ID',
+    });
+  }
+},
+viewsavedSnap:async(req,res)=>{
+const viewSaved = await savedSchema.find({Id:res.token})
+if(viewSaved){
+  res.json(viewSaved)
+}
+else{
+  res,json('error occure in saved')
+}
+},
+
 
 };

@@ -1,11 +1,11 @@
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-// const reportSchema = new mongoose.Schema({
+const savedSchema = new mongoose.Schema({
      
-//     Id0:{type:mongoose.Schema.ObjectId,ref:"User"},
-//     content_id:{type:mongoose.Schema.ObjectId,ref:"Content"},
-//     created_at:Date,
+    Id:{type:mongoose.Schema.ObjectId,ref:"User"},
+    content_id:{type:mongoose.Schema.ObjectId,ref:"Content"},
+    created_at:Date,
    
 
-// })
-// module.exports=mongoose.model('report',reportSchema)
+})
+module.exports=mongoose.model('saved',savedSchema)

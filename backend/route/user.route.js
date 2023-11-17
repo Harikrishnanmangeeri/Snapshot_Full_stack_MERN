@@ -22,6 +22,8 @@ userRouter.post('/user/showcomment',trycatchmiddleware(controller.showcomment))
 userRouter.post('/user/showAcountUserProfile',trycatchmiddleware(controller.showUserProfile))
 userRouter.delete('/user/content/:id',trycatchmiddleware(controller.deletecontent))
 userRouter.post('/user/reportcontent',auth,trycatchmiddleware(controller.reportcontent))
+userRouter.post('/user/SaveContent',auth,trycatchmiddleware(controller.savesnap))
+userRouter.get('/user/savedSnap',auth,controller.viewsavedSnap)
 
 
 

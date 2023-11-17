@@ -41,7 +41,7 @@ const Show_snap = ({ url }) => {
   const [profile, setprofile] = useState();
   const content = useSelector((state) => state.user.content);
   const show = useSelector((state) => state.user.showcomment);
-
+// console.log(content);
   
   
   useEffect(() => {
@@ -56,7 +56,8 @@ const Show_snap = ({ url }) => {
 
 
   const likes = useSelector((state) => state.user.like);
-  const notify = () => toast.dark("🚀 Exciting updates coming soon! Stay tuned! 🌟");
+
+  
 
 
   useEffect(() => {
@@ -108,6 +109,30 @@ const Show_snap = ({ url }) => {
     console.log(id);
     dispatch(showAnotherUser(id))
     router.push(`/View_Users_profile/${ cid||content.user_id._id }`)
+  }
+
+  
+  const handleSave = async(id) => {
+    // console.log(id);
+    try {
+      await axios.post(
+        "http://127.0.0.1:3001/api/user/SaveContent",
+        {
+          user_id:profile._id,
+          content_id:id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        }
+      );
+      toast.success('🎉 Snap saved successfully!');
+    } catch (error) {
+      console.error("error occure in saving snap:", error);
+      toast.error('Error occurred while saving snap. Please try again.');
+    }
+    
   }
 
   return (
@@ -185,7 +210,7 @@ const Show_snap = ({ url }) => {
                   onClick={()=>handleShowuser()}
                 />
                 <div>
-                  <Typography variant="subtitle1"   onClick={()=>handleShowuser()}>
+                  <Typography variant="subtitle1"   onClick={()=>handleShowuser(content?._id)}>
                     {content.user_id?.username}
                   </Typography>
                   <Typography variant="body2">
@@ -264,7 +289,7 @@ const Show_snap = ({ url }) => {
                     width: "20%",
                     margin: "0 auto",
                   }}
-                  onClick={()=>notify()}
+                  onClick={()=>handleSave(content._id)}
                 >
                   Save
                 </Button>
