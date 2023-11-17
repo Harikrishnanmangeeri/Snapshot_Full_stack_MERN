@@ -78,12 +78,10 @@ export default function Navbar() {
 
   // console.log(profile);
   const router = useRouter();
-  const handleLogout=()=>{
-deleteCookie("token")
-router.push('/')
-
-
-  }
+  const handleLogout = () => {
+    deleteCookie("token");
+    router.push("/");
+  };
 
   useEffect(() => {
     async function profile() {
@@ -145,7 +143,7 @@ router.push('/')
     >
       <Box sx={{ width: 250, height: "60vh" }} role="presentation">
         <List>
-          {profile?.map((data,index) => (
+          {profile?.map((data, index) => (
             <ListItem key={index}>
               <ListItemIcon>
                 <Avatar
@@ -172,7 +170,7 @@ router.push('/')
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=>handleLogout()}>
+            <ListItemButton onClick={() => handleLogout()}>
               <ListItemIcon>
                 <ExitToAppIcon />
               </ListItemIcon>
@@ -238,46 +236,46 @@ router.push('/')
 
   return (
     // <Box sx={{ flexGrow: 1 }} >
-      <AppBar
-        position="sticky"
-        style={{ background: "white", boxShadow: "none" }}
-      >
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <Image src="/Vector.svg" alt="Photos" width="30" height="30" />
+    <AppBar
+      position="sticky"
+      style={{ background: "white", boxShadow: "none" }}
+    >
+      <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="open drawer"
+          sx={{ mr: 2 }}
+        >
+          <Image src="/Vector.svg" alt="Photos" width="30" height="30" />
 
-            {/* <MenuIcon /> */}
-          </IconButton>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={2}
+          {/* <MenuIcon /> */}
+        </IconButton>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          <Button
+            variant="text"
+            className="btn active"
+            onClick={() => router.push("/user")}
+            style={{ color: "black" }}
           >
-            <Button
-              variant="text"
-              className="btn active"
-              onClick={() => router.push("/user")}
-              style={{ color: "black" }}
-            >
-              Home
-            </Button>
+            Home
+          </Button>
 
-            <Button
-              variant="text"
-              className="btn active"
-              onClick={() => router.push("/explore")}
-              style={{ color: "black" }}
-            >
-              Explore
-            </Button>
-            <Button
+          <Button
+            variant="text"
+            className="btn active"
+            onClick={() => router.push("/explore")}
+            style={{ color: "black" }}
+          >
+            Explore
+          </Button>
+          <Button
             variant="text"
             className="btn active"
             onClick={handleCreateMenuOpen}
@@ -289,22 +287,27 @@ router.push('/')
             anchorEl={createMenuOpen}
             open={Boolean(createMenuOpen)}
             onClose={() => setCreateMenuOpen(null)}
-            sx={{ width: 250, height: "60vh" }} role="presentation"
+            sx={{ width: 250, height: "60vh" }}
+            role="presentation"
           >
-            <MenuItem onClick={() => router.push("/create_idea_snap")}>Create Idea Snap</MenuItem>
-            <MenuItem onClick={() => router.push("/create_snap")}>Create Snap</MenuItem>
+            <MenuItem onClick={() => router.push("/create_idea_snap")}>
+              Create Idea Snap
+            </MenuItem>
+            <MenuItem onClick={() => router.push("/create_snap")}>
+              Create Snap
+            </MenuItem>
           </Menu>
-          </Stack>
-<Stack>
-<Search/>
-</Stack>
-    
-          <Box sx={{ flexGrow: 1 }} style={{ color: "black" }} />
-          <Box
-            sx={{ display: { xs: "none", md: "flex" } }}
-            style={{ color: "black" }}
-          >
-            {/* <IconButton
+        </Stack>
+        <Stack>
+          <Search />
+        </Stack>
+
+        <Box sx={{ flexGrow: 1 }} style={{ color: "black" }} />
+        <Box
+          sx={{ display: { xs: "none", md: "flex" } }}
+          style={{ color: "black" }}
+        >
+          {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
@@ -322,42 +325,42 @@ router.push('/')
                 <NotificationsIcon />
               </Badge>
             </IconButton> */}
-            {profile?.map((data,index) => (
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-                key={index}
-              >
-                <Avatar
-                  alt="User Avatar"
-                  src={data.avatar}
-                  sx={{ width: 30, height: 30 }}
-                />
-              </IconButton>
-            ))}
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          {profile?.map((data, index) => (
             <IconButton
               size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              onClick={handleProfileMenuOpen}
               color="inherit"
+              key={index}
             >
-              <MoreIcon />
+              <Avatar
+                alt="User Avatar"
+                src={data.avatar}
+                sx={{ width: 30, height: 30 }}
+              />
             </IconButton>
-          </Box>
-        </Toolbar>
-        {renderMobileMenu}
+          ))}
+        </Box>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton
+            size="large"
+            aria-label="show more"
+            aria-controls={mobileMenuId}
+            aria-haspopup="true"
+            onClick={handleMobileMenuOpen}
+            color="inherit"
+          >
+            <MoreIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+      {renderMobileMenu}
       {renderMenu}
-      </AppBar>
-     
+    </AppBar>
+
     // </Box>
   );
 }

@@ -107,7 +107,7 @@ const ReportedContent = () => {
           onClick={() => handleAction()}
           style={{ margin: "8px" }}
         >
-          Take Action
+           Action
         </Button>
         <Divider />
       </Card>

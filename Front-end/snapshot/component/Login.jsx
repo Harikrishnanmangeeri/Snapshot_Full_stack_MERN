@@ -13,8 +13,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const style = {
   position: 'absolute',
@@ -29,9 +29,9 @@ const style = {
   borderRadius: '25px',
 };
 
-// Adjust the top margin for content alignment
+
 const contentStyle = {
-  my: 4, // Adjust the top margin here
+  my: 4, 
   mx: 4,
   display: 'flex',
   flexDirection: 'column',
@@ -50,32 +50,30 @@ export default function Loginmodal() {
     const password = event.target.password.value;
     // console.log(email,password);
     try {
-     const response = await axios.post('http://127.0.0.1:3001/api/user/login',{
-        password:password,
-        email:email,
-       
-    })
-    console.log(response.data);
-    if (response.data.status=='sucess' &&  response.data.isBlocked == false ){
-      setCookie('token',response.data.token)
-    router.push('/user')
-    }
-    else if(response.data.status=='admin'){
-      setCookie('admin_token',response.data.token)
-      router.push('/Admin_Dash')
-    }else if (response.data.isBlocked == true ){
-       alert('blocked you ')
-    }
-    else{
-      alert('password incorrect')
-    }
-      
-    } catch (error) {
-      
-    }
-    event.target.reset()
+      const response = await axios.post('http://127.0.0.1:3001/api/user/login', {
+        password: password,
+        email: email,
+      });
 
-  }
+      if (response.data.status === 'sucess' && response.data.isBlocked === false) {
+        setCookie('token', response.data.token);
+        router.push('/user');
+        toast.success('Login successful!');
+      } else if (response.data.status === 'admin') {
+        setCookie('admin_token', response.data.token);
+        router.push('/Admin_Dash');
+        toast.success('Admin login successful!');
+      } else if (response.data.isBlocked === true) {
+        toast.error('You are blocked!');
+      } else {
+        toast.error('Incorrect password!');
+      }
+    } catch (error) {
+      toast.error('An error occurred.');
+    }
+
+    event.target.reset();
+  };
 
   return (
     <div>
@@ -161,7 +159,9 @@ export default function Loginmodal() {
               </Grid>
             </Box>
           </Box>
+          <ToastContainer position="top-right" autoClose={5000} />
         </Box>
+       
       </Modal>
     </div>
   );

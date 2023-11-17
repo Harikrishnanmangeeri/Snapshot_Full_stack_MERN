@@ -16,7 +16,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSelector, useDispatch } from "react-redux";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import {
   addComment,
   finduser,
@@ -48,8 +50,11 @@ export default function Viewsnapuser({
 }) {
   const [profile, setprofile] = useState();
   const [comment, setComment] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const cookie = getCookies("token");
-console.log(item);
+  console.log(item);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -106,25 +111,30 @@ console.log(item);
     return date.toLocaleDateString(undefined, options);
   }
 
-  const handledelete = async(id) =>{
+  const handledelete = async (id) => {
     try {
-
-      await axios.delete(
-        `http://127.0.0.1:3001/api/user/content/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookie.token}`,
-          },
-        }
-        
-      );
-    location.reload()
+      await axios.delete(`http://127.0.0.1:3001/api/user/content/${id}`, {
+        headers: {
+          Authorization: `Bearer ${cookie.token}`,
+        },
+      });
+      setSnackbarMessage("Delete successful");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      location.reload();
     } catch (error) {
       console.log("deleting unsucessfully", error.message);
-      
+      setSnackbarMessage("Delete unsuccessful");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
-  }
- 
+  };
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
   return (
     <div>
       <Modal
@@ -249,10 +259,10 @@ console.log(item);
                       </Button>
                     </div>
                     <div>
-                    <Tooltip title="Delete snap" arrow>
-                      <IconButton onClick={()=>handledelete(item._id)}>
-                        <DeleteOutlineIcon />
-                      </IconButton>
+                      <Tooltip title="Delete snap" arrow>
+                        <IconButton onClick={() => handledelete(item._id)}>
+                          <DeleteOutlineIcon />
+                        </IconButton>
                       </Tooltip>
                     </div>
                   </div>
@@ -355,6 +365,21 @@ console.log(item);
           ></IconButton>
         </Container>
       </Modal>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+        >
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
