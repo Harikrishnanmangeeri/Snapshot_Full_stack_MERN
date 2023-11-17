@@ -1,41 +1,44 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import Pagination from '@mui/material/Pagination';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import Typography from '@mui/material/Typography';
-import { getCookies } from 'cookies-next';
-import { Button, Divider } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Avatar from "@mui/material/Avatar";
+import Pagination from "@mui/material/Pagination";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
+import { getCookies } from "cookies-next";
+import { Button, Divider } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReportedContent = () => {
   const [reportedItems, setReportedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const cookie = getCookies('admin_token');
+  const cookie = getCookies("admin_token");
 
   useEffect(() => {
     async function getReportedItems() {
       try {
-        const response = await axios.get(`http://127.0.0.1:3001/api/admin/reports?page=${currentPage}`, {
-          headers: {
-            Authorization: `Bearer ${cookie.admin_token}`,
-          },
-        });
+        const response = await axios.get(
+          `http://127.0.0.1:3001/api/admin/reports?page=${currentPage}`,
+          {
+            headers: {
+              Authorization: `Bearer ${cookie.admin_token}`,
+            },
+          }
+        );
         setReportedItems(response.data.data);
         setTotalPages(response.data.totalPages);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching reported items:', error);
+        console.error("Error fetching reported items:", error);
         setLoading(false);
       }
     }
@@ -46,20 +49,32 @@ const ReportedContent = () => {
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
   };
-  const handleAction =()=>{
-    notify()
-  }
-  const notify = () => toast.info("This feature is under development. Stay tuned for updates!");
+  const handleAction = () => {
+    notify();
+  };
+  const notify = () =>
+    toast.info("This feature is under development. Stay tuned for updates!");
   const renderReportedItemCard = (item) => (
-    
     <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
-       <ToastContainer />
-      <Card style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <ToastContainer />
+      <Card
+        style={{ height: "100%", display: "flex", flexDirection: "column" }}
+      >
         <CardHeader
-          avatar={<Avatar src={item.content_id?.user_id?.avatar} alt={item.Id.username} />}
+          avatar={
+            <Avatar
+              src={item.content_id?.user_id?.avatar}
+              alt={item.Id.username}
+            />
+          }
           title={item.content_id?.user_id?.username}
         />
-        <CardMedia component="img" height="200" image={item.content_id.url} alt="Reported Image" />
+        <CardMedia
+          component="img"
+          height="200"
+          image={item.content_id.url}
+          alt="Reported Image"
+        />
         <CardContent style={{ flex: 1 }}>
           <Typography variant="h6" component="div">
             {item.content_id.title}
@@ -68,21 +83,30 @@ const ReportedContent = () => {
             {item.content_id.description}
           </Typography>
         </CardContent>
-        <Divider/>
+        <Divider />
         <div display="flex">
-        <Typography variant="body2" color="text.secondary" style={{ padding: '8px' }}>
-        Report Details:
-        </Typography>
-         <CardHeader
-          avatar={<Avatar src={item.Id.avatar} alt={item.Id.username} />}
-          title={item.Id.username}
-        />
-        <Typography variant="body2"  style={{ padding: '8px' ,color:"red"}}>
-       <span style={{color:'#C3C1C1 '}}>Reports:</span> {item.report}
-        </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            style={{ padding: "8px" }}
+          >
+            Report Details:
+          </Typography>
+          <CardHeader
+            avatar={<Avatar src={item.Id.avatar} alt={item.Id.username} />}
+            title={item.Id.username}
+          />
+          <Typography variant="body2" style={{ padding: "8px", color: "red" }}>
+            <span style={{ color: "#C3C1C1 " }}>Reports:</span> {item.report}
+          </Typography>
         </div>
-       
-        <Button variant="contained" color="primary" onClick={()=>handleAction()}  style={{ margin: '8px' }}>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleAction()}
+          style={{ margin: "8px" }}
+        >
           Take Action
         </Button>
         <Divider />
@@ -91,9 +115,13 @@ const ReportedContent = () => {
   );
   return (
     <Box mt={3}>
-    
       {loading ? (
-        <Box display="flex" alignItems="center" justifyContent="center" height="80vh">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="80vh"
+        >
           <CircularProgress />
         </Box>
       ) : (
@@ -101,8 +129,18 @@ const ReportedContent = () => {
           <Grid container spacing={3}>
             {reportedItems.map(renderReportedItemCard)}
           </Grid>
-          <Box display="flex" alignItems="center" justifyContent="center" mt={3}>
-            <Pagination count={totalPages} page={currentPage} color="primary" onChange={handlePageChange} />
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mt={3}
+          >
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              color="primary"
+              onChange={handlePageChange}
+            />
           </Box>
         </Box>
       )}

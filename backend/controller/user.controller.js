@@ -92,9 +92,15 @@ module.exports = {
           contact: contact,
         },
       });
-      res.json("add sucessfully");
+      res.status(200).json({
+        status: 'success',
+        message: 'add sucessfully',
+        })
     } else {
-      res.json("failed");
+      res.status(404).json({
+        status: 'error',
+        message: 'failed',
+        })
     }
   },
   editavatar: async (req, res) => {
@@ -106,11 +112,17 @@ module.exports = {
           avatar: avatar,
         },
       });
-      console.log(avatar);
-      console.log(avatars);
-      res.json("add sucessfully");
+      // console.log(avatar);
+      // console.log(avatars);
+      res.status(200).json({
+        status: 'success',
+        message: 'add sucessfully',
+        })
     } else {
-      res.json("failed");
+      res.status(404).json({
+        status: 'error',
+        message: 'failed',
+        })
     }
   },
 
@@ -123,9 +135,12 @@ module.exports = {
           banner: banner,
         },
       });
-      console.log(banner);
-      console.log(banners);
-      res.json("add sucessfully");
+      // console.log(banner);
+      // console.log(banners);
+      res.status(200).json({
+        status: 'success',
+        message: 'banner added sucessfully',
+        })
     } else {
       res.json("failed");
     }
@@ -139,8 +154,11 @@ module.exports = {
         { _id: res.token },
         { $push: { draftContent: draft } }
       );
-      res.json("added sucessfully");
-      console.log(drafts);
+      res.status(200).json({
+        status: 'success',
+        message: 'added to draft sucessfully',
+        })
+      // console.log(drafts);
     } else {
       res.json("failed");
     }
@@ -148,15 +166,18 @@ module.exports = {
   deletedraft: async (req, res) => {
     try {
       const { deletedraft } = req.body;
-      console.log("hello", deletedraft);
+      // console.log("hello", deletedraft);
       const user = await userschema.findOne({ _id: res.token });
       if (user.length != 0) {
         const deletedrafts = await userschema.updateOne(
           { _id: res.token },
           { $pull: { draftContent: deletedraft } }
         );
-        res.json("deleted");
-        console.log(deletedrafts);
+        res.status(200).json({
+          status: 'success',
+          message: 'deleted sucessfully',
+          })
+        // console.log(deletedrafts);
       } else {
         res.json("failed");
       }
@@ -167,7 +188,7 @@ module.exports = {
   postContent: async (req, res) => {
     try {
       const { url, description, title, category } = req.body;
-      console.log(description, title, category);
+      // console.log(description, title, category);
       const user = await userschema.findOne({
         draftContent: url,
       });
@@ -237,7 +258,7 @@ module.exports = {
   },
   follow: async (req, res) => {
     const { user_id, follow_user } = req.body;
-    console.log(user_id, follow_user);
+    // console.log(user_id, follow_user);
     const followser = await userschema.findOne({ _id: follow_user });
     const following = await userschema.findOne({ _id: user_id });
     if (
@@ -309,10 +330,11 @@ module.exports = {
     }
 },
 deletecontent:async(req,res)=>{
-  const { content_id } = req.body
-  const deletesnap = await contentschema.findOne({_id:content_id});
+  const { id } = req.params
+
+  const deletesnap = await contentschema.findOne({_id:id});
   if(deletesnap){
-    await contentschema.deleteOne({_id:content_id})
+    await contentschema.deleteOne({_id:id})
     res.status(200).json({
       status:'sucess',
       message:'Successfully deleted .',

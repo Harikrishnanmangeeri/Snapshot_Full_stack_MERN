@@ -237,9 +237,9 @@ router.push('/')
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }} >
+    // <Box sx={{ flexGrow: 1 }} >
       <AppBar
-        position="static"
+        position="sticky"
         style={{ background: "white", boxShadow: "none" }}
       >
         <Toolbar>
@@ -354,9 +354,10 @@ router.push('/')
             </IconButton>
           </Box>
         </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
+        {renderMobileMenu}
       {renderMenu}
-    </Box>
+      </AppBar>
+     
+    // </Box>
   );
 }

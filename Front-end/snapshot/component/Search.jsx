@@ -19,7 +19,9 @@ export default function Search() {
     backgroundColor: '#f2f2f2',
     padding: '5px 10px',
     marginLeft: 20,
-    width: '1000px',
+    width: '100%', 
+    maxWidth: '500px', 
+    margin: '0 auto', 
   };
 
   return (
@@ -28,7 +30,7 @@ export default function Search() {
       <InputBase
         placeholder="Search…"
         onChange={(e) => handleSearch(e)}
-        style={{ marginLeft: 10 }}
+        style={{ marginLeft: 10, flex: 1 }} 
       />
     </div>
   );

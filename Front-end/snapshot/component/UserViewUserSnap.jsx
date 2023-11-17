@@ -16,6 +16,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSelector, useDispatch } from "react-redux";
+import 'react-toastify/dist/ReactToastify.css';
 import {
   addComment,
   finduser,
@@ -48,7 +49,7 @@ export default function Viewsnapuser({
   const [profile, setprofile] = useState();
   const [comment, setComment] = useState("");
   const cookie = getCookies("token");
-
+console.log(item);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -105,6 +106,25 @@ export default function Viewsnapuser({
     return date.toLocaleDateString(undefined, options);
   }
 
+  const handledelete = async(id) =>{
+    try {
+
+      await axios.delete(
+        `http://127.0.0.1:3001/api/user/content/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        }
+        
+      );
+    location.reload()
+    } catch (error) {
+      console.log("deleting unsucessfully", error.message);
+      
+    }
+  }
+ 
   return (
     <div>
       <Modal
@@ -230,7 +250,7 @@ export default function Viewsnapuser({
                     </div>
                     <div>
                     <Tooltip title="Delete snap" arrow>
-                      <IconButton>
+                      <IconButton onClick={()=>handledelete(item._id)}>
                         <DeleteOutlineIcon />
                       </IconButton>
                       </Tooltip>

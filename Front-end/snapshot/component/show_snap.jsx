@@ -47,7 +47,7 @@ const Show_snap = ({ url }) => {
     function reload() {
       dispatch(finduser(url));
       dispatch(showcomments(url))
-    
+      
     }
     reload();
   }, [dispatch]);
@@ -78,6 +78,7 @@ const Show_snap = ({ url }) => {
       );
       setComment("");
     }
+    setTimeout(()=>dispatch(showcomments(url)),50)
   };
 
   const handleLike =async () => {
@@ -89,6 +90,7 @@ const Show_snap = ({ url }) => {
 
   const handlefollow_unfollow = () => {
     dispatch(follow({ user_id: profile._id, id: content.user_id._id }));
+    setTimeout(()=>dispatch(finduser(url)),50)
   };
   //user_id==currentuser,, //id == follow
 

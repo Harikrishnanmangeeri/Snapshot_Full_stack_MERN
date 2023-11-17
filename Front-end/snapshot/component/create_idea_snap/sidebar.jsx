@@ -96,7 +96,7 @@ export default function Sidebar() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [draft,setDraft]=useState();
   const dispatch = useDispatch()
-console.log(draft);
+// console.log(draft);
   useEffect(() => {
     async function draft() {
       const drafts = await axios.get(

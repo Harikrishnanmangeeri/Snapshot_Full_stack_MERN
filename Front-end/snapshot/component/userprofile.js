@@ -53,10 +53,10 @@ export default function UserProfile() {
         >
           <CardCover
             sx={{
-              display: "relative", // Make the container relative for absolute positioning
+              display: "relative", 
             width: "100%",
             height: "50vh",
-            position: "relative", // Set relative positioning
+            position: "relative",
           }}
         >
           {profile?.map((data) => (
