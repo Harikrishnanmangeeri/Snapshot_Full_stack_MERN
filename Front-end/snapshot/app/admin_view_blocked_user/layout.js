@@ -108,6 +108,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body><ThemeProvider theme={defaultTheme}>
+      {cookie.admin_token  ? null : router.push('/')}
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" sx={{ backgroundColor: "red" }} open={open}>

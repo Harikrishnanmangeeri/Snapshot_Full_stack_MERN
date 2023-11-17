@@ -107,7 +107,7 @@ const BlockedUserListComponent = () => {
             height="80vh"
             width="100%"
           >
-            <CircularProgress />
+              <CircularProgress />
           </Box>
         ) : users?.length > 0 ? (
           // Render the first 9 users or less

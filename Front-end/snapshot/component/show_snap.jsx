@@ -11,7 +11,8 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -55,6 +56,8 @@ const Show_snap = ({ url }) => {
 
 
   const likes = useSelector((state) => state.user.like);
+  const notify = () => toast.dark("🚀 Exciting updates coming soon! Stay tuned! 🌟");
+
 
   useEffect(() => {
     async function profile() {
@@ -261,6 +264,7 @@ const Show_snap = ({ url }) => {
                     width: "20%",
                     margin: "0 auto",
                   }}
+                  onClick={()=>notify()}
                 >
                   Save
                 </Button>

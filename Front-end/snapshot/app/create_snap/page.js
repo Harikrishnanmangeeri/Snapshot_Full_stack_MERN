@@ -33,6 +33,7 @@ function Page() {
     border: 'none',
     borderRadius: '35px',
     cursor: 'pointer',
+    margin:'10px'
   };
 
   const handleGoHome = () => {
@@ -40,6 +41,10 @@ function Page() {
 router.push('/user')
   };
   
+  const handleGoToIdeaSnap = () => {
+    router.push('/create_idea_snap'); 
+  };
+
   return (
     <div style={containerStyle}>
      
@@ -51,6 +56,9 @@ router.push('/user')
         </p>
         <button style={buttonStyle} onClick={handleGoHome}>
           Go to Home
+        </button>
+        <button style={buttonStyle}  onClick={handleGoToIdeaSnap}>
+          Go to Idea Snap
         </button>
       </div>
     </div>

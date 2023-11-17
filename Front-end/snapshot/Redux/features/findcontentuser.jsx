@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCookie } from "cookies-next";
+import axiosInstance from '../axios';
 
 const initialState = {
   loading: false,
@@ -18,7 +19,7 @@ const cookie = getCookie('token');
 
 export const finduser = createAsyncThunk('user/finduser', async (id) => {
   // try {
-    const res = await axios.post('http://127.0.0.1:3001/api/user/contentUser',{
+    const res = await axiosInstance.post('user/contentUser',{
       id:id
 
 
@@ -35,7 +36,7 @@ export const finduser = createAsyncThunk('user/finduser', async (id) => {
 export const setlike = createAsyncThunk('user/setlike', async ({id,user_id}) => {
   // console.log(user_id);
   // try {
-    const res = await axios.post('http://127.0.0.1:3001/api/user/setLike',{
+    const res = await axiosInstance.post('user/setLike',{
       id:id,
       user_id:user_id
 
@@ -55,7 +56,7 @@ export const setlike = createAsyncThunk('user/setlike', async ({id,user_id}) => 
 export const follow = createAsyncThunk('user/follow', async ({id,user_id}) => {
   // console.log(user_id,id);
   // try {
-    const res = await axios.post('http://127.0.0.1:3001/api/user/follow',{
+    const res = await axiosInstance.post('user/follow',{
       
     //id == follow ,, user_id == currentuser
     follow_user:id,
@@ -72,7 +73,7 @@ export const follow = createAsyncThunk('user/follow', async ({id,user_id}) => {
 export const addComment = createAsyncThunk('user/addComments', async ({id,user_id,comment}) => {
   
   // try {
-    const res = await axios.post('http://127.0.0.1:3001/api/user/comment',{
+    const res = await axiosInstance.post('user/comment',{
       
     comment:comment,
     user_id:user_id,
@@ -90,7 +91,7 @@ export const addComment = createAsyncThunk('user/addComments', async ({id,user_i
 export const showcomments = createAsyncThunk('user/showcomment', async (id) => {
  
   // try {
-    const res = await axios.post('http://127.0.0.1:3001/api/user/showcomment',{
+    const res = await axiosInstance.post('user/showcomment',{
     _id:id
 
     },{
@@ -103,7 +104,7 @@ export const showcomments = createAsyncThunk('user/showcomment', async (id) => {
 });
 export const showAnotherUser = createAsyncThunk('user/showuser', async (id) => {
   console.log(id);
-    const res = await axios.post('http://127.0.0.1:3001/api/user/showAcountUserProfile',{
+    const res = await axiosInstance.post('user/showAcountUserProfile',{
       userid:id.userid,
       commentuserid:id.commentuser
     },{
@@ -117,7 +118,7 @@ export const showAnotherUser = createAsyncThunk('user/showuser', async (id) => {
 export const reportcontent = createAsyncThunk('user/reportContent', async (id) => {
   // console.log(id);
   // try {
-    const res = await axios.post('http://127.0.0.1:3001/api/user/reportcontent',{
+    const res = await axiosInstance.post('user/reportcontent',{
       
     id:id.content_id,
     user_id:id.reported_user_id,
@@ -140,12 +141,12 @@ const userslice = createSlice({
     builder
       .addCase(finduser.pending, (state) => {
         state.loading = true;
-        state.error = null; // Reset error when a new request starts
+        state.error = null; 
       })
       .addCase(finduser.fulfilled, (state, action) => {
         state.loading = false;
         state.content = action.payload;
-        state.error = null; // Reset error on success
+        state.error = null; 
       })
       .addCase(finduser.rejected, (state, action) => {
         state.loading = true;
