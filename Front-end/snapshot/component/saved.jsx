@@ -1,38 +1,55 @@
-import React from 'react';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import axios from 'axios';
+import { getCookies } from 'cookies-next';
 
-const Saved = () => {
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    backgroundImage: 'url("https://source.unsplash.com/random/800x600")', 
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    color: '#fff',
-    borderRadius:"35px"
-  };
+export default function SavedContent() {
+  const [content, setContent] = React.useState([]);
+  // console.log(content.data);
+  const cookie = getCookies("token");
 
-  const messageStyle = {
-    textAlign: 'center',
-    fontSize: '24px',
-    padding: '20px',
-    borderRadius: '10px',
-    background: 'rgba(0, 0, 0, 0.8)',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
-  };
+  React.useEffect(() => {
+    async function fetchSavedContent() {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:3001/api/user/savedSnap",
+          {
+            headers: {
+              Authorization: `Bearer ${cookie.token}`,
+            },
+          }
+        );
+        setContent(response.data);
+
+      } catch (error) {
+        console.error("Error fetching saved content:", error);
+      }
+    }
+
+    fetchSavedContent();
+  }, [cookie.token]);
 
   return (
-    <div style={containerStyle}>
-      <div style={messageStyle}>
-        <p>
-          Your content has been saved! More features are coming soon. Stay tuned for updates and exciting developments.
-        </p>
-      
-      </div>
-    </div>
+    <>
+      <Box sx={{ width: 500, height: 450 }}>
+        <ImageList variant="masonry" cols={3} gap={8}>
+          {content.data?.map((item) => (
+            <ImageListItem key={item._id}>
+              <img
+                srcSet={`${item.content_id?.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                src={`${item.content_id?.url}?w=248&fit=crop&auto=format`}
+                alt={item.content_id?.title}
+                loading="lazy"
+                style={{borderRadius:'35px'}}
+              />
+              <ImageListItemBar position="below" title={item.title} />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Box>
+    </>
   );
-};
-
-export default Saved;
+}

@@ -54,7 +54,7 @@ export default function Viewsnapuser({
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const cookie = getCookies("token");
-  console.log(item);
+  // console.log(item);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Viewsnapuser({
   };
   const handleShowuser = (cid) => {
     const id = { userid: item.user_id?._id, commentuser: cid };
-    console.log(id);
+    // console.log(id);
     dispatch(showAnotherUser(id));
     // router.push(`/View_Users_profile/${ cid||content.user_id._id }`)
   };
@@ -242,7 +242,7 @@ export default function Viewsnapuser({
                   </div>
                   <div style={{ display: "flex" }}>
                     <div>
-                      <Button
+                      {/* <Button
                         variant="contained"
                         color="primary"
                         type="submit"
@@ -256,7 +256,7 @@ export default function Viewsnapuser({
                         }}
                       >
                         Save
-                      </Button>
+                      </Button> */}
                     </div>
                     <div>
                       <Tooltip title="Delete snap" arrow>

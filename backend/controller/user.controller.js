@@ -402,15 +402,33 @@ savesnap: async (req, res) => {
     });
   }
 },
-viewsavedSnap:async(req,res)=>{
-const viewSaved = await savedSchema.find({Id:res.token})
-if(viewSaved){
-  res.json(viewSaved)
-}
-else{
-  res,json('error occure in saved')
-}
+viewsavedSnap: async (req, res) => {
+  try {
+    const viewSaved = await savedSchema.find({ Id: res.token }).populate({
+      path: 'content_id',
+      model: 'Content',
+    });
+
+    if (viewSaved) {
+      res.json({
+        status: 'success',
+        data: viewSaved,
+      });
+    } else {
+      res.json({
+        status: 'error',
+        message: 'Error occurred in saved',
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
 },
+
 
 
 };

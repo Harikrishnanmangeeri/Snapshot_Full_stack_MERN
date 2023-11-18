@@ -31,7 +31,7 @@ const handlesnap = () =>{
 
   return (
     <div style={containerStyle}>
-<ImageList sx={imageListStyle} cols={5} rowHeight={250} gap={16}>
+<ImageList sx={imageListStyle} cols={5} rowHeight="auto" gap={16}>
         {content?.map((item) => (
           
           <Showingsnapprofile item={item}/>
@@ -42,20 +42,17 @@ const handlesnap = () =>{
 }
 
 const containerStyle = {
-  height: '600px', // Set a fixed height
+
   overflow: 'hidden', // Hide overflow (scrollbars)
 };
 
 const imageListStyle = {
   width: '100%',
   height: 'auto',
+  borderRadius: '25px'
 };
 
-const imageItemStyle = {
-  borderRadius: '25px', // Add border radius of 25px
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add a subtle shadow to each image
-  overflow: 'hidden', // Hide overflow for images
-};
+
 
 
 // Nothing to show...yet! Pins you create will live here.
