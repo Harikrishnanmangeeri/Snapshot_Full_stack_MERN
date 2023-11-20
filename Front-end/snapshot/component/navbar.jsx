@@ -15,6 +15,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import List from "@mui/material/List";
@@ -30,46 +31,17 @@ const cookie = getCookies("token");
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Search from "./Search";
-
-// const Search = styled("div")(({ theme }) => ({
-//   position: "relative",
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   "&:hover": {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginRight: theme.spacing(2),
-//   marginLeft: 0,
-//   width: "100%",
-//   [theme.breakpoints.up("sm")]: {
-//     marginLeft: theme.spacing(3),
-//     width: "auto",
-//   },
-// }));
-
-// const SearchIconWrapper = styled("div")(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: "100%",
-//   position: "absolute",
-//   pointerEvents: "none",
-//   display: "flex",
-//   alignItems: "center",
-//   justifyContent: "center",
-// }));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    padding: theme.spacing(1, 2), // Adjust the padding as needed
     transition: theme.transitions.create("width"),
-    width: "100%",
+    width: "100%", // Adjust the width as needed
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
   },
 }));
-
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -199,38 +171,46 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Box style={{width:'89px'}}>
+        <Search />
+      </Box>
+      <Divider style={{marginTop:'8px'}}/>
+      <List>
+          {profile?.map((data, index) => (
+            <ListItem key={index}>
+              <ListItemIcon>
+                <Avatar
+                  alt="User Avatar"
+                  src={data.avatar}
+                  sx={{ width: 50, height: 50 }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                onClick={() => router.push("/user_profile")}
+                primary={data.username}
+              />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => router.push("/user_profile")}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => handleLogout()}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        </List>
     </Menu>
   );
 
@@ -298,33 +278,20 @@ export default function Navbar() {
             </MenuItem>
           </Menu>
         </Stack>
-        <Stack>
-          <Search />
-        </Stack>
 
         <Box sx={{ flexGrow: 1 }} style={{ color: "black" }} />
         <Box
-          sx={{ display: { xs: "none", md: "flex" } }}
+          sx={{
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
           style={{ color: "black" }}
         >
-          {/* <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+          <Stack>
+            <Search />
+          </Stack>
           {profile?.map((data, index) => (
             <IconButton
               size="large"
@@ -353,7 +320,7 @@ export default function Navbar() {
             onClick={handleMobileMenuOpen}
             color="inherit"
           >
-            <MoreIcon />
+            <MenuIcon style={{ color: "black" }} />
           </IconButton>
         </Box>
       </Toolbar>

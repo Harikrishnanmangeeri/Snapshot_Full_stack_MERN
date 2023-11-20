@@ -72,15 +72,15 @@ const ReportedContent = () => {
         <CardMedia
           component="img"
           height="200"
-          image={item.content_id.url}
+          image={item.content_id?.url}
           alt="Reported Image"
         />
         <CardContent style={{ flex: 1 }}>
           <Typography variant="h6" component="div">
-            {item.content_id.title}
+            {item.content_id?.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {item.content_id.description}
+            {item.content_id?.description}
           </Typography>
         </CardContent>
         <Divider />
@@ -93,7 +93,7 @@ const ReportedContent = () => {
             Report Details:
           </Typography>
           <CardHeader
-            avatar={<Avatar src={item.Id.avatar} alt={item.Id.username} />}
+            avatar={<Avatar src={item.Id?.avatar} alt={item.Id?.username} />}
             title={item.Id.username}
           />
           <Typography variant="body2" style={{ padding: "8px", color: "red" }}>

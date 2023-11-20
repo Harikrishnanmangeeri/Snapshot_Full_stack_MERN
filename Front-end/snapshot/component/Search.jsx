@@ -19,7 +19,7 @@ export default function Search() {
     backgroundColor: '#f2f2f2',
     padding: '5px 10px',
     marginLeft: 20,
-    width: '100%', 
+    width: '180%', 
     maxWidth: '500px', 
     margin: '0 auto', 
   };
