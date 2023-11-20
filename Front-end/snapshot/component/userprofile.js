@@ -15,140 +15,163 @@ import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
 import Usertab from "./created_saved_in profile";
 import EditbannerModal from "./Editbannermodal";
+
 const cookie = getCookies("token");
 
 export default function UserProfile() {
-  const [profile, setprofile] = useState();
-
+  const [profile, setProfile] = useState();
   const router = useRouter();
-  // console.log(banner);
-
 
   useEffect(() => {
-    async function profile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
-        {
-          headers: {
-            Authorization: `Bearer ${cookie.token} `,
-          },
-        }
-      );
-      setprofile(profiles.data);
+    async function fetchProfile() {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:3001/api/user/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${cookie.token}`,
+            },
+          }
+        );
+        setProfile(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
     }
-    profile();
+    fetchProfile();
   }, []);
+
+  
+  const handleShareProfile = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Check out my profile!',
+        text: 'View my profile on this awesome site.',
+        url: window.location.href,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing:', error));
+    }
+  
+  };
 
   return (
     <>
-          <Box >
+      <Box>
         <Card
           sx={{
             minWidth: 300,
             minHeight: "70vh",
             flexGrow: 1,
             alignItems: "center",
+            position: "relative",
+            overflow: "hidden", 
           }}
-          style={{boredr:'none'}}
+          style={{ border: "none" }}
         >
           <CardCover
             sx={{
-              display: "relative", 
-            width: "100%",
-            height: "50vh",
-            position: "relative",
-          }}
-        >
-          {profile?.map((data) => (
-            <img
-              src={data.banner}
-              alt="User Profile Cover"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "25px",
-              }}
-            />
-          ))}
-          
-          <div
-            style={{
               position: "absolute",
-              top: "10px", 
-              right: "10px", 
-            }}
-          >
-            <EditbannerModal />
-          </div>
-
-     
-          <div
-            style={{
-              position: "absolute",
-              bottom: "-50px", 
-              left: "50%",
-              transform: "translateX(-50%)", 
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
             }}
           >
             {profile?.map((data) => (
-              <Avatar
-                alt="User Avatar"
-                src={data.avatar}
-                sx={{ width: 150, height: 150 ,border: '6px solid white'  }}
+              <img
+                key={data._id}
+                src={data.banner}
+                alt="User Profile Cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  filter: "brightness(60%)", 
+                }}
               />
             ))}
-          </div>
-        </CardCover>
-        <CardContent>
-            {profile?.map((data) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-                style={{
-              padding: "30px",
-              background: "#f5f5f5",
-              borderRadius: "20px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+              }}
+            >
+              <EditbannerModal />
+            </div>
+          </CardCover>
+
+          <CardContent
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: "50%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+              color: "white", 
+              padding: "40px", 
             }}
-                key={data._id}
-              >
-                <div>
-                  <Typography variant="h5">{data.username}</Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
+          >
+            {profile?.map((data) => (
+              <Box key={data._id}>
+                <div style={{ position: "relative" }}>
+                  <Avatar
+                    alt="User Avatar"
+                    src={data.avatar}
+                    sx={{
+                      width: 150,
+                      height: 150,
+                      border: "6px solid white",
+                      margin: "0 auto", 
+                    }}
+                  />
+                  <IconButton
+                    onClick={() => router.push("/edit_profile")}
+                    sx={{
+                      position: "absolute",
+                      bottom: "5px",
+                      right: "8px",
+                      backgroundColor: "#1976D2",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "#125699",
+                      },
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </div>
+                <div style={{ marginTop: "20px" }}>
+                  <Typography variant="h4" sx={{ fontWeight: "bold", color: "white" }}>
+                    {data.username}
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary" sx={{ color: "white", marginTop: 1 }}>
                     {data.email}
                   </Typography>
-                </div>
-                <div>
-                  <Typography variant="h5">{data.bio}</Typography>
-                  {/* <Typography variant="subtitle1" color="textSecondary">{data.contact}</Typography> */}
-                </div>
-                <div>
-                  <Typography variant="h5">{data.website}</Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
+                  <Typography variant="body1" sx={{ marginTop: 2, color: "white" }}>
+                    {data.bio}
+                  </Typography>
+                  <Typography variant="body1" sx={{ marginTop: 1, color: "white" }}>
+                    {data.website}
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary" sx={{ color: "white", marginTop: 1 }}>
                     {data.contact}
                   </Typography>
-                </div>
-                <div>
-                  <Typography variant="subtitle1">
-                    <strong>Followers:</strong> {data.followers?.length}
-                  </Typography>
-                  <Typography variant="subtitle1">
+                  <Typography variant="body2" sx={{ marginTop: 2, color: "white" }}>
+                    <strong>Followers:</strong> {data.followers?.length} |{" "}
                     <strong>Following:</strong> {data.following?.length}
                   </Typography>
                 </div>
-                <div>
-                  <Button variant="outlined" >
-                  <ShareIcon />
-              </Button>
-              <IconButton  onClick={() => router.push("/edit_profile")}>
-                <EditIcon />
-              </IconButton>
+                <div style={{ marginTop: "30px" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{ marginRight: 2, color: "white", borderColor: "white" }}
+                    onClick={handleShareProfile}
+                  >
+                    <ShareIcon />
+                  </Button>
                 </div>
-             
               </Box>
             ))}
           </CardContent>

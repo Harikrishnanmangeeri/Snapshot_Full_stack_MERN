@@ -5,6 +5,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import axios from 'axios';
 import { getCookies } from 'cookies-next';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 export default function SavedContent() {
   const [content, setContent] = React.useState([]);
@@ -32,10 +34,13 @@ export default function SavedContent() {
     fetchSavedContent();
   }, [cookie.token]);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <>
-      <Box sx={{ width: 500, height: 450 }}>
-        <ImageList variant="masonry" cols={3} gap={8}>
+      <Box >
+        <ImageList variant="masonry" cols={isMobile ? 2 : 5} gap={8}>
           {content.data?.map((item) => (
             <ImageListItem key={item._id}>
               <img

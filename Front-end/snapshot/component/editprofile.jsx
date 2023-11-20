@@ -24,17 +24,12 @@ import { getCookies } from "cookies-next";
 const cookie = getCookies("token");
 
 export default function Editprofile() {
-  const [avatar, setavatar] = useState(null);
-  
-  // console.log(avatar);
+  const [avatar, setAvatar] = useState(null);
   const router = useRouter();
 
-  const handleupload = async () => {
+  const handleUpload = async () => {
     try {
-      
       const url = await upload(avatar);
-      
-      
       await axios.put(
         "http://127.0.0.1:3001/api/user/Editavatar",
         {
@@ -46,95 +41,61 @@ export default function Editprofile() {
           },
         }
       );
-      
     } catch (error) {
-      console.log("from upload", error.message);
+      console.log("Error from upload", error.message);
     }
-   
   };
-  const uploadavatar = async (e) => {
-    setavatar(e.target.files[0]);
-    
+
+  const uploadAvatar = (e) => {
+    setAvatar(e.target.files[0]);
   };
-  const handlesubmit =async (e)=>{
-    e.preventDefault()
-    
-    }
-    
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Add any additional logic for form submission if needed
+  };
 
   return (
     <Grid
       container
-      component="main"
-      sx={{ display: "flex", alignItems: "center" }}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        minHeight: "100vh",
+        background: "linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.9))",
+      }}
     >
-      {/* <CssBaseline /> */}
-      <Box
-        sx={{
-          width: 250,
-        }}
-        role="presentation"
-      >
-        <List>
-          <ListItem sx={{ display: "flex", justifyContent: "space-around" }}>
-            <ListItemText
-              onClick={() => router.push("/user_profile")}
-              primary="Edit profile"
-            />
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton onClick={() => router.push("/user_profile")}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profile" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText primary="Settings" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Box>
-
       <Grid
         item
         xs={12}
         sm={8}
         md={5}
-        // component={Paper}
-        elevation={6}
-        // square
         container
-        sx={{ borderRadius: "9px" }}
+        sx={{
+          borderRadius: "9px",
+          background: "#fff",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          margin: "20px",
+          padding: "20px",
+        }}
       >
         <Box
           sx={{
-            my: 8,
-            mx: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            margin: "3vh",
           }}
         >
-          <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handlesubmit}>
-            <Typography component="h6" variant="h6">
-              avatar
+          <Box component="form" noValidate sx={{ mt: 2 }} onSubmit={handleSubmit}>
+            <Typography variant="h6" sx={{ marginBottom: 2 ,display: "flex", flexDirection: "column", alignItems: "center" }}>
+              Avatar
             </Typography>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <TextField
                 margin="normal"
                 fullWidth
                 name="Name"
-                onChange={(e)=>uploadavatar(e)}
+                onChange={(e) => uploadAvatar(e)}
                 type="file"
                 id="image"
                 InputProps={{
@@ -146,14 +107,16 @@ export default function Editprofile() {
               <Button
                 type="submit"
                 variant="contained"
-                style={{
-                  background: "Red",
+                sx={{
+                  mt: 2,
                   color: "white",
                   borderRadius: "9px",
-                  margin: "10px",
+                  backgroundColor: "#1976D2",
+                  "&:hover": {
+                    backgroundColor: "#125699",
+                  },
                 }}
-                sx={{ mt: 1, mb: 1 }}
-                onClick={()=>handleupload()}
+                onClick={handleUpload}
               >
                 Change Avatar
               </Button>

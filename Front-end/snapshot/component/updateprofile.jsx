@@ -1,8 +1,8 @@
-'use client'
+"use client";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getCookies } from 'cookies-next';
-const cookie = getCookies('token')
+import { getCookies } from "cookies-next";
 import { EditRounded as EditIcon } from "@mui/icons-material";
 import {
   Box,
@@ -12,26 +12,32 @@ import {
   TextField,
   Button,
   Avatar,
-  IconButton,
+  CssBaseline,
 } from "@mui/material";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+
+const cookie = getCookies("token");
+
 export default function UpdateProfile() {
-  const router = useRouter()
-  const [profile,setprofile]=useState()
-  
-  useEffect(()=>{async function profile(){
-    const profiles = await axios.get('http://127.0.0.1:3001/api/user/profile',
-    {
-     headers: {
-       Authorization: `Bearer ${cookie.token} `,
-       
-     },
-   })
-    setprofile(profiles.data)
- }profile()},[])
-  
-  
-  
+  const router = useRouter();
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const response = await axios.get("http://127.0.0.1:3001/api/user/profile", {
+          headers: {
+            Authorization: `Bearer ${cookie.token} `,
+          },
+        });
+        setProfile(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
+    fetchProfile();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bio = e.target.bio.value;
@@ -39,60 +45,56 @@ export default function UpdateProfile() {
     const website = e.target.website.value;
     const contact = e.target.contact.value;
 
-   
     try {
-        if (cookie.token) {
-        
-          await axios.put(
-            'http://127.0.0.1:3001/api/user/Editprofile',
-            {
-              bio: bio,
-              website: website,
-              contact: contact,
-              username: username,
+      if (cookie.token) {
+        await axios.put(
+          "http://127.0.0.1:3001/api/user/Editprofile",
+          {
+            bio: bio,
+            website: website,
+            contact: contact,
+            username: username,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${cookie.token} `,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${cookie.token} `,
-                
-              },
-            }
-           
-          );
-  
-          router.push("/user_profile");
-          // console.log('success');
-        } else {
-          console.error('Token is missing in cookies.');
-        
-        }
-      } catch (error) {
-        console.error('from send',error);
+          }
+        );
+
+        router.push("/user_profile");
+      } else {
+        console.error("Token is missing in cookies.");
       }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+
     e.target.reset();
   };
 
   return (
     <Container component="main">
+      <CssBaseline />
       <Grid container justifyContent="center">
-        <Grid item xs={12} sm={8} md={5} sx={{ borderRadius: "9px" }}>
+        <Grid item xs={12} sm={8} md={5} sx={{ borderRadius: "9px", marginTop: "30px" }}>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
+              my: 4,
+              mx: 2,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              margin: "3vh",
+              textAlign: "center",
             }}
           >
             <Typography component="h1" variant="h5">
               Update Profile
             </Typography>
-            {profile?.map((data) => (
-              <form noValidate onSubmit={handleSubmit}>
+            {profile.map((data) => (
+              <form key={data._id} noValidate onSubmit={handleSubmit}>
                 <Avatar
-                  src={data.avatar} 
+                  src={data.avatar}
                   alt="Profile Picture"
                   sx={{
                     width: 100,
@@ -130,7 +132,7 @@ export default function UpdateProfile() {
                   name="contact"
                   defaultValue={data.contact}
                   variant="outlined"
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 2 }} 
                 />
 
                 <Button
@@ -141,14 +143,27 @@ export default function UpdateProfile() {
                     background: "Red",
                     color: "white",
                     borderRadius: "9px",
+                    marginTop: "10px",
                   }}
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mb: 2 }}
                 >
                   Save
                 </Button>
-                <IconButton color="primary" >
-                  <EditIcon />
-                </IconButton>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  style={{
+                    background: "Red",
+                    color: "white",
+                    borderRadius: "9px",
+                    marginTop: "10px",
+                  }}
+                  onClick={() => router.push("/user_profile")}
+                  sx={{ mb: 2 }}
+                >
+                 back to profile
+                </Button>
               </form>
             ))}
           </Box>

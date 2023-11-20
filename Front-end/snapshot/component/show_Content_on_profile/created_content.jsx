@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { getCookies } from "cookies-next";
 import axios from 'axios';
 import Showingsnapprofile from "./showingsnapprofile";
@@ -29,9 +31,12 @@ const handlesnap = () =>{
 
 }
 
+const theme = useTheme();
+const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <div style={containerStyle}>
-<ImageList sx={imageListStyle} cols={5} rowHeight="auto" gap={16}>
+<ImageList sx={imageListStyle} variant="masonry" cols={isMobile ? 2 : 5} rowHeight="auto" gap={8}>
         {content?.map((item) => (
           
           <Showingsnapprofile item={item}/>
