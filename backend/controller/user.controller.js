@@ -313,7 +313,7 @@ module.exports = {
     const showcomment = await commentschema.find({ content_id:_id }).populate("user_id")
  
     if(showcomment){
-      res.json(showcomment)
+      res.json(showcomment.reverse())
 
     }
     else{
@@ -428,7 +428,12 @@ viewsavedSnap: async (req, res) => {
     });
   }
 },
-
+alluser:async(req,res)=>{
+  const allusers = await userschema.find()
+  if (allusers){
+    res.json(allusers)
+  }
+}
 
 
 };

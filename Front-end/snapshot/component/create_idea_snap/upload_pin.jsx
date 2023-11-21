@@ -4,11 +4,14 @@ import {
   Button,
   Container,
   Grid,
+  ImageList,
+  ImageListItem,
   Typography,
 } from '@mui/material';
 import ImageUploadModal from './ImageUploadModal';
 import { useSelector } from 'react-redux';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 const Publish_idea_snap = () => {
@@ -33,9 +36,49 @@ console.log(open);
     setModalOpen(false);
   };
 
+  const commonStyles = {
+    bgcolor: 'background.paper',
+    borderColor: 'text.primary',
+    m: 1,
+    border: 1,
+  };
+  
+  const images =[
+    {
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?palakkad"
+    },
+    {
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?munnar"
+    },{
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?india"
+    },{
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?wayanad"
+    },{
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?alappuzha"
+    },
+    {
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?kerala"
+    },
+    {
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?malappuram"
+    },
+    {
+      name: "Health and Wellness",
+      image:"https://source.unsplash.com/400x300/?varanasi"
+    },
+  ]
+
 
   
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Container style={{ maxWidth: open ? '58%' : '80%' }}>
       <Grid container spacing={3}>
@@ -66,19 +109,22 @@ console.log(open);
             "Your inspiration is someone's future."
           </Typography>
         </Grid>
-
-        <Grid item xs={12}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridGap: '8px' }}>
-  <img src="https://source.unsplash.com/150x150/?random=1" alt="Random Image 1" />
-  <img src="https://source.unsplash.com/200x200/?random=2" alt="Random Image 2" />
-  <img src="https://source.unsplash.com/180x250/?random=3" alt="Random Image 3" />
-  <img src="https://source.unsplash.com/250x180/?random=4" alt="Random Image 4" />
-  <img src="https://source.unsplash.com/170x170/?random=5" alt="Random Image 5" />
-</div>
-
-</Grid>
+     
 
       </Grid>
+      <ImageList  cols={isMobile ? 2 : 4} gap={8}>
+          {images.map((images, index) => (
+            <ImageListItem key={index}>
+              <img
+                srcSet={`${images.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                src={`${images.image}?w=248&fit=crop&auto=format`}
+                alt={images.name}
+                loading="lazy"
+                style={{ ...commonStyles, borderRadius: '16px' }}
+              />
+            </ImageListItem>
+        ))}
+      </ImageList>
       <ImageUploadModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
