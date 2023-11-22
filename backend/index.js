@@ -5,7 +5,7 @@ const app = express()
 const userRouter=require('./route/user.route')
 const adminRouter = require('./route/admin.route')
 app.use(express.json())
-mongoose.connect('mongodb://127.0.0.1:27017/snapshot').then(console.log('connected'))
+mongoose.connect('mongodb+srv://snapshot:C2R4sQm0qsENuIZO@cluster0.mykldlu.mongodb.net/?retryWrites=true&w=majority').then(console.log('connected'))
 app.use(cors())
 
 app.use('/api',userRouter,adminRouter)
