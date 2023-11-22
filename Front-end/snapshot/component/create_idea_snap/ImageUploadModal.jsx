@@ -6,11 +6,12 @@ import Button from "@mui/material/Button";
 import { useRouter } from 'next/navigation';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { getCookies } from 'cookies-next';
-import axios from 'axios';
 import ContentUpload from './Upload_content_cloudnary';
 import {content} from '@/Redux/features/content';
 import { useDispatch } from 'react-redux';
+import axiosInstance from '@/Redux/axios';
 const cookie = getCookies("token");
+
 
 
 const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => {
@@ -28,8 +29,8 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload, uploadedImage }) => 
   } else {
     try {
       const url = await ContentUpload(draft);
-      await axios.post(
-        "http://127.0.0.1:3001/api/user/draft",
+      await axiosInstance.post(
+        "user/draft",
         {
           draft: url,
         },

@@ -10,7 +10,8 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
-import axios from 'axios';
+import axiosInstance from '@/Redux/axios';
+
 
 
 
@@ -47,7 +48,7 @@ export default function RegistrationModal() {
     const password = event.target.password.value
     // const confirmPassword = event.target.confirmPassword.value
     try {
-      await axios.post('http://127.0.0.1:3001/api/user/register',{
+      await axiosInstance.post('user/register',{
         username:username,
          password:password,
           email:email,

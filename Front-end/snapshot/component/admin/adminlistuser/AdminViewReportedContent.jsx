@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -15,6 +14,7 @@ import { getCookies } from "cookies-next";
 import { Button, Divider } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "@/Redux/axios"
 
 const ReportedContent = () => {
   const [reportedItems, setReportedItems] = useState([]);
@@ -26,8 +26,8 @@ const ReportedContent = () => {
   useEffect(() => {
     async function getReportedItems() {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:3001/api/admin/reports?page=${currentPage}`,
+        const response = await axiosInstance.get(
+          `admin/reports?page=${currentPage}`,
           {
             headers: {
               Authorization: `Bearer ${cookie.admin_token}`,

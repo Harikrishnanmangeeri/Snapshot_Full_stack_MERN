@@ -11,13 +11,11 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SendSharpIcon from "@mui/icons-material/SendSharp";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
 import {
@@ -28,8 +26,8 @@ import {
   showAnotherUser,
   showcomments,
 } from "@/Redux/features/findcontentuser";
-
 import Reportcontent from "./Report";
+import axiosInstance from "@/Redux/axios";
 
 const cookie = getCookies("token");
 
@@ -53,8 +51,8 @@ const Show_snap = ({ url }) => {
 
   useEffect(() => {
     async function profile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const profiles = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,
@@ -102,8 +100,8 @@ const Show_snap = ({ url }) => {
 
   const handleSave = async (id) => {
     try {
-      await axios.post(
-        "http://127.0.0.1:3001/api/user/SaveContent",
+      await axiosInstance.post(
+        "user/SaveContent",
         {
           user_id: profile._id,
           content_id: id,

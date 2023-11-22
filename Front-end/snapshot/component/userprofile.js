@@ -10,12 +10,11 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import ShareIcon from "@mui/icons-material/Share";
 import Avatar from "@mui/material/Avatar";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
 import Usertab from "./created_saved_in profile";
 import EditbannerModal from "./Editbannermodal";
-
+import axiosInstance from "@/Redux/axios";
 const cookie = getCookies("token");
 
 export default function UserProfile() {
@@ -25,8 +24,8 @@ export default function UserProfile() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:3001/api/user/profile",
+        const response = await axiosInstance.get(
+          "user/profile",
           {
             headers: {
               Authorization: `Bearer ${cookie.token}`,

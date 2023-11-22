@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { getCookies } from "cookies-next";
-import { EditRounded as EditIcon } from "@mui/icons-material";
 import {
   Box,
   Grid,
@@ -15,6 +13,7 @@ import {
   CssBaseline,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import axiosInstance from "@/Redux/axios";
 
 const cookie = getCookies("token");
 
@@ -25,7 +24,7 @@ export default function UpdateProfile() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const response = await axios.get("http://127.0.0.1:3001/api/user/profile", {
+        const response = await axiosInstance.get("user/profile", {
           headers: {
             Authorization: `Bearer ${cookie.token} `,
           },
@@ -47,8 +46,8 @@ export default function UpdateProfile() {
 
     try {
       if (cookie.token) {
-        await axios.put(
-          "http://127.0.0.1:3001/api/user/Editprofile",
+        await axiosInstance.put(
+          "user/Editprofile",
           {
             bio: bio,
             website: website,

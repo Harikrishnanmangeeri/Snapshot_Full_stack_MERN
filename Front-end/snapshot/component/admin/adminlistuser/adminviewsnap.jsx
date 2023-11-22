@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -12,6 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import { getCookies } from "cookies-next";
+import axiosInstance from "@/Redux/axios";
 
 const AdminViewSnap = () => {
   const [reportedItems, setReportedItems] = useState([]);
@@ -23,8 +23,8 @@ const AdminViewSnap = () => {
   useEffect(() => {
     async function getReportedItems() {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:3001/api/admin/viewSnap?page=${currentPage}`,
+        const response = await axiosInstance.get(
+          `admin/viewSnap?page=${currentPage}`,
           {
             headers: {
               Authorization: `Bearer ${cookie.admin_token}`,

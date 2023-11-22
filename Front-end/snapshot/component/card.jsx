@@ -9,11 +9,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { finduser, showcomments } from "@/Redux/features/findcontentuser";
 import { Stack } from "@mui/material";
+import axiosInstance from "@/Redux/axios";
+
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -44,8 +45,8 @@ const Cardhome = () => {
 
   useEffect(() => {
     async function fetchContent() {
-      const contents = await axios.get(
-        "http://127.0.0.1:3001/api/user/ShowAllContentHome"
+      const contents = await axiosInstance.get(
+        "user/ShowAllContentHome"
       );
       setContent(contents.data);
     }
@@ -54,8 +55,8 @@ const Cardhome = () => {
 
   useEffect(() => {
     async function fetchUsers() {
-      const allUsers = await axios.get(
-        "http://127.0.0.1:3001/api/user/allUser"
+      const allUsers = await axiosInstance.get(
+        "user/allUser"
       );
       setalluser(allUsers.data);
     }

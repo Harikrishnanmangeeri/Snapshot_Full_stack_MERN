@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import Pagination from "@mui/material/Pagination";
-import axios from "axios";
 import { getCookies } from "cookies-next";
 import { useRouter } from "next/navigation";
+import axiosInstance from "@/Redux/axios";
 
 const cookie = getCookies("admin_token");
 const UserListComponent = () => {
@@ -26,8 +26,8 @@ const UserListComponent = () => {
   useEffect(() => {
     async function getUserList() {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:3001/api/admin/viewusers?page=${currentPage}`,
+        const response = await axiosInstance.get(
+          `admin/viewusers?page=${currentPage}`,
           {
             headers: {
               Authorization: `Bearer ${cookie.admin_token}`,
@@ -48,8 +48,8 @@ const UserListComponent = () => {
 
   const blockUnblock = async (id) => {
     try {
-      await axios.post(
-        "http://127.0.0.1:3001/api/admin/blockuser",
+      await axiosInstance.post(
+        "admin/blockuser",
         {
           user_id: id,
         },

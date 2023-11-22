@@ -3,10 +3,11 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import axios from 'axios';
 import { getCookies } from 'cookies-next';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import axiosInstance from '@/Redux/axios';
+
 
 export default function SavedContent() {
   const [content, setContent] = React.useState([]);
@@ -16,8 +17,8 @@ export default function SavedContent() {
   React.useEffect(() => {
     async function fetchSavedContent() {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:3001/api/user/savedSnap",
+        const response = await axiosInstance.get(
+          "user/savedSnap",
           {
             headers: {
               Authorization: `Bearer ${cookie.token}`,

@@ -12,7 +12,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from 'next/image';
-import axios from 'axios';
+import axiosInstance from '@/Redux/axios';
+
 
 
 
@@ -33,7 +34,7 @@ export default function Registration() {
     const password = event.target.password.value
     // const confirmPassword = event.target.confirmPassword.value
     try {
-      await axios.post('http://127.0.0.1:3001/api/user/register',{
+      await axiosInstance.post('user/register',{
         username:username,
          password:password,
           email:email,

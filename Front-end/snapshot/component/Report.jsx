@@ -7,14 +7,13 @@ import Typography from "@mui/material/Typography";
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import IconButton from "@mui/material/IconButton";
 import { FormControl, RadioGroup, FormControlLabel, Radio, Tooltip } from "@mui/material";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
 import { useDispatch, useSelector } from "react-redux";
 import { reportcontent } from "@/Redux/features/findcontentuser";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import axiosInstance from "@/Redux/axios";
 const cookie = getCookies("token");
 
 const style = {
@@ -40,8 +39,8 @@ export default function Reportcontent() {
 
   useEffect(() => {
     async function profile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const profiles = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,

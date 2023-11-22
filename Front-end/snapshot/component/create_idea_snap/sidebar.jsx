@@ -20,12 +20,12 @@ import ImageListItem from '@mui/material/ImageListItem';
 import { Button, Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import ImageUploadModal from './ImageUploadModal';
-import axios from 'axios';
 import { getCookies } from "cookies-next";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { autoBatchEnhancer } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import {content,modal} from '@/Redux/features/content';
+import axiosInstance from '@/Redux/axios';
 
 const cookie = getCookies("token");
 
@@ -99,8 +99,8 @@ export default function Sidebar() {
 // console.log(draft);
   useEffect(() => {
     async function draft() {
-      const drafts = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const drafts = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,
@@ -148,8 +148,8 @@ const router =useRouter()
   const removeImage= async(file)=>{
     try {
     
-     await axios.put(
-      "http://127.0.0.1:3001/api/user/draft",
+     await axiosInstance.put(
+      "user/draft",
       {
         deletedraft: file,
       },

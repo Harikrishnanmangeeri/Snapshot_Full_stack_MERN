@@ -13,7 +13,6 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSelector, useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,6 +27,7 @@ import {
 // import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
 import { Tooltip } from "@mui/material";
+import axiosInstance from "@/Redux/axios";
 const style = {
   position: "absolute",
   top: "50%",
@@ -59,8 +59,8 @@ export default function Viewsnapuser({
 
   useEffect(() => {
     async function profile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const profiles = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,
@@ -113,7 +113,7 @@ export default function Viewsnapuser({
 
   const handledelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:3001/api/user/content/${id}`, {
+      await axiosInstance.delete(`user/content/${id}`, {
         headers: {
           Authorization: `Bearer ${cookie.token}`,
         },

@@ -10,11 +10,12 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Image from 'next/image';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '@/Redux/axios';
+
 
 const style = {
   position: 'absolute',
@@ -50,7 +51,7 @@ export default function Loginmodal() {
     const password = event.target.password.value;
     // console.log(email,password);
     try {
-      const response = await axios.post('http://127.0.0.1:3001/api/user/login', {
+      const response = await axiosInstance.post('user/login', {
         password: password,
         email: email,
       });

@@ -28,9 +28,9 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { deleteCookie, getCookies } from "cookies-next";
 const cookie = getCookies("token");
-import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Search from "./Search";
+import axiosInstance from "@/Redux/axios";
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
@@ -57,8 +57,8 @@ export default function Navbar() {
 
   useEffect(() => {
     async function profile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const profiles = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,

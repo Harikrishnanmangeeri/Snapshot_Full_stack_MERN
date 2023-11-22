@@ -19,13 +19,14 @@ import { Button, Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Create_idea_snap from '../Publish_snaps/ideaSnap';
 import { getCookies } from "cookies-next";
-import axios from 'axios';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from 'react-redux';
 import {content} from '@/Redux/features/content';
 import ImageUploadModal from '../create_idea_snap/ImageUploadModal';
+import axiosInstance from '@/Redux/axios';
+
 
 const cookie = getCookies("token");
 
@@ -89,8 +90,8 @@ export default function PublishBar() {
   const dispatch = useDispatch()
   useEffect(() => {
     async function draft() {
-      const drafts = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const drafts = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,
@@ -106,8 +107,8 @@ export default function PublishBar() {
   const removeImage= async(file)=>{
     try {
     
-     await axios.put(
-      "http://127.0.0.1:3001/api/user/draft",
+     await axiosInstance.put(
+      "user/draft",
       {
         deletedraft: file,
       },

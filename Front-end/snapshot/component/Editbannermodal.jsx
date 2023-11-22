@@ -8,10 +8,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import uploadbanner from "./uploadbanner_cloudnary";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
+import axiosInstance from "@/Redux/axios";
 const cookie = getCookies("token");
+
 
 const style = {
   position: "absolute",
@@ -41,8 +42,8 @@ export default function EditbannerModal() {
     try {
       const url = await uploadbanner(banner);
 
-      await axios.put(
-        "http://127.0.0.1:3001/api/user/Editbanner",
+      await axiosInstance.put(
+        "user/Editbanner",
         {
           banner: url,
         },

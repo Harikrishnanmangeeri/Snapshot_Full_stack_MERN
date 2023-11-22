@@ -4,8 +4,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { getCookies } from "cookies-next";
-import axios from 'axios';
 import Showingsnapprofile from "./showingsnapprofile";
+import axiosInstance from "@/Redux/axios";
 const cookie = getCookies("token");
 
 export default function ContentShowonUserProfile() {
@@ -14,8 +14,8 @@ const [content,setContent]=useState();
 console.log(content);
 useEffect(() => {
   async function content() {
-    const contents = await axios.get(
-      "http://127.0.0.1:3001/api/user/showcontent",
+    const contents = await axiosInstance.get(
+      "user/showcontent",
       {
         headers: {
           Authorization: `Bearer ${cookie.token} `,

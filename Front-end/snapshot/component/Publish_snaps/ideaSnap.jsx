@@ -15,9 +15,10 @@ import {
 import Divider from "@mui/material/Divider";
 import Autocomplete from "@mui/material/Autocomplete";
 import InfoIcon from "@mui/icons-material/Info";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
+import axiosInstance from "@/Redux/axios";
+
 
 const Create_idea_snap = ({ sidebarOpen }) => {
   const [data, setData] = useState({});
@@ -64,8 +65,8 @@ const Create_idea_snap = ({ sidebarOpen }) => {
     try {
       const cookie = getCookies("token");
       if (cookie.token) {
-        await axios.post(
-          "http://127.0.0.1:3001/api/user/postcontent",
+        await axiosInstance.post(
+          "user/postcontent",
           {
             url: user,
             title: title,

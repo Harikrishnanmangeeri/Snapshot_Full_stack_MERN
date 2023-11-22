@@ -6,8 +6,8 @@ import { Card, CardContent, CardMedia, Grid } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import { useSelector, useDispatch } from "react-redux";
 import { follow, showAnotherUser } from "@/Redux/features/findcontentuser";
-import axios from "axios";
 import { getCookies } from "cookies-next";
+import axiosInstance from "@/Redux/axios";
 
 const cookie = getCookies("token");
 
@@ -24,8 +24,8 @@ const ShowUserProfile = ({ userprofile }) => {
 
   useEffect(() => {
     async function fetchProfile() {
-      const profiles = await axios.get(
-        "http://127.0.0.1:3001/api/user/profile",
+      const profiles = await axiosInstance.get(
+        "user/profile",
         {
           headers: {
             Authorization: `Bearer ${cookie.token} `,

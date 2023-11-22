@@ -14,13 +14,11 @@ import {
   Divider,
 } from "@mui/material";
 import { useState } from "react";
-import axios from "axios";
 import upload from "./uploads";
 import { useRouter } from "next/navigation";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import UpdateProfile from "./updateprofile";
 import { getCookies } from "cookies-next";
+import axiosInstance from "@/Redux/axios";
 const cookie = getCookies("token");
 
 export default function Editprofile() {
@@ -30,8 +28,8 @@ export default function Editprofile() {
   const handleUpload = async () => {
     try {
       const url = await upload(avatar);
-      await axios.put(
-        "http://127.0.0.1:3001/api/user/Editavatar",
+      await axiosInstance.put(
+        "user/Editavatar",
         {
           avatar: url,
         },
