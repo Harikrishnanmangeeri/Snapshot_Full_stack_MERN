@@ -18,7 +18,7 @@ export default function LandingCover() {
             muted
           >
             <source
-              src="/mainvid.mp4"
+              src="https://res.cloudinary.com/dnsmxuhrz/video/upload/v1700826222/mainvid_qvbu68.mp4"
               type="video/mp4"
             />
           </video>
