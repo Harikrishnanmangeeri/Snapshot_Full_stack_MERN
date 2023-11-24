@@ -108,11 +108,16 @@ export default function RootLayout({ children }) {
     deleteCookie("admin_token");
     router.push('/');
   };
+  React.useEffect(()=>{
+    if(!cookie.admin_token){
+      router.push('/')
+    }
+  })
 
   return (
     <html lang="en">
       <body><ThemeProvider theme={defaultTheme}>
-      {cookie.admin_token  ? null : router.push('/')}
+      {/* {cookie.admin_token  ? null : router.push('/')} */}
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" sx={{ backgroundColor: "red" }} open={open}>
