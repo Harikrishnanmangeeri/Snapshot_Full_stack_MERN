@@ -62,7 +62,7 @@ export default function Loginmodal() {
         toast.success('Login successful!');
       } else if (response.data.status === 'admin') {
         setCookie('admin_token', response.data.token);
-        router.push('/Admin_Dash');
+        router.push('/admindash');
         toast.success('Admin login successful!');
       } else if (response.data.isBlocked === true) {
         toast.error('You are blocked!');

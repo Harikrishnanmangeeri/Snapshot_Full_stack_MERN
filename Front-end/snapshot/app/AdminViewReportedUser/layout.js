@@ -176,13 +176,13 @@ export default function RootLayout({ children }) {
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
-            <ListItemButton onClick={()=>router.push('/Admin_Dash/admin_view_users')}>
+            <ListItemButton onClick={()=>router.push('/admindash/adminviewusers')}>
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary="Users" />
             </ListItemButton>
-            <ListItemButton onClick={()=>router.push('/admin_view_blocked_user')}>
+            <ListItemButton onClick={()=>router.push('/adminviewblockeduser')}>
               <ListItemIcon>
                 <LayersIcon />
               </ListItemIcon>
@@ -193,13 +193,13 @@ export default function RootLayout({ children }) {
           <ListSubheader component="div" inset>
             Content
           </ListSubheader>
-          <ListItemButton onClick={()=>router.push('/admin_view_snap')}>
+          <ListItemButton onClick={()=>router.push('/adminviewsnap')}>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="View snap" />
           </ListItemButton>
-          <ListItemButton onClick={()=>router.push('/AdminViewReportedUser')}>
+          <ListItemButton onClick={()=>router.push('/adminviewreportedUser')}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>

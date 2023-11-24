@@ -3,7 +3,7 @@ import ShowUserprofile from '@/component/viewUsersProfile'
 import { useParams } from 'next/navigation'
 import React from 'react'
 
-function page() {
+function Page() {
   const params = useParams()
   console.log(params);
   return (
@@ -11,4 +11,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

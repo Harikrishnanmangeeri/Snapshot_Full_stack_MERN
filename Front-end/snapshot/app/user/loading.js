@@ -1,5 +1,5 @@
 import React from "react";
-
+// import Image from 'next/image';
 const loading = () => {
   return (
     <div
@@ -10,7 +10,7 @@ const loading = () => {
         height: "100vh",
       }}
     >
-      <img src="https://res.cloudinary.com/dnsmxuhrz/image/upload/v1700215116/banner/loading_rj37pn.gif" />
+      <img src="https://res.cloudinary.com/dnsmxuhrz/image/upload/v1700215116/banner/loading_rj37pn.gif"  alt='Photos'/>
     </div>
   );
 };
