@@ -113,7 +113,7 @@ export default function RootLayout({ children }) {
       router.push('/')
     }
   })
-
+// set
   return (
     <html lang="en">
       <body><ThemeProvider theme={defaultTheme}>
