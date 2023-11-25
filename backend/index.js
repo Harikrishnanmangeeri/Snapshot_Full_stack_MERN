@@ -1,11 +1,12 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose =require('mongoose')
+require('dotenv').config()
 const app = express()
 const userRouter=require('./route/user.route')
 const adminRouter = require('./route/admin.route')
 app.use(express.json())
-mongoose.connect('mongodb+srv://snapshot:C2R4sQm0qsENuIZO@cluster0.mykldlu.mongodb.net/?retryWrites=true&w=majority').then(console.log('connected'))
+mongoose.connect(process.env.DATABASE_URL).then(console.log('connected'))
 app.use(cors())
 
 app.use('/api',userRouter,adminRouter)
