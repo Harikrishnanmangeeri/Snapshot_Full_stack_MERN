@@ -15,26 +15,12 @@ import { finduser, showcomments } from "@/Redux/features/findcontentuser";
 import { Stack } from "@mui/material";
 import axiosInstance from "@/Redux/axios";
 
-
 const commonStyles = {
   bgcolor: "background.paper",
   borderColor: "text.primary",
   m: 1,
   border: 1,
 };
-
-const CustomCard = ({ item, onClick }) => (
-  <Card sx={{ marginBottom: "10px", borderRadius: "16px" }}>
-    <CardActionArea onClick={onClick}>
-      <CardMedia
-        component="img"
-        alt={item.title}
-        height="140"
-        image={`${item.url}?w=248&fit=crop&auto=format`}
-      />
-    </CardActionArea>
-  </Card>
-);
 
 const Cardhome = () => {
   const [content, setContent] = useState();
@@ -45,9 +31,7 @@ const Cardhome = () => {
 
   useEffect(() => {
     async function fetchContent() {
-      const contents = await axiosInstance.get(
-        "user/ShowAllContentHome"
-      );
+      const contents = await axiosInstance.get("user/ShowAllContentHome");
       setContent(contents.data);
     }
     fetchContent();
@@ -55,9 +39,7 @@ const Cardhome = () => {
 
   useEffect(() => {
     async function fetchUsers() {
-      const allUsers = await axiosInstance.get(
-        "user/allUser"
-      );
+      const allUsers = await axiosInstance.get("user/allUser");
       setalluser(allUsers.data);
     }
     fetchUsers();
@@ -92,7 +74,7 @@ const Cardhome = () => {
         >
           {filteredUsers?.map((user) => (
             <Grid item key={user._id}>
-              <Card sx={{ borderBottom: "1px solid #ccc", padding: "10px", Width:"100%",height:'100%' }}>
+              <Card sx={{ borderBottom: "1px solid #ccc", padding: "10px", width: "100%", height: "100%" }}>
                 <Typography variant="h6">{user.username}</Typography>
                 <img
                   src={user.avatar}
@@ -111,25 +93,23 @@ const Cardhome = () => {
 
       <ImageList variant="masonry" cols={isMobile ? 2 : 6} gap={8}>
         {filteredContent?.map((item) => (
-          <div key={item.img}>
-            <ImageListItem
-              key={item.img}
-              sx={{ borderRadius: "16px", marginBottom: "10px" }}
-            >
-              <img
-                srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.url}?w=248&fit=crop&auto=format`}
-                alt={item.title}
-                loading="lazy"
-                style={{
-                  ...commonStyles,
-                  borderRadius: "16px",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleContent(item._id)}
-              />
-            </ImageListItem>
-          </div>
+          <ImageListItem
+            key={item._id} // Use a unique identifier, e.g., item._id
+            sx={{ borderRadius: "16px", marginBottom: "10px" }}
+          >
+            <img
+              srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.url}?w=248&fit=crop&auto=format`}
+              alt={item.title}
+              loading="lazy"
+              style={{
+                ...commonStyles,
+                borderRadius: "16px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleContent(item._id)}
+            />
+          </ImageListItem>
         ))}
       </ImageList>
     </Box>
