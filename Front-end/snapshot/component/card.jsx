@@ -92,26 +92,25 @@ const Cardhome = () => {
       )}
 
       <ImageList variant="masonry" cols={isMobile ? 2 : 6} gap={8}>
-        {filteredContent?.map((item) => (
-          <ImageListItem
-            key={item._id} // Use a unique identifier, e.g., item._id
-            sx={{ borderRadius: "16px", marginBottom: "10px" }}
-          >
-            <img
-              srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              src={`${item.url}?w=248&fit=crop&auto=format`}
-              alt={item.title}
-              loading="lazy"
-              style={{
-                ...commonStyles,
-                borderRadius: "16px",
-                cursor: "pointer",
-              }}
-              onClick={() => handleContent(item._id)}
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+  {filteredContent?.map((item) => (
+    <ImageListItem key={item._id} sx={{ borderRadius: "16px", marginBottom: "10px", overflow: "hidden" }}>
+      <img
+        src={`${item.url}?w=248&fit=crop&auto=format`}
+        alt={item.title}
+        loading="lazy"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          cursor: "pointer",
+          borderRadius: "16px", // Add border radius to the image
+        }}
+        onClick={() => handleContent(item._id)}
+      />
+    </ImageListItem>
+  ))}
+</ImageList>
+
     </Box>
   );
 };
