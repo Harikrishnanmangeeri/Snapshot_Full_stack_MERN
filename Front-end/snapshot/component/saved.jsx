@@ -45,7 +45,7 @@ export default function SavedContent() {
           {content.data?.map((item) => (
             <ImageListItem key={item._id}>
               <img
-                srcSet={`${item.content_id?.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                // srcSet={`${item.content_id?.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                 src={`${item.content_id?.url}?w=248&fit=crop&auto=format`}
                 alt={item.content_id?.title}
                 loading="lazy"

@@ -47,6 +47,7 @@ const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 }
 
 const containerStyle = {
+  
 
   overflow: 'hidden', // Hide overflow (scrollbars)
 };
