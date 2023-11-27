@@ -1,5 +1,4 @@
 "use client";
-// Import necessary components
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -9,22 +8,12 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import { getCookies } from "cookies-next";
 import axiosInstance from "@/Redux/axios";
-import { makeStyles } from "@mui/styles";
-
-// Create a useStyles hook for custom styles
-const useStyles = makeStyles((theme) => ({
-  masonryContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-    gap: theme.spacing(3), // Adjust the gap as needed
-  },
-}));
 
 const AdminViewSnap = () => {
-  const classes = useStyles(); // Use the custom styles
   const [reportedItems, setReportedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,46 +60,48 @@ const AdminViewSnap = () => {
         </Box>
       ) : (
         <>
-          <div className={classes.masonryContainer}>
+          <Grid container spacing={3}>
             {reportedItems.map((item) => (
-              <Card key={item._id} elevation={3} style={{ maxWidth: "400px", width: "100%" }}>
-                <CardHeader
-                  avatar={
-                    <Avatar
-                      src={item.user_id.avatar}
-                      alt={item.user_id.username}
-                    />
-                  }
-                  title={item.user_id.username}
-                  subheader={new Date(item.created_at).toLocaleDateString()}
-                />
-                <Divider />
-                {item.url && (
-                  <img
-                    src={item.url}
-                    alt="Reported Snapshot"
-                    style={{
-                      width: "100%",
-                      maxHeight: "300px",
-                      objectFit: "cover",
-                    }}
+              <Grid item key={item._id} xs={12} sm={6} md={4}>
+                <Card elevation={3} style={{ maxWidth: "400px" }}>
+                  <CardHeader
+                    avatar={
+                      <Avatar
+                        src={item.user_id.avatar}
+                        alt={item.user_id.username}
+                      />
+                    }
+                    title={item.user_id.username}
+                    subheader={new Date(item.created_at).toLocaleDateString()}
                   />
-                )}
-                <CardContent>
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    style={{ marginBottom: "16px" }}
-                  >
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    {item.description}
-                  </Typography>
-                </CardContent>
-              </Card>
+                  <Divider />
+                  {item.url && (
+                    <img
+                      src={item.url}
+                      alt="Reported Snapshot"
+                      style={{
+                        width: "100%",
+                        maxHeight: "300px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  )}
+                  <CardContent>
+                    <Typography
+                      variant="h5"
+                      component="div"
+                      style={{ marginBottom: "16px" }}
+                    >
+                      {item.title}
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      {item.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </div>
+          </Grid>
           <Box
             display="flex"
             alignItems="center"
