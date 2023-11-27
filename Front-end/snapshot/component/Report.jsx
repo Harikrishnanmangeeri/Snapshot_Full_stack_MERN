@@ -104,7 +104,7 @@ export default function Reportcontent() {
                 type="button"
                 fullWidth
                 variant="contained"
-              
+              onClick={()=>handleReport()}
                 style={{
                   background: "red",
                   color: "white",
