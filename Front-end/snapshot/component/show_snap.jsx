@@ -66,20 +66,20 @@ const Show_snap = ({ url }) => {
 
   const handleAddComment = () => {
     if (comment.trim() !== "") {
-      dispatch(addComment({ comment, id: content._id, user_id: profile._id }));
+      dispatch(addComment({ comment, id: content._id, user_id: profile?._id }));
       setComment("");
     }
-    setTimeout(() => dispatch(showcomments(url)), 100);
+    setTimeout(() => dispatch(showcomments(url)), 50);
   };
 
   const handleLike = async () => {
-    dispatch(setlike({ id: content._id, user_id: profile._id }));
-    setTimeout(() => dispatch(finduser(url)), 100);
+    dispatch(setlike({ id: content._id, user_id: profile?._id }));
+    setTimeout(() => dispatch(finduser(url)), 50);
   };
 
   const handlefollow_unfollow = () => {
     dispatch(follow({ user_id: profile._id, id: content.user_id._id }));
-    setTimeout(() => dispatch(finduser(url)), 100);
+    setTimeout(() => dispatch(finduser(url)), 50);
   };
 
   function formatDate(dateTimeString) {

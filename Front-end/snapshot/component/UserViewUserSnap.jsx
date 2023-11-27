@@ -23,6 +23,7 @@ import {
   finduser,
   setlike,
   showAnotherUser,
+  showcomments,
 } from "@/Redux/features/findcontentuser";
 // import { useRouter } from "next/navigation";
 import { getCookies } from "cookies-next";
@@ -89,8 +90,9 @@ export default function Viewsnapuser({
 
   const handleAddComment = () => {
     if (comment.trim() !== "") {
-      dispatch(addComment({ comment, id: item._id, user_id: profile._id }));
+      dispatch(addComment({ comment, id: item._id, user_id: profile?._id }));
       setComment("");
+      setTimeout(() => dispatch(showcomments(url)), 50);
     }
   };
   const handleShowuser = (cid) => {
@@ -100,7 +102,7 @@ export default function Viewsnapuser({
     // router.push(`/View_Users_profile/${ cid||content.user_id._id }`)
   };
   const handleLike = async () => {
-    dispatch(setlike({ id: item._id, user_id: profile._id }));
+    dispatch(setlike({ id: item._id, user_id: profile?._id }));
     setTimeout(() => dispatch(finduser(item._id)), 50);
     setimg(true);
   };
