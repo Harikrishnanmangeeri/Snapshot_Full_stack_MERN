@@ -31,7 +31,7 @@ const Showingsnapprofile = ({item}) => {
             <img 
             onClick={()=>{setOpen(true) 
                 setimg(true)}}
-              srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              // srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               src={`${item.url}?w=164&h=164&fit=crop&auto.format`}
               alt={item.title}
               loading="lazy"
