@@ -204,7 +204,7 @@ export default function RootLayout({ children }) {
             </ListItemIcon>
             <ListItemText primary="View snap" />
           </ListItemButton>
-          <ListItemButton onClick={()=>router.push('/reported_snap')}>
+          <ListItemButton onClick={()=>router.push('/reported')}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
