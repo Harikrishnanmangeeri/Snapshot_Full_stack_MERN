@@ -60,10 +60,10 @@ const AdminViewSnap = () => {
         </Box>
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "16px" }}>
             {reportedItems.map((item) => (
-              <Grid item key={item._id} xs={12} sm={6} md={4}>
-                <Card elevation={3} style={{ maxWidth: "400px" }}>
+              <Grid item key={item._id}>
+                <Card elevation={3} style={{ maxWidth: "400px", width: "100%" }}>
                   <CardHeader
                     avatar={
                       <Avatar
