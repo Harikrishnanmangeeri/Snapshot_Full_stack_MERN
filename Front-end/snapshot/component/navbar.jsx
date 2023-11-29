@@ -120,7 +120,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <Avatar
                   alt="User Avatar"
-                  src={data.avatar}
+                  src={data.avatar  || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"}
                   sx={{ width: 50, height: 50 }}
                 />
               </ListItemIcon>
@@ -181,7 +181,7 @@ export default function Navbar() {
               <ListItemIcon>
                 <Avatar
                   alt="User Avatar"
-                  src={data.avatar}
+                  src={data.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"}
                   sx={{ width: 50, height: 50 }}
                 />
               </ListItemIcon>
@@ -305,7 +305,7 @@ export default function Navbar() {
             >
               <Avatar
                 alt="User Avatar"
-                src={data.avatar}
+                src={data.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"}
                 sx={{ width: 30, height: 30 }}
               />
             </IconButton>

@@ -322,7 +322,7 @@ const Show_snap = ({ url }) => {
           {/* Add Comment Section */}
           <div style={{ display: "flex", alignItems: "center", marginTop: '20px' }}>
             <Avatar
-              src={profile?.avatar}
+              src={profile?.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"}
               alt="Current User"
               style={{ marginRight: "10px" }}
             />

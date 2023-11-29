@@ -80,7 +80,8 @@ export default function UserProfile() {
             {profile?.map((data) => (
               <img
                 key={data._id}
-                src={data.banner}
+                src={data.banner ||  "https://source.unsplash.com/400x300/?nature,green"}
+
                 alt="User Profile Cover"
                 style={{
                   width: "100%",
@@ -116,8 +117,8 @@ export default function UserProfile() {
               <Box key={data._id}>
                 <div style={{ position: "relative" }}>
                   <Avatar
-                    alt="User Avatar"
-                    src={data.avatar}
+                    alt="UserAvatar"
+                    src={data.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"}
                     sx={{
                       width: 150,
                       height: 150,

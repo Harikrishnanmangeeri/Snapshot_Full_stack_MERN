@@ -74,7 +74,7 @@ const BlockedUserListComponent = () => {
     <Grid item key={user._id} xs={12} sm={6} md={4} lg={4}>
       <Card>
         <CardContent>
-          <Avatar alt={user.username} src={user.avatar} />
+          <Avatar alt={user.username} src={user.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"} />
           <Typography variant="h6">{user.username}</Typography>
           <Typography variant="body2" color="textSecondary">
             {user.email}

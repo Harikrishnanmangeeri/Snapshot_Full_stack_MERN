@@ -63,7 +63,7 @@ const ReportedContent = () => {
         <CardHeader
           avatar={
             <Avatar
-              src={item.content_id?.user_id?.avatar}
+              src={item.content_id?.user_id?.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"}
               alt={item.Id.username}
             />
           }
@@ -93,7 +93,7 @@ const ReportedContent = () => {
             Report Details:
           </Typography>
           <CardHeader
-            avatar={<Avatar src={item.Id?.avatar} alt={item.Id?.username} />}
+            avatar={<Avatar src={item.Id?.avatar || "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=740&t=st=1701241418~exp=1701242018~hmac=c94f338792a354aec3ab592961d6c3850efb9e25718efe54afaa649a350a91cd"} alt={item.Id?.username} />}
             title={item.Id.username}
           />
           <Typography variant="body2" style={{ padding: "8px", color: "red" }}>

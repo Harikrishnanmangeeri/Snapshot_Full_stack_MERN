@@ -12,7 +12,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import axiosInstance from '@/Redux/axios';
 
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const style = {
@@ -42,7 +43,7 @@ export default function RegistrationModal() {
   const handleClose = () => setOpen(false);
 
   const register = async (event)=>{
-    // event.preventDefault()
+    event.preventDefault()
     const username = event.target.username.value
     const email = event.target.email.value
     const password = event.target.password.value
@@ -53,8 +54,9 @@ export default function RegistrationModal() {
          password:password,
           email:email,
       })
+      toast.success('Registration successful!');
     } catch (error) {
-      
+      toast.error('An error occurred.');
     }
   event.target.reset()
   handleClose()
@@ -86,6 +88,7 @@ export default function RegistrationModal() {
             <CloseIcon />
           </Button>
           <Box sx={contentStyle}>
+          <ToastContainer/>
           <Image src="/Vector.svg" alt="Photos" width="70" height="30" />
             <Typography component="h2" variant="h5">
               Welcome to Snapshot

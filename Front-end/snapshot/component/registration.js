@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from 'next/image';
 import axiosInstance from '@/Redux/axios';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -39,11 +39,12 @@ export default function Registration() {
          password:password,
           email:email,
       })
+      toast.success('Registration successful!');
+      // event.target.reset()
     } catch (error) {
-      
+      toast.error('An error occurred.');
     }
-  event.target.reset()
- 
+    event.target.reset()
   }
 
   return (
