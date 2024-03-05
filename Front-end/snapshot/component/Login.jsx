@@ -70,7 +70,7 @@ export default function Loginmodal() {
         toast.error('Incorrect password!');
       }
     } catch (error) {
-      toast.error('An error occurred.');
+      toast.error(error.message);
     }
 
     event.target.reset();
